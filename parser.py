@@ -3,6 +3,13 @@ import json
 import re
 import pprint
 import csv
+import exceptions
+
+def num(s):
+    try:
+        return int(s)
+    except exceptions.ValueError:
+        return float(s)
 
 countries = {}
 files = ['gni', 'health_expenditure', 'life_expectency']
@@ -64,6 +71,7 @@ for currentFileName in files:
 						year = country[aYear]
 					
 					year[indicator] = col.replace(',','')
+					year[indicator] = year[indicator]
 					if(year[indicator]) == '..':
 						year[indicator] = "NaN"
 					# print '... year ... ' 
@@ -76,22 +84,55 @@ for currentFileName in files:
 	ifile.close()
 
 
+# Output format 1
 # pprint.pprint(countries)
+# records = []
+# for countryName in countries:
+# 	countryRecord = countries[countryName] 
+# 	for year in countryRecord.keys():
+# 		aRecord = countryRecord[year]
+# 		aRecord['country'] = countryName
+# 		aRecord['year'] = year
+# 		records.append(aRecord)
 
+# pprint.pprint(records)
+
+# Output format 2
+# pprint.pprint(countries)
+# [{"country":"Taiwan", "region":"...", "gni":[[1800,....], [], [], .. ]  }]
 records = []
 for countryName in countries:
-	countryRecord = countries[countryName] 
+	countryRecord = countries[countryName]
+	countryStore = {} 
 	for year in countryRecord.keys():
-		aRecord = countryRecord[year]
-		aRecord['country'] = countryName
-		aRecord['year'] = year
-		records.append(aRecord)
+		for indicator in files:
+			if countryRecord[year][indicator] != "NaN":
+				anIndicatorStore = [num(year), num(countryRecord[year][indicator])]
+				try:
+					countryStore[indicator].append(anIndicatorStore)
+				except:  # new an indicator array if first seeing this indicator
+					countryStore[indicator] = []
+					countryStore[indicator].append(anIndicatorStore)
+	
+	# sort years
+	for indicator in files:
+		try:
+			countryStore[indicator] = sorted(countryStore[indicator],key=lambda x: x[0])
+		except:
+			# create a empty indicatorStore for those doesn't have anything
+			# countryStore[indicator] = []
+			continue	
+	countryStore["country"] = countryName
+	
+	records.append(countryStore)
 
-pprint.pprint(records)
+# pprint.pprint(records)
 
-f = open('worldbankdata.json', 'w')
+
+f = open('worldbankdata2.json', 'w')
 f.write(json.dumps(records, sort_keys=True, indent=4))
 f.close()
+
 
 
 
