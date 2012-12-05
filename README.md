@@ -3,9 +3,11 @@ infoviz-worldbankdata
 
 This is a group project for the Information Visualization course in U Mich, which we are aiming to visualize some of the data from The World Bank
 
-Simple Testing Server
+How to 
 =====================
-python -m SimpleHTTPServer 3000
+1. Go to the repository (infoviz-worldbankdata)
+2. $python -m SimpleHTTPServer 3000
+3. localhost:3000/index.html
 
 Reference
 =========
@@ -22,12 +24,14 @@ To do
 System Architecture
 ===================
 WBD (parent object)
+* Members & Methods
 	- indicators
 		- an array stores all the indiciators
 	- defaultXIndicator
 	- defaultYIndicator
 
 Entries
+* Members & Methods
 	- allData
 	- selDataXYPlot
 	- filter
