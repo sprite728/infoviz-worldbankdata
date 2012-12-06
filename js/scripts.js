@@ -2,10 +2,6 @@
 
 var WBD = WBD || {};
 
-// 
-WBD.DisplayOptionView = Backbone.View.extend({
-
-});
 
 
 

@@ -243,8 +243,8 @@ WBD.XYPlot = Backbone.View.extend({
     
     // Add tipsy, not a good way
     $("#xy-plot circle").each(function(){
-      var content = this.__data__;
-      var country = content.country;
+      var d = this.__data__;
+      var country = d.country;
       console.log(country);
 
       $(this).qtip({

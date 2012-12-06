@@ -22,6 +22,14 @@ WBD.Entries = Backbone.Model.extend({
     allData: [], // [{'country': 'taiwan', 'year': '1234' ... }, ...]
     selDataXYPlot: [],
     filter: {}
+
+    // Constants
+    // DatasetLabels 
+      // xDatasetLabel
+      // yDatasetLabel
+    // yearRage: [min, max]
+    // currentViewTab: 'map' or 'xy-plot'
+    //  
   },
 
   initialize: function(opts){
