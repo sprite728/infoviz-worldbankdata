@@ -14,27 +14,33 @@ WBD.Filter = Backbone.Model.extend({
   },
   
   toggleCountry: function(country) {
-	  console.log("this.countries");
-	  console.log(this.countries);
-	  console.log("this");
-	  console.log(this);
-	  var tempCountries = this.countries || [];
 
-	  if( typeof tempCountries == 'undefined' || tempCountries.length == 0 ){
-		  console.log("Happy");
-		  tempCountries.push(country);
-	  }
-	  else if(tempCountries.indexOf(country)>-1){
-		  console.log("Two Happy!");
+	  var tempCountries = this.get("countries");
+
+	  if(tempCountries.indexOf(country)>-1){
 		  tempCountries.remove(country);
 	  }
 	  else{
 		  tempCountries.push(country);
 	  }
 	  
-	  console.log(tempCountries);
-	  
 	  this.set({countries : tempCountries});
+	  this.trigger("change:countries");
+  },
+  
+    toggleContinent: function(continent) {
+
+	  var tempContinents = this.get("regions");
+
+	  if(tempContinents.indexOf(continent)>-1){
+		  tempContinents.remove(continent);
+	  }
+	  else{
+		  tempContinents.push(continent);
+	  }
+	  
+	  this.set({regions : tempContinents});
+	  this.trigger("change:regions");
   },
   
   
@@ -63,10 +69,10 @@ WBD.Entries = Backbone.Model.extend({
 
     // listen to any changes happen with filter
     // if filter is changed, call applyFilter
-    // applyFilter would change other attributes which is subscribe by 
-    // other views. 
+    // applyFilter would change other attributes which is subscribe by other views. 
     // Therefore, when applyFilter is called, other views would change subsequently 
     this.get("filter").bind("change", this.applyFilter, this);
+	this.get("filter").bind("change:countries", this.applyFilter, this);
   },
 
   // filter allData to selectedData
@@ -86,16 +92,18 @@ WBD.Entries = Backbone.Model.extend({
       var key;
       var returnObj = {};
 
+	  if( !that.isSelectedCountry(d.country) ){
+	    return;
+	  }
+	  
       for( key in d){
-        // console.log("KEY");
-        // console.log(key);
         if(d.hasOwnProperty(key)){
           // Only check the parts that's not inherited from other places
           // console.log("HI");
-          if(d[key] instanceof Array){
-            // it is an indicator, such as "gni" ... 
-            returnObj[key] = that.interpolateValues(d[key], that.get("filter").get("year"));
-          }
+		  if(d[key] instanceof Array){
+			// it is an indicator, such as "gni" ... 
+			returnObj[key] = that.interpolateValues(d[key], that.get("filter").get("year"));
+		  }
         }
       }
 
@@ -108,10 +116,26 @@ WBD.Entries = Backbone.Model.extend({
       }
     });
     
+	filteredData = filteredData.filter(function(element, index, array){
+		return ( element !== undefined );
+	});
+	console.log("Filtered Data", filteredData);
+	
     this.set("selDataXYPlot", filteredData);
 
   },
 
+  isSelectedCountry: function(country){
+	var countries = this.get("filter").get("countries");
+	if(countries.length == 0){return true;}
+	if(countries.indexOf(country)>-1){
+		return true;
+	}
+	else{
+		return false;
+	}
+  },
+  
   getSelDataXYPlot: function(){
     return this.get("selDataXYPlot");
   },

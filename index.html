@@ -4,18 +4,49 @@
     <meta charset="utf-8">
     <!-- The sequence of the libraries is very important! d3 > jq > under > backbone -->
     <link href="css/scripts.css" rel="stylesheet" type="text/css" />
+    <link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+    
 </head>
 
 <body>
     <div id="main">
     	<div id="options">
-        	<div id="countries_filter"></div>
+        	<div id="country_or_continent">
+            	<h4>Display Options</h4>
+            	<button id="countryTab">Country</button> || <button id="continentTab">Continent</button>
+                <br>
+            </div>
+        	<div id="xyAxis">
+            	<h4>Select Dataset</h4>
+            	<select id="xAxisPicker">
+                	<option>X1</option>
+    				<option>X2</option>
+                    <option>X3</option>
+    				<option>X4</option>
+                </select>
+                <br>
+                <select id="yAxisPicker">
+                	<option>Y1</option>
+    				<option>Y2</option>
+                    <option>Y3</option>
+    				<option>Y4</option>
+                </select>
+            </div>
+        	<div id="slider_value">
+            	<h4>Value Range</h4>
+            	<div id="slider-xAxis"></div>
+                <br>
+                <div id="slider-yAxis"></div>
+            </div>
+        	<div id="countries_filter">
+            	<h4>Country Options</h4>
+            </div>
         </div>
-    
     </div>
 
 <script src="js/libs/d3.v2.js"></script>
 <script src="js/libs/jquery-1.8.2.js"></script>
+<script src="js/libs/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="js/libs/jquery.qtip-1.0.0-rc3.js"></script>
 <script src="js/libs/underscore.js"></script>
 <script src="js/libs/backbone.js"></script>

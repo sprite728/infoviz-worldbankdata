@@ -21,28 +21,39 @@ WBD.DisplayOptionView = Backbone.View.extend({
 	
 	this.model = opts.model;
 	var that = this;
-
-	console.log(allCountries);
 	
 	for (var country in allCountries){
 		if(allCountries.hasOwnProperty(country)){
-			console.log(allCountries[country]);
+			//console.log(allCountries[country]);
 			$("#countries_filter").append("<button class='country'>" + allCountries[country] + "</button><br />");
 		}
 	}
 	
-	$("#countries_filter .country").click(that, function(){
+	$("#countries_filter .country").click(function(){
 //console.log($(this).text());
-		var self = that;
-		self.model.get("filter");//.toggleCountry($(this).text());
-		self.model.get("filter").toggleCountry($(this).text());
-		console.log("get filter");
-		console.log(self.model.get("filter"));
-		console.log("filter.get contries");
-		console.log(self.model.get("filter").get("countries"));
-		that.update();
+		that.model.get("filter").toggleCountry($(this).text());
+//console.log("filter.get contries");
+		console.log(that.model.get("filter").get("countries"));
 	});
 	
+	$("#xyAxis > select").change(function(e) {
+        console.log("X Axis: ", $("#xAxisPicker").val());
+		console.log("Y Axis: ", $("#yAxisPicker").val());
+    });
+	
+	$( "#slider-xAxis" ).slider({
+        range: true,
+        min: 0,
+        max: 150,
+        values: [ 0, 150 ],
+        slide: function( event, ui ) {
+            $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        }
+    });
+    $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+        " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+	
+	this.model.bind("change:filter", this.render, this );
 	//var countries = $.ajax({url: "./countries.json", async: false});
 	//var names =_.map(JSON.parse(countries.responseText), function(country){return country.country});
 	//console.log(names);
@@ -52,7 +63,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 	//}
   },
   
-  update: function() {
+  render: function() {
     var that = this;
 	
 	var year = this.model.get("filter").get("year");
