@@ -2,13 +2,6 @@
 
 var WBD = WBD || {};
 
-// 
-WBD.DisplayOptionView = Backbone.View.extend({
-
-});
-
-
-
 // main function 
 $(document).ready(function(){
   d3.json("worldbankdata2.json", function(data){
@@ -20,11 +13,14 @@ $(document).ready(function(){
 
       // Create Collection: myEntries
       console.log("Read and store data ... ");
+
       // read data into WBD.Record
       myEntries = new WBD.Entries({
         allData: WBD.prepareData(data)
       });
 
+	  myAllCountries = WBD.allCountries;
+	  myAllContinents = WBD.allContinents; 
       // console.log("Check myEntries");
       // console.log(myEntries.get('allData'));
       
@@ -34,9 +30,15 @@ $(document).ready(function(){
       {
         model: myEntries
       });
+	  
+	   myOptionsView = new WBD.DisplayOptionView({
+        model: myEntries,
+		allCountries : myAllCountries
+      });
 
       myMapView = new WBD.Map({
         model: myEntries
+		
       });
 
   });
