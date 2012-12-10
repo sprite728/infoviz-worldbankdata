@@ -3,7 +3,6 @@ var WBD = WBD || {};
 // Add a remove method to Array
 // reference: http://javascriptweblog.wordpress.com/
 Array.prototype.remove = function(member) {
-
   var index = this.indexOf(member);
 
   if (index > -1) {
@@ -31,3 +30,6 @@ WBD.prepareData = function(data){
 
   return data
 }
+
+WBD.allCountries = ["Canada", "Taiwan", "United States"];
+WBD.allContinents = ["Africa"];

@@ -9,16 +9,40 @@ var WBD = WBD || {};
 WBD.Filter = Backbone.Model.extend({
   defaults: {
     year: 2000, // year filter 
-    country: [], // country filter 
-    region: [] // region filter
-  }
+    countries: [], // countries filter 
+    regions: [] // regions filter
+  },
+  
+  toggleCountry: function(country) {
+	  console.log("this.countries");
+	  console.log(this.countries);
+	  console.log("this");
+	  console.log(this);
+	  var tempCountries = this.countries || [];
+
+	  if( typeof tempCountries == 'undefined' || tempCountries.length == 0 ){
+		  console.log("Happy");
+		  tempCountries.push(country);
+	  }
+	  else if(tempCountries.indexOf(country)>-1){
+		  console.log("Two Happy!");
+		  tempCountries.remove(country);
+	  }
+	  else{
+		  tempCountries.push(country);
+	  }
+	  
+	  console.log(tempCountries);
+	  
+	  this.set({countries : tempCountries});
+  },
+  
+  
 });
 
 // Entries Prototype
 WBD.Entries = Backbone.Model.extend({
-
   defaults: {
-    
     allData: [], // [{'country': 'taiwan', 'year': '1234' ... }, ...]
     selDataXYPlot: [],
     filter: {}
@@ -29,7 +53,6 @@ WBD.Entries = Backbone.Model.extend({
       // yDatasetLabel
     // yearRage: [min, max]
     // currentViewTab: 'map' or 'xy-plot'
-    //  
   },
 
   initialize: function(opts){
@@ -44,7 +67,6 @@ WBD.Entries = Backbone.Model.extend({
     // other views. 
     // Therefore, when applyFilter is called, other views would change subsequently 
     this.get("filter").bind("change", this.applyFilter, this);
-
   },
 
   // filter allData to selectedData
@@ -73,7 +95,6 @@ WBD.Entries = Backbone.Model.extend({
           if(d[key] instanceof Array){
             // it is an indicator, such as "gni" ... 
             returnObj[key] = that.interpolateValues(d[key], that.get("filter").get("year"));
-            
           }
         }
       }
