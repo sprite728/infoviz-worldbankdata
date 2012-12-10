@@ -10,7 +10,7 @@ WBD.XYPlot = Backbone.View.extend({
 
   //Note: there is no defaults in View
   xAxisDatasetName: 'gni',
-  yAxisDataName: 'life_expectency',
+  yAxisDatasetName: 'life_expectency',
   year: 2000, //temporal use
   yearSelector: 2000, //default
   yearLabel: "", // default
@@ -82,7 +82,7 @@ WBD.XYPlot = Backbone.View.extend({
         .attr("y", 6)
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
-        .text(that.yAxisDataName);
+        .text(that.yAxisDatasetName);
   },
 
   // render the updated axes 
@@ -101,7 +101,7 @@ WBD.XYPlot = Backbone.View.extend({
       .text(that.xAxisDatasetName);
 
     this.yAxisLabelEl
-      .text(that.yAxisDataName);
+      .text(that.yAxisDatasetName);
 
   },
 
@@ -118,7 +118,7 @@ WBD.XYPlot = Backbone.View.extend({
 
     this.yScale = d3.scale.linear()
       .domain( [ 0, d3.max(that.model.getSelDataXYPlot(), function(d){
-        return d[that.yAxisDataName]; 
+        return d[that.yAxisDatasetName]; 
       }) ] 
       )
       .range([that.height, 0]);
@@ -193,7 +193,7 @@ WBD.XYPlot = Backbone.View.extend({
       .attr("cy", function(d){ 
         // It is possible that some countries won't have this indicator record
         // therefore, return 0 
-        return that.yScale(d[that.yAxisDataName] || 0 ); 
+        return that.yScale(d[that.yAxisDatasetName] || 0 ); 
       })
       .attr("r", function(d){
         return that.dotSize;
@@ -234,7 +234,7 @@ WBD.XYPlot = Backbone.View.extend({
         .attr("cy", function(d){ 
           // It is possible that some countries won't have this indicator record
           // therefore, return 0 
-          return that.yScale(d[that.yAxisDataName] || 0 ); 
+          return that.yScale(d[that.yAxisDatasetName] || 0 ); 
         })
         .attr("r", function(d){
           return that.dotSize;

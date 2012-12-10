@@ -10,7 +10,12 @@ WBD.Filter = Backbone.Model.extend({
   defaults: {
     year: 2000, // year filter 
     countries: [], // countries filter 
-    regions: [] // regions filter
+    continents: [], // regions filter
+    categories: [],
+    xDataRange: [], // [ min, max] if empty or only 1 element -> wrong
+    yDataRange: [], // [ min, max] if empty or only 1 element -> wrong
+    popuRange: []
+
   },
   
   toggleCountry: function(country) {
@@ -45,7 +50,7 @@ WBD.Entries = Backbone.Model.extend({
   defaults: {
     allData: [], // [{'country': 'taiwan', 'year': '1234' ... }, ...]
     selDataXYPlot: [],
-    filter: {}
+    filter: {},
 
     // Constants
     // DatasetLabels 
@@ -53,6 +58,11 @@ WBD.Entries = Backbone.Model.extend({
       // yDatasetLabel
     // yearRage: [min, max]
     // currentViewTab: 'map' or 'xy-plot'
+    xDatasetName: "gni",
+    yDatasetName: "life_expectency",
+    isViewByCountry: false,
+    xDatasetScale: "linear",
+    yDatasetScale: "linear",
   },
 
   initialize: function(opts){

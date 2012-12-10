@@ -30,6 +30,3 @@ WBD.prepareData = function(data){
 
   return data
 }
-
-WBD.allCountries = ["Canada", "Taiwan", "United States"];
-WBD.allContinents = ["Africa"];
