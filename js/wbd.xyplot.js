@@ -149,8 +149,8 @@ WBD.XYPlot = Backbone.View.extend({
       // console.log("this.yearSelectorBox");
       // console.log(this.yearSelectorBox);
 
-      console.log("this.yearSelectorBox");
-      console.log(this.yearSelectorBox);
+      //console.log("this.yearSelectorBox");
+      //console.log(this.yearSelectorBox);
 
       this.yearSelector = this.svg.append("rect")
         .attr("class", "overlay")
@@ -184,9 +184,9 @@ WBD.XYPlot = Backbone.View.extend({
         // therefore, return 0 
 
         if(d.country == "Canada"){
-          console.log(d.country);
-          console.log(d.gni);
-          console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
+          //console.log(d.country);
+          //console.log(d.gni);
+          //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
         }
         return that.xScale(d[that.xAxisDatasetName] || 0 ); 
       })
@@ -225,9 +225,9 @@ WBD.XYPlot = Backbone.View.extend({
           // therefore, return 0 
 
           if(d.country == "Canada"){
-            console.log(d.country);
-            console.log(d.gni);
-            console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
+            //console.log(d.country);
+            //console.log(d.gni);
+            //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
           }
           return that.xScale(d[that.xAxisDatasetName] || 0 ); 
         })
@@ -245,7 +245,7 @@ WBD.XYPlot = Backbone.View.extend({
     $("#xy-plot circle").each(function(){
       var d = this.__data__;
       var country = d.country;
-      console.log(country);
+      //console.log(country);
 
       $(this).qtip({
         content: country,

@@ -1,6 +1,28 @@
+#main{
+	width: 960px;
+	height: auto;
+	margin: 0 auto;
+	float: none;
+}
+
+#options{
+	width: 300px;
+	margin: 50px 0;
+	float: left;
+}
+
+#xyAxis > #xAxisPicker, #xyAxis > #yAxisPicker{
+	width: 180px;
+}
+
+#slider-xAxis, slider-yAxis{
+	width: 180px;
+}
+
 #xy-plot {
   margin-left: 40px;
   height: 550px;
+  float: right;
 }
 
 text {
@@ -43,6 +65,11 @@ text {
         background-color: rgba(255,255,255,.75);
 }
 
+
+
+
+
+/*Country Selection Button Style*/
 .country{
 	width: 150px;
 	text-align: center;
