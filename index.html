@@ -5,11 +5,45 @@
     <!-- The sequence of the libraries is very important! d3 > jq > under > backbone -->
     <link href="css/scripts.css" rel="stylesheet" type="text/css" />
     <link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
-    
+    <script type="text/javascript" src="js/jquery-1.2.6.min.js"></script>
 </head>
 
 <body>
+    <script type="text/javascript">
+	$(document).ready(function() {
+		$(".topMenuAction").click( function() {
+			if ($("#openCloseIdentifier").is(":hidden")) {
+				$("#slider").animate({ 
+					marginTop: "-450px"
+					}, 500 );
+				$("#topMenuImage").html('<img src="images/open.png" alt="open" />');
+				$("#openCloseIdentifier").show();
+			} else {
+				$("#slider").animate({ 
+					marginTop: "-50px"
+					}, 500 );
+				$("#topMenuImage").html('<img src="images/open.png" alt="close" />');
+				$("#openCloseIdentifier").hide();
+			}
+		});  
+	});
+	</script>
+    <div id="sliderWrap">
+		<div id="openCloseIdentifier"></div>
+		<div id="slider">
+			<div id="sliderContent">
+				Isn't this nice?
+			</div>
+			<div id="openCloseWrap">
+				<a href="#" class="topMenuAction" id="topMenuImage">
+					<img src="images/open.png" alt="open" />
+				</a>
+			</div>
+		</div>
+	</div>
     <div id="main">
+        <h1> GlobalLens <strong class="less">Info Viz </strong></h1>
+				<h2>Some basic and useful style snippets</h2>
     	<div id="options">
         	<div id="country_or_continent">
             	<h4>Display Options</h4>

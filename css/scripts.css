@@ -1,3 +1,7 @@
+body{
+    background: #ddd url(../images/bg.jpg) repeat top left;
+    font-family: "Lato", Calibri, Arial, sans-serif;
+    }
 #main{
 	width: 960px;
 	height: auto;
@@ -103,4 +107,73 @@ text {
 .country:active {
 	position:relative;
 	top:1px;
+}
+
+
+#slider {
+position: absolute;
+background-image:url(images/back.png);
+background-repeat:no-repeat;
+background-position: bottom;
+width: 300px;
+height: 500px;
+margin-top: -450px;
+}
+#slider img {
+border: 0;
+margin-top:312px;
+margin-left:-109px;
+}
+#sliderContent {
+margin: 50px 0 0 50px;
+position: absolute;
+text-align:center;
+background-color:#FFFFCC;
+color:#333333;
+font-weight:bold;
+}
+#header {
+margin: 0 auto;
+width: 600px;
+background-color: #F0F0F0;
+height: 200px;
+padding: 10px;
+}
+#wrd {
+margin: 0 auto;
+width: 600px;
+padding: 10px;
+}
+#openCloseWrap {
+position:absolute;
+margin: 143px 0 0 120px;
+font-size:12px;
+font-weight:bold;
+}
+
+
+#main h1 {
+	font-size: 40px;
+	line-height: 0px;
+	margin-left:200px;
+	position: relative;
+	font-weight: 50;
+	color: #666;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+}
+
+#main .less {
+	font-weight: 400;
+}
+
+#main h2 {
+	font-size: 14px;
+	font-weight: 100;
+	margin-left: 200px;
+	margin-top:0;
+	padding: 15px 0 5px 0;
+	color: #666;
+	font-family: Cambria, Georgia, serif;
+	font-style: italic;
+	text-shadow: 0 1px 1px rgba(255,255,255,0.6);
 }
