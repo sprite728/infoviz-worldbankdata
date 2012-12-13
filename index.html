@@ -142,29 +142,41 @@
             	<button id="countryTab">Country</button> || <button id="continentTab">Continent</button>
                 <br>
             </div>
+			
         	<div id="xyAxis">
-            	<h4>Select Dataset</h4>
-            	<select id="xAxisPicker">
-                	<option>X1</option>
-    				<option>X2</option>
-                    <option>X3</option>
-    				<option>X4</option>
-                </select>
-                <br>
-                <select id="yAxisPicker">
-                	<option>Y1</option>
-    				<option>Y2</option>
-                    <option>Y3</option>
-    				<option>Y4</option>
-                </select>
+              <h4>Select Dataset</h4>
+              <label for="xAxisPicker">X Axis:&nbsp;&nbsp;</label><select id="xAxisPicker"></select><br>
+              <label for="yAxisPicker">Y Axis:&nbsp;&nbsp;</label><select id="yAxisPicker"></select><br>
+              <!--select id="zAxisPicker"></select-->
             </div>
-        	<div id="slider_value">
-            	<h4>Value Range</h4>
-            	<div id="slider-xAxis"></div>
-                <br>
-                <div id="slider-yAxis"></div>
+            
+        	<div id="range-value">
+              <h4>Value Range</h4>
+            
+              <!-- X Axis Filter, hi-->
+              <p>
+             	<label for="xRangeText">X Axis:</label>
+                <input type="text" id="xRangeText" />
+              </p>
+              <div id="slider-xAxis"></div>
+            
+              <!-- Y Axis Filter -->
+              <p>
+              	<label for="yRangeText">Y Axis:</label>
+                <input type="text" id="yRangeText" />
+              </p>
+              <div id="slider-yAxis"></div>
+            
+              <!-- Circle Size Filter -->
+              <p>
+            	<label for="circleSizeText">Cicle Size:</label>
+                <input type="text" id="circleSizeText" />
+              </p>
+              <div id="slider-circleSize"></div>
+            
             </div>
-        	<div id="countries_filter">
+        	
+			<div id="countries_filter">
             	<h4>Country Options</h4>
             </div>
         </div>
