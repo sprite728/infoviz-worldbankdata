@@ -5,54 +5,168 @@
     <!-- The sequence of the libraries is very important! d3 > jq > under > backbone -->
     <link href="css/scripts.css" rel="stylesheet" type="text/css" />
     <link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
-    
+    <script type="text/javascript" src="js/jquery-1.2.6.min.js"></script>
 </head>
 
 <body>
-    <div id="main">
+    <script type="text/javascript">
+	$(document).ready(function() {
+		$(".topMenuAction").click( function() {
+			if ($("#openCloseIdentifier").is(":hidden")) {
+				$("#slider").animate({ 
+					marginTop: "-450px"
+					}, 500 );
+				$("#topMenuImage").html('<img src="images/open.png" alt="open" />');
+				$("#openCloseIdentifier").show();
+			} else {
+				$("#slider").animate({ 
+					marginTop: "-50px"
+					}, 500 );
+				$("#topMenuImage").html('<img src="images/open.png" alt="close" />');
+				$("#openCloseIdentifier").hide();
+			}
+		});  
+	});
+	</script>
+    <div id="sliderWrap">
+		<div id="openCloseIdentifier"></div>
+		<div id="slider">
+			<div id="sliderContent">
+				Isn't this nice?
+			</div>
+			<div id="openCloseWrap">
+				<a href="#" class="topMenuAction" id="topMenuImage">
+					<img src="images/open.png" alt="open" />
+				</a>
+			</div>
+		</div>
+	</div>
+    <div id="h_menu">
+    
+        <div id="h_option">
+        <h1> GlobalLens <strong class="less">Info Viz </strong></h1>
+				<h2>Some basic and useful style snippets</h2>
+				
+		</div>
+		<div class="select_opt">
+		<strong class="data_select">Select Dataset</strong>
+				<section class="main_btn">
+				<div class="wrapper-demo">
+					<div id="dd" class="wrapper-dropdown-3" tabindex="1">
+						<span>X axis data</span>
+						<ul class="dropdown">
+							<li><a href="#">GNI</a></li>
+							<li><a href="#">Life Expectancy</a></li>
+							<li><a href="#">Health Expenditure</a></li>
+						</ul>
+					</div>
+				​</div>
+			</section>
+		</div>
+	    		<div class="select_opt">
+		<section class="main_btn">
+				<div class="wrapper-demo">
+					<div id="ee" class="wrapper-dropdown-3" tabindex="2">
+						<span>Y axis data</span>
+						<ul class="dropdown">
+							<li><a href="#">GNI</a></li>
+							<li><a href="#">Life Expectancy</a></li>
+							<li><a href="#">Health Expenditure</a></li>
+						</ul>
+					</div>
+				​</div>
+			</section>
+		</div>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script type="text/javascript">
+			
+			function DropDown(el) {
+				this.dd = el;
+				this.placeholder = this.dd.children('span');
+				this.opts = this.dd.find('ul.dropdown > li');
+				this.val = '';
+				this.index = -1;
+				this.initEvents();
+			}
+			DropDown.prototype = {
+				initEvents : function() {
+					var obj = this;
+
+					obj.dd.on('click', function(event){
+						$(this).toggleClass('active');
+						return false;
+					});
+
+					obj.opts.on('click',function(){
+						var opt = $(this);
+						obj.val = opt.text();
+						obj.index = opt.index();
+						obj.placeholder.text(obj.val);
+					});
+				},
+				getValue : function() {
+					return this.val;
+				},
+				getIndex : function() {
+					return this.index;
+				}
+			}
+
+			$(function() {
+
+				var dd = new DropDown( $('#dd') );
+
+				$(document).click(function() {
+					// all dropdowns
+					$('.wrapper-dropdown-3').removeClass('active');
+				});
+
+			});
+            $(function() {
+
+				var dd = new DropDown( $('#ee') );
+
+				$(document).click(function() {
+					// all dropdowns
+					$('.wrapper-dropdown-3').removeClass('active');
+				});
+
+			});
+
+		</script>
+	</div>
+	<div id="main">
     	<div id="options">
         	<div id="country_or_continent">
-          	<h4>Display Options</h4>
-            <button id="countryTab">Country</button> || <button id="continentTab">Continent</button>
-            <br>
-          </div>
+            	<h4>Display Options</h4>
+            	<button id="countryTab">Country</button> || <button id="continentTab">Continent</button>
+                <br>
+            </div>
         	<div id="xyAxis">
-            <h4>Select Dataset</h4>
-            <label for="xAxisPicker">X Axis:&nbsp;&nbsp;</label><select id="xAxisPicker"></select><br>
-            <label for="yAxisPicker">Y Axis:&nbsp;&nbsp;</label><select id="yAxisPicker"></select><br>
-            <!--select id="zAxisPicker"></select-->
-          </div>
-            
-        	<div id="range-value">
-            <h4>Value Range</h4>
-            
-            <!-- X Axis Filter -->
-            <p>
-            	<label for="xRangeText">X Axis:</label>
-              <input type="text" id="xRangeText" />
-            </p>
-            <div id="slider-xAxis"></div>
-            
-            <!-- Y Axis Filter -->
-            <p>
-            	<label for="yRangeText">Y Axis:</label>
-              <input type="text" id="yRangeText" />
-            </p>
-            <div id="slider-yAxis"></div>
-            
-            <!-- Circle Size Filter -->
-            <p>
-            	<label for="circleSizeText">Cicle Size:</label>
-              <input type="text" id="circleSizeText" />
-            </p>
-            <div id="slider-circleSize"></div>
-            
-          </div>
-          
+            	<h4>Select Dataset</h4>
+            	<select id="xAxisPicker">
+                	<option>X1</option>
+    				<option>X2</option>
+                    <option>X3</option>
+    				<option>X4</option>
+                </select>
+                <br>
+                <select id="yAxisPicker">
+                	<option>Y1</option>
+    				<option>Y2</option>
+                    <option>Y3</option>
+    				<option>Y4</option>
+                </select>
+            </div>
+        	<div id="slider_value">
+            	<h4>Value Range</h4>
+            	<div id="slider-xAxis"></div>
+                <br>
+                <div id="slider-yAxis"></div>
+            </div>
         	<div id="countries_filter">
-           	<h4>Country Options</h4>
-          </div>
-          
+            	<h4>Country Options</h4>
+            </div>
         </div>
     </div>
 
