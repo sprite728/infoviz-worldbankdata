@@ -115,14 +115,14 @@ position: absolute;
 background-image:url(images/back.png);
 background-repeat:no-repeat;
 background-position: bottom;
-width: 300px;
+width: 320px;
 height: 500px;
 margin-top: -450px;
 }
 #slider img {
 border: 0;
 margin-top:312px;
-margin-left:-109px;
+margin-left:-99px;
 }
 #sliderContent {
 margin: 50px 0 0 50px;
@@ -151,8 +151,12 @@ font-size:12px;
 font-weight:bold;
 }
 
-
-#main h1 {
+#h_menu {
+    float:left;
+    margin-left:150px;
+    width:1024px;
+    }
+#h_menu h1 {
 	font-size: 40px;
 	line-height: 0px;
 	margin-left:200px;
@@ -162,11 +166,11 @@ font-weight:bold;
 	text-shadow: 0 1px 1px rgba(255,255,255,0.6);
 }
 
-#main .less {
+#h_menu .less {
 	font-weight: 400;
 }
 
-#main h2 {
+#h_menu h2 {
 	font-size: 14px;
 	font-weight: 100;
 	margin-left: 200px;
@@ -176,4 +180,170 @@ font-weight:bold;
 	font-family: Cambria, Georgia, serif;
 	font-style: italic;
 	text-shadow: 0 1px 1px rgba(255,255,255,0.6);
+}
+#h_option {
+    float:left;
+    padding-right:50px;
+    margin:0;
+    padding-left:0;
+    height:100px;
+    }
+#select_opt{
+    float:right;
+    margin-top:-50px;
+    margin-left:500px;
+}
+
+ .wrapper-dropdown-3 {
+    /* Size and position */
+    position: relative;
+    width: 100px;
+    padding: 9px;
+
+    /* Styles */
+    background: #fff;
+    border-radius: 7px;
+    border: 1px solid rgba(0,0,0,0.15);
+    box-shadow: 0 1px 1px rgba(50,50,50,0.1);
+    cursor: pointer;
+    outline: none;
+
+    /* Font settings */
+    font-weight: bold;
+    color: #8AA8BD;
+}
+
+.wrapper-dropdown-3:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    right: 10px;
+    margin-top: 10px;
+    border-width: 6px 6px 0 6px;
+    border-style: solid;
+    border-color: #8aa8bd transparent;
+}
+
+.wrapper-dropdown-3 .dropdown {
+  /* Size & position */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+        margin:0;
+    padding:0;
+    /* Styles */
+    background: white;
+    border-radius: inherit;
+    border: 1px solid rgba(0,0,0,0.17);
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    font-weight: normal;
+    -webkit-transition: all 0.5s ease-in;
+    -moz-transition: all 0.5s ease-in;
+    -ms-transition: all 0.5s ease-in;
+    -o-transition: all 0.5s ease-in;
+    transition: all 0.5s ease-in;
+    list-style: none;
+
+    /* Hiding */
+    opacity: 0;
+    pointer-events: none;
+}
+
+.wrapper-dropdown-3 .dropdown:after {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+    right: 15px;
+    border-width: 0 6px 6px 6px;
+    border-style: solid;
+    border-color: #fff transparent;    
+}
+
+.wrapper-dropdown-3 .dropdown:before {
+    content: "";
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+    right: 13px;
+    border-width: 0 8px 8px 8px;
+    border-style: solid;
+    border-color: rgba(0,0,0,0.1) transparent;    
+}
+
+.wrapper-dropdown-3 .dropdown li a {
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    color: #8aa8bd;
+    border-bottom: 1px solid #e6e8ea;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,1);
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.wrapper-dropdown-3 .dropdown li i {
+    color: inherit;
+    margin:0;
+    padding:0;
+}
+
+.wrapper-dropdown-3 .dropdown li:first-of-type a {
+    border-radius: 7px 7px 0 0;
+}
+
+.wrapper-dropdown-3 .dropdown li:last-of-type a {
+    border: none;
+    border-radius: 0 0 7px 7px;
+}
+
+/* Hover state */
+
+.wrapper-dropdown-3 .dropdown li:hover a {
+    background: #f3f8f8;
+}
+
+/* Active state */
+
+.wrapper-dropdown-3.active .dropdown {
+    opacity: 1;
+    pointer-events: auto;
+    margin:0;
+    padding:0;
+}
+
+/* No CSS3 support */
+
+.no-opacity       .wrapper-dropdown-3 .dropdown,
+.no-pointerevents .wrapper-dropdown-3 .dropdown {
+    display: none;
+    opacity: 1; /* If opacity support but no pointer-events support */
+    pointer-events: auto; /* If pointer-events support but no pointer-events support */
+}
+
+.no-opacity       .wrapper-dropdown-3.active .dropdown,
+.no-pointerevents .wrapper-dropdown-3.active .dropdown {
+    display: block;
+}
+.wrapper-demo {
+    margin:10px;
+    float:left;
+    
+}
+
+.wrapper-demo:after {
+    clear: both;
+    content: "";
+    display: table;
+}
+
+.main_btn {
+	margin: 0 auto;
 }
