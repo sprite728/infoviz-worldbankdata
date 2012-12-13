@@ -1,9 +1,9 @@
 var WBD = WBD || {};
 
-WBD.allCountries = ["Canada", "Taiwan", "United States"];
+WBD.allCountries = ["Canada", "China", "Russia", "United States", "Mexico", "Japan", "South Korea", "Chile"];
 
-WBD.allContinents = ["Africa"];
+WBD.allContinents = ["Africa", "South America", "North America", "Asian", "Europe"];
 
-WBD.allIndicators = [];
+WBD.allIndicators = ["A", "B", "C", "D", "E", "F"];
 
-WBD.allCategories = [];
+WBD.allCategories = ["BRIC", "AIPEC", "WTO"];

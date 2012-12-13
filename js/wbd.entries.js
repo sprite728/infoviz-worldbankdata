@@ -1,4 +1,6 @@
 // Author: Chuan-Che Huang, chuanche@umich.edu
+//				 An Yang, anyang@umich.edu
+
 var WBD = WBD || {};
 
 // Filter Object Prototype
@@ -12,10 +14,9 @@ WBD.Filter = Backbone.Model.extend({
     countries: [], // countries filter 
     continents: [], // regions filter
     categories: [],
-    xDataRange: [], // [ min, max] if empty or only 1 element -> wrong
-    yDataRange: [], // [ min, max] if empty or only 1 element -> wrong
-    popuRange: []
-
+    xDataRange: [0, 200], // [ min, max] if empty or only 1 element -> wrong
+    yDataRange: [0, 200], // [ min, max] if empty or only 1 element -> wrong
+    circleSizeRange: [0, 200]
   },
   
   toggleCountry: function(country) {
