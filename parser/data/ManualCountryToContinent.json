@@ -1,38 +1,106 @@
 {
-    "Bahamas, The": [], 
-    "Brunei Darussalam": [], 
-    "Channel Islands": [], 
-    "Congo, Dem. Rep.": [], 
-    "Congo, Rep.": [], 
-    "Cote d'Ivoire": [], 
-    "Curacao": [], 
-    "Egypt, Arab Rep.": [], 
-    "Faeroe Islands": [], 
-    "Gambia, The": [], 
-    "Hong Kong SAR, China": [], 
-    "Iran, Islamic Rep.": [], 
-    "Korea, Dem. Rep.": [], 
-    "Korea, Rep.": [], 
-    "Kosovo": [], 
-    "Kyrgyz Republic": [], 
-    "Lao PDR": [], 
-    "Macao SAR, China": [], 
-    "Macedonia, FYR": [], 
+    "Bahamas, The": [
+        "North America"
+    ], 
+    "Brunei Darussalam": [
+        "Asia"
+    ], 
+    "Channel Islands": [
+        "Europe"
+    ], 
+    "Congo, Dem. Rep.": [
+        "Africa"
+    ], 
+    "Congo, Rep.": [
+        "Africa"
+    ], 
+    "Cote d'Ivoire": [
+        "Africa"
+    ], 
+    "Curacao": [
+        "North America"
+    ], 
+    "Egypt, Arab Rep.": [
+        "Africa"
+    ], 
+    "Faeroe Islands": [
+        "Europe"
+    ], 
+    "Gambia, The": [
+        "Africa"
+    ], 
+    "Hong Kong SAR, China": [
+        "Asia"
+    ], 
+    "Iran, Islamic Rep.": [
+        "Asia"
+    ], 
+    "Korea, Dem. Rep.": [
+        "Asia"
+    ], 
+    "Korea, Rep.": [
+        "Asia"
+    ], 
+    "Kosovo": [
+        "Europe"
+    ], 
+    "Kyrgyz Republic": [
+        "Asia"
+    ], 
+    "Lao PDR": [
+        "Asia"
+    ], 
+    "Macao SAR, China": [
+        "Asia"
+    ], 
+    "Macedonia, FYR": [
+        "Europe"
+    ], 
     "Micronesia, Fed. Sts.": [], 
-    "Myanmar": [], 
-    "Russian Federation": [], 
-    "Sao Tome and Principe": [], 
-    "Sint Maarten (Dutch part)": [], 
-    "Slovak Republic": [], 
-    "South Sudan": [], 
-    "St. Kitts and Nevis": [], 
-    "St. Lucia": [], 
-    "St. Martin (French part)": [], 
-    "St. Vincent and the Grenadines": [], 
-    "Syrian Arab Republic": [], 
-    "Venezuela, RB": [], 
-    "Virgin Islands (U.S.)": [], 
-    "West Bank and Gaza": [], 
+    "Myanmar": [
+        "Asia"
+    ], 
+    "Russian Federation": [
+        "Europe"
+    ], 
+    "Sao Tome and Principe": [
+        "Africa"
+    ], 
+    "Sint Maarten (Dutch part)": [
+        "North America"
+    ], 
+    "Slovak Republic": [
+        "Europe"
+    ], 
+    "South Sudan": [
+        "Africa"
+    ], 
+    "St. Kitts and Nevis": [
+        "North America"
+    ], 
+    "St. Lucia": [
+        "North America"
+    ], 
+    "St. Martin (French part)": [
+        "North America"
+    ], 
+    "St. Vincent and the Grenadines": [
+        "North America"
+    ], 
+    "Syrian Arab Republic": [
+        "Asia"
+    ], 
+    "Venezuela, RB": [
+        "South America"
+    ], 
+    "Virgin Islands (U.S.)": [
+        "North America"
+    ], 
+    "West Bank and Gaza": [
+        "Asia"
+    ], 
     "World": [], 
-    "Yemen, Rep.": []
+    "Yemen, Rep.": [
+        "Asia"
+    ]
 }
