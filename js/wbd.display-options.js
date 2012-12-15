@@ -55,9 +55,35 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		for (var country in allCountries){
 			if(allCountries.hasOwnProperty(country)){
 				//console.log(allCountries[country]);
-				$("#countries_filter").append("<li><button class='country'>" + allCountries[country] + "</button></li><br />");
+				$("#countries_filter").append("<button class='country'>" + allCountries[country] + "</button><br />");
 			}
 		}
+		
+		$("#countries_tags").tagit({
+			availableTags: allCountries,
+			beforeTagAdded: function(evt, ui) {
+				if (!ui.duringInitialization) {
+					addEvent('beforeTagAdded: ' + eventTags.tagit('tagLabel', ui.tag));
+				}
+			},
+			afterTagAdded: function(evt, ui) {
+				if (!ui.duringInitialization) {
+					addEvent('afterTagAdded: ' + eventTags.tagit('tagLabel', ui.tag));
+				}
+                },
+                beforeTagRemoved: function(evt, ui) {
+                    addEvent('beforeTagRemoved: ' + eventTags.tagit('tagLabel', ui.tag));
+                },
+                afterTagRemoved: function(evt, ui) {
+                    addEvent('afterTagRemoved: ' + eventTags.tagit('tagLabel', ui.tag));
+                },
+                onTagClicked: function(evt, ui) {
+                    addEvent('onTagClicked: ' + eventTags.tagit('tagLabel', ui.tag));
+                },
+                onTagExists: function(evt, ui) {
+                    addEvent('onTagExists: ' + eventTags.tagit('tagLabel', ui.existingTag));
+                }			
+		});
 		
 		//Indicator Pickers Initialized here
 		var defaultX = that.model.get("xDatasetName");
@@ -66,15 +92,14 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		$("#xAxisPicker").append("<option class='xIndicator'>" + defaultX + "</option>");
 		$("#yAxisPicker").append("<option class='yIndicator'>" + defaultY + "</option>");
 		
-		for (var indicator in allIndicators.remove(defaultX)){
+		for (var indicator in allIndicators){
 			if(allIndicators.hasOwnProperty(indicator)){
-					$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[indicator] + "</option>");
-			}
-		}
-		
-		for (var indicator in allIndicators.remove(defaultY)){
-			if(allIndicators.hasOwnProperty(indicator)){
-					$("#yAxisPicker").append("<option class='yIndicator'>" + allIndicators[indicator] + "</option>");
+					if(allIndicators[indicator] != defaultX){
+						$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[indicator] + "</option>");
+					}
+					if(allIndicators[indicator] != defaultY){
+						$("#yAxisPicker").append("<option class='yIndicator'>" + allIndicators[indicator] + "</option>");
+					}
 			}
 		}
 		

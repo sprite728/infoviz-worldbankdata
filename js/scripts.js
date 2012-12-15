@@ -39,6 +39,5 @@ $(document).ready(function(){
     myMapView = new WBD.Map({
       model: myEntries
     });
-
   });
 });
