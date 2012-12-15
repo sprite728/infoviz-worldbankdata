@@ -12,7 +12,7 @@ def num(s):
         return float(s)
 
 countries = {}
-files = ['gni', 'health_expenditure', 'life_expectency']
+files = ['gni', 'health_expenditure', 'life_expectency', 'population']
 
 print "Start parsing ... "
 for currentFileName in files:
@@ -97,9 +97,42 @@ for currentFileName in files:
 
 # pprint.pprint(records)
 
+json_data = open('data/ContinentsToCountryAbbrev.json').read()
+myContinentToCountryAbbrev = json.loads(json_data)
+
+json_data = open('data/CountryAbbrevToCountryDetail.json').read()
+myCountryAbbrevToCountryDetail = json.loads(json_data)
+
+RawCountryAbbrevToCountryName = {}
+for aCountryAbbrev in myCountryAbbrevToCountryDetail.keys():
+	RawCountryAbbrevToCountryName[aCountryAbbrev] = myCountryAbbrevToCountryDetail[aCountryAbbrev]['name']
+
+RawContinentToCountires = {}
+for aContinentAbbrev in myContinentToCountryAbbrev.keys():
+	aContinentName = myContinentToCountryAbbrev[aContinentAbbrev]['name']
+
+	# Map a country abbreviation name to it's real name 
+	countriesInAContinent = []
+	CountryAbbrevNames = myContinentToCountryAbbrev[aContinentAbbrev]['countries']
+	for aCountryAbbrevName in CountryAbbrevNames:
+		aCountryName =  RawCountryAbbrevToCountryName[aCountryAbbrevName]
+		countriesInAContinent.append(aCountryName)
+	
+	RawContinentToCountires[aContinentName] = countriesInAContinent
+
+RawCountryToContinent = {}
+for aContinent in RawContinentToCountires.keys():
+	countriesInAContinent = RawContinentToCountires[aContinent]
+	for country in countriesInAContinent:
+		RawCountryToContinent[country] = aContinent
+
 # Output format 2
 # pprint.pprint(countries)
 # [{"country":"Taiwan", "region":"...", "gni":[[1800,....], [], [], .. ]  }]
+
+json_data = open('data/ManualCountryToContinent.json').read()
+myManualCountryToContinent = json.loads(json_data)
+
 records = []
 for countryName in countries:
 	countryRecord = countries[countryName]
@@ -123,10 +156,26 @@ for countryName in countries:
 			# countryStore[indicator] = []
 			continue	
 	countryStore["country"] = countryName
-	
+
+	try:
+		countryStore["continent"] = RawCountryToContinent[countryName]
+	except:
+		print countryName
+		try:
+			continent = myManualCountryToContinent[countryName]
+
+		except: 
+			myManualCountryToContinent[countryName] = []
+
+
 	records.append(countryStore)
 
 # pprint.pprint(records)
+
+
+f = open('data/ManualCountryToContinent.json', 'w')
+f.write(json.dumps(myManualCountryToContinent, sort_keys=True, indent=4))
+f.close()
 
 
 f = open('worldbankdata2.json', 'w')

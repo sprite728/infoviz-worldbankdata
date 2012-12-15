@@ -10057,11 +10057,12 @@ countries = {
 }
 
 
+
 f = open("ContinentsToCountryAbbrev.json", "w")
-f.write(json.dumps(continents), sort_keys=True, indent=4)
+f.write(json.dumps(continents, sort_keys=True, indent=4))
 f.close()
 
-f = open("CountryAbbrevToContryDetail.json", "w")
-f.write(json.dumps(countries), sort_keys=True, indent=4)
+f = open("CountryAbbrevToCountryDetail.json", "w")
+f.write(json.dumps(countries, sort_keys=True, indent=4))
 f.close()
 
