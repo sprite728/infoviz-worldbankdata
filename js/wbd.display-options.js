@@ -38,6 +38,9 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		var allIndicators = WBD.allIndicators;
 		var allCategories = WBD.allCategories;
 		
+		console.log("============All Continents shown from display options=============");
+		console.log(allContinents);
+		
 		var xDataRange = this.model.get("filter").get("xDataRange");
 		var yDataRange = this.model.get("filter").get("yDataRange");
 		var circleSizeRange = this.model.get("filter").get("circleSizeRange");
@@ -51,9 +54,11 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		//console.log("xDataRange: ", xDataRange[0]);
 		//console.log("yDataRange: ", yDataRange[1]);
 		
-		
-		for (var country in allCountries){
+		var country;
+		for (country in allCountries){
 			if(allCountries.hasOwnProperty(country)){
+				//console.log("=============Country===============");
+				//console.log(country);
 				//console.log(allCountries[country]);
 				$("#countries_filter").append("<button class='country'>" + allCountries[country] + "</button><br />");
 			}
@@ -64,6 +69,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			autocomplete: {delay: 0, minLength: 2},
 			caseSensitive: true,
 			allowDuplicates: false,
+			removeConfirmation: true,
 			
 			beforeTagAdded: function(evt, ui) {
 				console.log(ui.tag);

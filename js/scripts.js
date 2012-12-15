@@ -20,7 +20,10 @@ $(document).ready(function(){
       url: 'parser/countries.json',
       data: data,
       success: function(data){
-        WBD.allCountries = data;
+        WBD.allCountries = $.parseJSON(data);
+				console.log("hello");
+				console.log(data);
+				console.log(WBD.allCountries);
       },
       async: false
     });
@@ -51,6 +54,7 @@ $(document).ready(function(){
       async: false
     });
     console.log(WBD.allContinents);
+
 
 
     // --- Start program ---
