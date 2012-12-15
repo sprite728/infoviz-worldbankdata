@@ -163,7 +163,7 @@ for countryName in countries:
 		print countryName
 		try:
 			continent = myManualCountryToContinent[countryName]
-
+			print " check"
 		except: 
 			myManualCountryToContinent[countryName] = []
 
@@ -182,7 +182,17 @@ f = open('worldbankdata2.json', 'w')
 f.write(json.dumps(records, sort_keys=True, indent=4))
 f.close()
 
+f = open("countries.json", "w")
+f.write(json.dumps(countries.keys(), sort_keys=True, indent=4))
+f.close()
 
+f = open("continents.json", "w")
+f.write(json.dumps(RawContinentToCountires.keys(), sort_keys=True, indent=4))
+f.close()
+
+f = open("indicators.json", "w")
+f.write(json.dumps(files, sort_keys=True, indent=4))
+f.close()
 
 
 
