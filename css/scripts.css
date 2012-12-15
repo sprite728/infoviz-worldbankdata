@@ -15,8 +15,18 @@
 	width: 180px;
 }
 
-#slider-xAxis, slider-yAxis{
-	width: 180px;
+#slider-xAxis, #slider-yAxis, #slider-circleSize{
+	width: 180px;	height: 12px;
+}
+
+#range-value .ui-slider-handle{
+	width: 12px; height: 20px;
+}
+
+#range-value input{
+	border: 0; 
+	color: #f6931f; 
+	font-weight: bold;
 }
 
 #xy-plot {
