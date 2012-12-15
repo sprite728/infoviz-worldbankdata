@@ -5,6 +5,7 @@
 	float: none;
 }
 
+/*Display Options Style */
 #options{
 	width: 300px;
 	margin: 50px 0;
@@ -28,6 +29,13 @@
 	color: #f6931f; 
 	font-weight: bold;
 }
+
+#countries_filter li{
+	list-style: none;
+}
+
+
+
 
 #xy-plot {
   margin-left: 40px;

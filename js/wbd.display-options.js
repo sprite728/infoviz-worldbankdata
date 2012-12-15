@@ -55,7 +55,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		for (var country in allCountries){
 			if(allCountries.hasOwnProperty(country)){
 				//console.log(allCountries[country]);
-				$("#countries_filter").append("<button class='country'>" + allCountries[country] + "</button><br />");
+				$("#countries_filter").append("<li><button class='country'>" + allCountries[country] + "</button></li><br />");
 			}
 		}
 		
