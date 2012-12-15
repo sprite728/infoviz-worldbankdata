@@ -20,11 +20,17 @@ $(document).ready(function(){
       url: 'parser/countries.json',
       data: data,
       success: function(data){
-        WBD.allCountries = data;
+        console.log(data);
+        if($.parseJSON(data) == null){
+          WBD.allCountries = data;
+        } else {
+          WBD.allCountries = $.parseJSON(data);
+        }
+        console.log(WBD.allCountries);
       },
       async: false
     });
-    console.log(WBD.allCountries);
+    // console.log(WBD.allCountries);
 
 
     // read all indicators
@@ -34,11 +40,15 @@ $(document).ready(function(){
       data: data,
       success: function(data){
         console.log(data);
-        WBD.allIndicators = data;
+        if($.parseJSON(data) == null){
+          WBD.allIndicators = data;
+        } else {
+          WBD.allIndicators = $.parseJSON(data);
+        }
+        console.log(WBD.allCountries);
       },
       async: false
     });
-    console.log(WBD.allIndicators);
 
     // read all continents
     console.log("Read continents")
@@ -46,11 +56,16 @@ $(document).ready(function(){
       url: 'parser/continents.json',
       data: data,
       success: function(data){
-        WBD.allContinents = data;
+        console.log(data);
+        if($.parseJSON(data) == null){
+          WBD.allContinents = data;
+        } else {
+          WBD.allContinents = $.parseJSON(data);
+        }
+        console.log(WBD.allContinents);
       },
       async: false
     });
-    console.log(WBD.allContinents);
 
 
     // --- Start program ---
