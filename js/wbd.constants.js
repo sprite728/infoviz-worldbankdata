@@ -4,6 +4,6 @@ WBD.allCountries = ["Canada", "Taiwan", "United States"];
 
 WBD.allContinents = ["Africa"];
 
-WBD.allIndicators = [];
+WBD.allIndicators = ["gni", "life_expectency"];
 
 WBD.allCategories = [];
