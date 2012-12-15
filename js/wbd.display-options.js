@@ -61,28 +61,16 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		$("#countries_tags").tagit({
 			availableTags: allCountries,
+			autocomplete: {delay: 0, minLength: 2},
+			caseSensitive: true,
+			allowDuplicates: false,
+			
 			beforeTagAdded: function(evt, ui) {
-				if (!ui.duringInitialization) {
-					addEvent('beforeTagAdded: ' + eventTags.tagit('tagLabel', ui.tag));
-				}
+				console.log(ui.tag);
 			},
 			afterTagAdded: function(evt, ui) {
-				if (!ui.duringInitialization) {
-					addEvent('afterTagAdded: ' + eventTags.tagit('tagLabel', ui.tag));
-				}
-                },
-                beforeTagRemoved: function(evt, ui) {
-                    addEvent('beforeTagRemoved: ' + eventTags.tagit('tagLabel', ui.tag));
-                },
-                afterTagRemoved: function(evt, ui) {
-                    addEvent('afterTagRemoved: ' + eventTags.tagit('tagLabel', ui.tag));
-                },
-                onTagClicked: function(evt, ui) {
-                    addEvent('onTagClicked: ' + eventTags.tagit('tagLabel', ui.tag));
-                },
-                onTagExists: function(evt, ui) {
-                    addEvent('onTagExists: ' + eventTags.tagit('tagLabel', ui.existingTag));
-                }			
+				console.log(ui.tag);
+			},
 		});
 		
 		//Indicator Pickers Initialized here
