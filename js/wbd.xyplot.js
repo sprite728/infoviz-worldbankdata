@@ -9,8 +9,8 @@ WBD.XYPlot = Backbone.View.extend({
   tagName: 'div',
 
   //Note: there is no defaults in View
-  xAxisDatasetName: 'gni',
-  yAxisDatasetName: 'life_expectency',
+  xAxisDatasetName: '',
+  yAxisDatasetName: '',
   year: 2000, //temporal use
   yearSelector: 2000, //default
   yearLabel: "", // default
@@ -29,9 +29,19 @@ WBD.XYPlot = Backbone.View.extend({
   initialize: function(opts){
     $('#main').append(this.el);
     this.model = opts.model;
-
+		
+		//Get x and y datasets
+		this.xAxisDatasetName = this.model.get("xDatasetName");		
+		this.yAxisDatasetName = this.model.get("yDatasetName");	
+		
+		console.log("xDatasetName from Entries: " + this.xAxisDatasetName);
+		console.log("yDatasetName from Entries: " + this.yAxisDatasetName);
+		
     // Listen to changes on model
     this.model.bind("change:selDataXYPlot", this.render, this );
+		this.model.bind("change:filter", this.render, this );
+		//this.model.bind("change:xDatasetName", this.render, this );
+		//this.model.bind("change:yDatasetname", this.render, this );
 
     // Members
     this.svg = d3.select(this.el).append("svg")
@@ -108,19 +118,27 @@ WBD.XYPlot = Backbone.View.extend({
   // initialize the elements and members used for scales and axes
   initScales: function(){
     var that = this;
+		 
+		var xDataRange = d3.extent(that.model.getSelDataXYPlot(), function(d){
+        return d[that.xAxisDatasetName];} );
+				
+		var yDataRange = d3.extent(that.model.getSelDataXYPlot(), function(d){
+        return d[that.yAxisDatasetName];} );
+				
+		console.log("Initial xDataRange in XYPlot: ", xDataRange);
+		console.log("Initial yDataRange in XYPlot: ", yDataRange);
+		
+		that.model.get("filter").set({xDataRange: xDataRange});
+		that.model.get("filter").set({yDataRange: yDataRange});
+		//that.model.get("filter").trigger("change:filter"); 
+		
     // Create Scales 
     this.xScale = d3.scale.linear()
-      .domain( [ 0, d3.max(that.model.getSelDataXYPlot(), function(d){
-        return d[that.xAxisDatasetName]; 
-      })] 
-      )
-      .range([0, this.width]);
+      .domain(xDataRange)
+			.range([0, this.width]);
 
     this.yScale = d3.scale.linear()
-      .domain( [ 0, d3.max(that.model.getSelDataXYPlot(), function(d){
-        return d[that.yAxisDatasetName]; 
-      }) ] 
-      )
+      .domain(yDataRange)
       .range([that.height, 0]);
 
 
@@ -133,7 +151,7 @@ WBD.XYPlot = Backbone.View.extend({
       .scale(that.yScale)
       .orient("left");
   },
-
+	
   initYearSelector: function(){
       // Add the year label; the value is set on transition.
       var that = this;
@@ -179,7 +197,7 @@ WBD.XYPlot = Backbone.View.extend({
     this.baseGraph
         // d.country is the key to identify different array element
         .data(this.model.getSelDataXYPlot(), function(d){ return d.country})
-      .attr("cx", function(d){ 
+      		.attr("cx", function(d){ 
         // It is possible that some countries won't have this indicator record
         // therefore, return 0 
 
@@ -207,6 +225,8 @@ WBD.XYPlot = Backbone.View.extend({
     // console.log(circles.exit());
     // this.baseGraph.exit().remove();
     this.updateYearSelector();
+		this.initScales();
+		this.updateAxes();
     console.log("done");
   },
 
@@ -260,7 +280,6 @@ WBD.XYPlot = Backbone.View.extend({
       });
     });
     
-
     // console.log("exit()");
     // console.log(circles.exit());
     // this.baseGraph.exit().remove();

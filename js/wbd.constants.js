@@ -4,6 +4,6 @@ WBD.allCountries = ["Canada", "China", "Russia", "United States", "Mexico", "Jap
 
 WBD.allContinents = ["Africa", "South America", "North America", "Asian", "Europe"];
 
-WBD.allIndicators = ["A", "B", "C", "D", "E", "F"];
+WBD.allIndicators = ["life_expectency", "health_expenditure", "gni", "population"];
 
 WBD.allCategories = ["BRIC", "AIPEC", "WTO"];

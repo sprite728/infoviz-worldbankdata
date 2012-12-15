@@ -14,9 +14,9 @@ WBD.Filter = Backbone.Model.extend({
     countries: [], // countries filter 
     continents: [], // regions filter
     categories: [],
-    xDataRange: [0, 200], // [ min, max] if empty or only 1 element -> wrong
-    yDataRange: [0, 200], // [ min, max] if empty or only 1 element -> wrong
-    circleSizeRange: [0, 200]
+    xDataRange: [], // [ min, max] if empty or only 1 element -> wrong
+    yDataRange: [], // [ min, max] if empty or only 1 element -> wrong
+    circleSizeRange: []
   },
   
   toggleCountry: function(country) {
@@ -31,7 +31,7 @@ WBD.Filter = Backbone.Model.extend({
 	  }
 	  
 	  this.set({countries : tempCountries});
-	  this.trigger("change:countries");
+	  //this.trigger("change:countries");
   },
   
     toggleContinent: function(continent) {
@@ -46,7 +46,7 @@ WBD.Filter = Backbone.Model.extend({
 	  }
 	  
 	  this.set({regions : tempContinents});
-	  this.trigger("change:regions");
+	  //this.trigger("change:regions");
   },
   
   
@@ -83,7 +83,7 @@ WBD.Entries = Backbone.Model.extend({
     // applyFilter would change other attributes which is subscribe by other views. 
     // Therefore, when applyFilter is called, other views would change subsequently 
     this.get("filter").bind("change", this.applyFilter, this);
-	this.get("filter").bind("change:countries", this.applyFilter, this);
+		//this.get("filter").bind("change:countries", this.applyFilter, this);
   },
 
   // filter allData to selectedData
@@ -103,19 +103,36 @@ WBD.Entries = Backbone.Model.extend({
       var key;
       var returnObj = {};
 
-	  if( !that.isSelectedCountry(d.country) ){
-	    return;
-	  }
-	  
+			if( !that.isSelectedCountry(d.country) ){
+				return;
+			}
+
+/*			
+			if( !that.isSelectedContinent(d.continent) ){
+				return;
+			}
+
+			var yDataRange = that.get("filter").get("yDataRange");
+			//console.log(xDataRange[0]);
+			console.log(d.country);
+			console.log(d.gni);
+			//console.log(d[that.get("yDatasetName")]);
+			console.log(typeof yDataRange[0]);
+
+			
+			if(d[that.get("yDatasetName")] > yDataRange[0] && d[that.get("yDatasetName")] < yDataRange[1]){
+				console.log("True!");
+				//return;
+			}			
+*/  
       for( key in d){
         if(d.hasOwnProperty(key)){
           // Only check the parts that's not inherited from other places
-          // console.log("HI");
-		  if(d[key] instanceof Array){
-			// it is an indicator, such as "gni" ... 
-			returnObj[key] = that.interpolateValues(d[key], that.get("filter").get("year"));
-		  }
-        }
+				if(d[key] instanceof Array){
+				// it is an indicator, such as "gni" ... 
+				returnObj[key] = that.interpolateValues(d[key], that.get("filter").get("year"));
+				}
+					}
       }
 
       if(returnObj === {}){
@@ -127,24 +144,22 @@ WBD.Entries = Backbone.Model.extend({
       }
     });
     
-	filteredData = filteredData.filter(function(element, index, array){
-		return ( element !== undefined );
-	});
-	console.log("Filtered Data", filteredData);
-	
+		filteredData = filteredData.filter(function(element, index, array){
+			return ( element !== undefined );
+		});
+				
     this.set("selDataXYPlot", filteredData);
-
   },
 
   isSelectedCountry: function(country){
-	var countries = this.get("filter").get("countries");
-	if(countries.length == 0){return true;}
-	if(countries.indexOf(country)>-1){
-		return true;
-	}
-	else{
-		return false;
-	}
+		var countries = this.get("filter").get("countries");
+		if(countries.length == 0){return true;}
+		if(countries.indexOf(country)>-1){
+			return true;
+		}
+		else{
+			return false;
+		}
   },
   
   getSelDataXYPlot: function(){

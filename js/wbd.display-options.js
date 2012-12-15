@@ -42,10 +42,16 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		var yDataRange = this.model.get("filter").get("yDataRange");
 		var circleSizeRange = this.model.get("filter").get("circleSizeRange");
 		
-		console.log("xDataRange: ", xDataRange[0]);
-		console.log("yDataRange: ", yDataRange[1]);
+		/*
+		console.log("X Data Ranges: " +  xDataRange);
+		console.log("Y Data Ranges: " +  yDataRange);
+		console.log("Z Data Ranges: " +  circleSizeRange);
+		*/
 		
-		//Indicator Pickers Initialized here
+		//console.log("xDataRange: ", xDataRange[0]);
+		//console.log("yDataRange: ", yDataRange[1]);
+		
+		
 		for (var country in allCountries){
 			if(allCountries.hasOwnProperty(country)){
 				//console.log(allCountries[country]);
@@ -53,48 +59,62 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			}
 		}
 		
-		for (var indicator in allIndicators){
+		//Indicator Pickers Initialized here
+		var defaultX = that.model.get("xDatasetName");
+		var defaultY = that.model.get("yDatasetName");
+		
+		$("#xAxisPicker").append("<option class='xIndicator'>" + defaultX + "</option>");
+		$("#yAxisPicker").append("<option class='yIndicator'>" + defaultY + "</option>");
+		
+		for (var indicator in allIndicators.remove(defaultX)){
 			if(allIndicators.hasOwnProperty(indicator)){
-				//console.log(allCountries[country]);
-				$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[indicator] + "</option>");
-				$("#yAxisPicker").append("<option class='yIndicator'>" + allIndicators[indicator] + "</option>");
+					$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[indicator] + "</option>");
+			}
+		}
+		
+		for (var indicator in allIndicators.remove(defaultY)){
+			if(allIndicators.hasOwnProperty(indicator)){
+					$("#yAxisPicker").append("<option class='yIndicator'>" + allIndicators[indicator] + "</option>");
 			}
 		}
 		
 		//Data Range Sliders here
 		$( "#slider-xAxis" ).slider({
 			range: true,
-      min: xDataRange[0],
-      max: xDataRange[1],
-      values: xDataRange,
-      slide: function( event, ui ) {
-          $( "#xRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+			min: xDataRange[0],
+			max: xDataRange[1],
+			values: xDataRange,
+			slide: function( event, ui ) {
+        $( "#xRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+				that.model.get("filter").set({xDataRange: ui.values});
       }
     });
 		$( "#xRangeText" ).val( "$" + $( "#slider-xAxis" ).slider( "values", 0 ) +
             " - $" + $( "#slider-xAxis" ).slider( "values", 1 ) );
 		
 		$( "#slider-yAxis" ).slider({
-      range: true,
-      min: yDataRange[0],
-      max: yDataRange[1],
-      values: yDataRange,
-      slide: function( event, ui ) {
-          $( "#yRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-      }
+			range: true,
+			min: yDataRange[0],
+			max: yDataRange[1],
+			values: yDataRange,
+			slide: function( event, ui ) {
+				$( "#yRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+				that.model.get("filter").set({ yDataRange: ui.values});
+			}
     });
 		$( "#yRangeText" ).val( "$" + $( "#slider-yAxis" ).slider( "values", 0 ) +
             " - $" + $( "#slider-yAxis" ).slider( "values", 1 ) );
 		
 		$( "#slider-circleSize" ).slider({
-      range: true,
-      min: circleSizeRange[0],
-      max: circleSizeRange[1],
-      values: circleSizeRange,
-      slide: function( event, ui ) {
-          $( "#circleSizeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-      }
-    });
+			range: true,
+			min: circleSizeRange[0],
+			max: circleSizeRange[1],
+			values: circleSizeRange,
+			slide: function( event, ui ) {
+				$( "#circleSizeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+				that.model.get("filter").set({ circleSizeRange: ui.values});
+			}
+		});
 		$( "#circleSizeText" ).val( "$" + $( "#slider-circleSize" ).slider( "values", 0 ) +
             " - $" + $( "#slider-circleSize" ).slider( "values", 1 ) );
 		
@@ -106,27 +126,36 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			//console.log($(this).text());
 			that.model.get("filter").toggleCountry($(this).text());
 			//console.log("filter.get contries");
-			console.log(that.model.get("filter").get("countries"));
+			//console.log(that.model.get("filter").get("countries"));
 		});
 		
 		//Indicator Selection Controllers here
 		$("#xyAxis > select").change(function(e) {
+			var xName = $("#xAxisPicker").val();
+			var yName = $("#yAxisPicker").val();
+			that.model.set("xDatasetName: xName");
+			that.model.set("yDatasetName: xName");
+			that.model.set("selDataXYPlot", that.model.get("allData")); 
+			
+			console.log("============== CHANGING XY AXIS ===============");
 			console.log("X Axis: ", $("#xAxisPicker").val());
 			console.log("Y Axis: ", $("#yAxisPicker").val());
 		});
 	
 		//Data Range Slider Controllers here
-		
 	},
 	
   render: function() {
     var that = this;
-	
-	var year = this.model.get("filter").get("year");
-	var countries = this.model.get("filter").get("countries");
-	var regions = this.model.get("filter").get("regions");
-	
-	//console.log(regions + " >> " + countries + " >> " + year);
+		
+		this.doDrawing;
+		this.doHandle;
+		/*
+		var year = this.model.get("filter").get("year");
+		var countries = this.model.get("filter").get("countries");
+		var regions = this.model.get("filter").get("regions");
+		*/
+		//console.log(regions + " >> " + countries + " >> " + year);
 	
   },
   
