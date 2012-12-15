@@ -39,7 +39,10 @@ WBD.XYPlot = Backbone.View.extend({
 		
     // Listen to changes on model
     this.model.bind("change:selDataXYPlot", this.render, this );
-		this.model.bind("change:filter", this.render, this );
+		
+    this.model.get("filter").bind("change:xDataRange", this.render, this );
+    this.model.get("filter").bind("change:yDataRange", this.render, this );
+    
 		//this.model.bind("change:xDatasetName", this.render, this );
 		//this.model.bind("change:yDatasetname", this.render, this );
 
@@ -128,8 +131,8 @@ WBD.XYPlot = Backbone.View.extend({
 		console.log("Initial xDataRange in XYPlot: ", xDataRange);
 		console.log("Initial yDataRange in XYPlot: ", yDataRange);
 		
-		that.model.get("filter").set({xDataRange: xDataRange});
-		that.model.get("filter").set({yDataRange: yDataRange});
+		// that.model.get("filter").set({xDataRange: xDataRange});
+		// that.model.get("filter").set({yDataRange: yDataRange});
 		//that.model.get("filter").trigger("change:filter"); 
 		
     // Create Scales 
