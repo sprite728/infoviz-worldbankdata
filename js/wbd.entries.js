@@ -259,6 +259,7 @@ WBD.Entries = Backbone.Model.extend({
     *   { ... }  
     * ]
     */
+    
 
     var filteredData = that.allData.map(function(d){
       // d is an attribute in the array

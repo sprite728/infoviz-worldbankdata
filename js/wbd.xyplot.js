@@ -241,9 +241,12 @@ WBD.XYPlot = Backbone.View.extend({
       .call( that.addToolTip );
     
     // 
+    console.log("enter group");
+    console.log(exitGroup.enter());
 
-    exitGroup.enter()
-      .append("circle")
+    exitGroup
+        .data(this.model.getSelDataXYPlot(), function(d){ return d.country})
+      .exit().append("circle")
         .attr("class", "dot")
         .attr("id", function(d){ return d.country; })
         .attr("cx", function(d){ 

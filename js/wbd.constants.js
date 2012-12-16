@@ -16,3 +16,5 @@ WBD.mapContinentToColor = {
 	"Europe": "bf3300",
 	"Oceanic": "#245d70"
 }
+
+WBD.mapCountryToContinent = {}

@@ -169,7 +169,7 @@ for countryName in countries:
 		print countryName
 		try:
 			continent = myManualCountryToContinent[countryName]
-			countryStore["continent"] = continent
+			countryStore["continent"] = continent[0]
 			print " check"
 		except: 
 			myManualCountryToContinent[countryName] = []
@@ -200,6 +200,11 @@ f.close()
 
 f = open("continents.json", "w")
 f.write(json.dumps(RawContinentToCountires.keys(), sort_keys=True, indent=4))
+f.close()
+
+
+f = open("mapCountryToContinent.json", "w")
+f.write(json.dumps(RawCountryToContinent, sort_keys=True, indent=4))
 f.close()
 
 f = open("indicators.json", "w")
