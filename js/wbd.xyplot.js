@@ -21,8 +21,8 @@ WBD.XYPlot = Backbone.View.extend({
   margins: {
     top: 25,
     bottom: 25,
-    right: 25,
-    left: 25
+    right: 30,
+    left: 30
   },
   dotSize: 3,  // default dot size 
 
@@ -39,6 +39,10 @@ WBD.XYPlot = Backbone.View.extend({
 		
     // Listen to changes on model
     this.model.bind("change:selDataXYPlot", this.render, this );
+    this.model.get("filter").bind("change:year", function(){
+      console.log("filter");
+      console.log(this.model.get("filter"));
+    }, this);
 		
     this.model.get("filter").bind("change:xDataRange", this.render, this );
     this.model.get("filter").bind("change:yDataRange", this.render, this );
@@ -122,14 +126,18 @@ WBD.XYPlot = Backbone.View.extend({
   initScales: function(){
     var that = this;
 		 
-		var xDataRange = d3.extent(that.model.getSelDataXYPlot(), function(d){
-        return d[that.xAxisDatasetName];} );
+		var xDataRange = this.model.get("filter").get("xDatasetScale");
+    var yDataRange = this.model.get("filter").get("yDatasetScale");
+
+    console.log(xDataRange);
+    console.log(yDataRange);
+  //       return d[that.xAxisDatasetName];} );
 				
-		var yDataRange = d3.extent(that.model.getSelDataXYPlot(), function(d){
-        return d[that.yAxisDatasetName];} );
+		// var yDataRange = d3.extent(that.model.getSelDataXYPlot(), function(d){
+  //       return d[that.yAxisDatasetName];} );
 				
-		console.log("Initial xDataRange in XYPlot: ", xDataRange);
-		console.log("Initial yDataRange in XYPlot: ", yDataRange);
+		// console.log("Initial xDataRange in XYPlot: ", xDataRange);
+		// console.log("Initial yDataRange in XYPlot: ", yDataRange);
 		
 		// that.model.get("filter").set({xDataRange: xDataRange});
 		// that.model.get("filter").set({yDataRange: yDataRange});
@@ -137,11 +145,11 @@ WBD.XYPlot = Backbone.View.extend({
 		
     // Create Scales 
     this.xScale = d3.scale.linear()
-      .domain(xDataRange)
+      .domain(this.model.get("filter").get("xDataRange"))
 			.range([0, this.width]);
 
     this.yScale = d3.scale.linear()
-      .domain(yDataRange)
+      .domain(this.model.get("filter").get("yDataRange"))
       .range([that.height, 0]);
 
 

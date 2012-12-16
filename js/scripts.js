@@ -14,58 +14,7 @@ $(document).ready(function(){
     var myXYPlotView;
     var myMapView;
 
-    // read all countries
-    console.log("Read countries")
-    $.ajax({
-      url: 'parser/countries.json',
-      data: data,
-      success: function(data){
-        console.log(data);
-        if($.parseJSON(data) == null){
-          WBD.allCountries = data;
-        } else {
-          WBD.allCountries = $.parseJSON(data);
-        }
-        console.log(WBD.allCountries);
-      },
-      async: false
-    });
-    // console.log(WBD.allCountries);
-
-
-    // read all indicators
-    console.log("Read indicators")
-    $.ajax({
-      url: 'parser/indicators.json',
-      data: data,
-      success: function(data){
-        console.log(data);
-        if($.parseJSON(data) == null){
-          WBD.allIndicators = data;
-        } else {
-          WBD.allIndicators = $.parseJSON(data);
-        }
-        console.log(WBD.allCountries);
-      },
-      async: false
-    });
-
-    // read all continents
-    console.log("Read continents")
-    $.ajax({
-      url: 'parser/continents.json',
-      data: data,
-      success: function(data){
-        console.log(data);
-        if($.parseJSON(data) == null){
-          WBD.allContinents = data;
-        } else {
-          WBD.allContinents = $.parseJSON(data);
-        }
-        console.log(WBD.allContinents);
-      },
-      async: false
-    });
+    WBD.prepareConstants();
 
 
     // --- Start program ---
@@ -74,7 +23,10 @@ $(document).ready(function(){
 
     // read data into WBD.Record
     myEntries = new WBD.Entries({
-      allData: WBD.prepareData(data)
+      allData: WBD.prepareData(data),
+      xDatasetName: WBD.allIndicators[0],
+      yDatasetName: WBD.allIndicators[1]
+
     });
 
 	  myAllCountries = WBD.allCountries;

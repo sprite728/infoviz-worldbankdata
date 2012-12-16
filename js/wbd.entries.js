@@ -34,7 +34,7 @@ WBD.Filter = Backbone.Model.extend({
 	  //this.trigger("change:countries");
   },
   
-    toggleContinent: function(continent) {
+  toggleContinent: function(continent) {
 
 	  var tempContinents = this.get("regions");
 
@@ -74,7 +74,14 @@ WBD.Entries = Backbone.Model.extend({
 
   initialize: function(opts){
     this.allData = opts.allData;
+    this.xDatasetName = opts.xDatasetName;
+    this.yDatasetName = opts.yDatasetName;
+
     this.set("filter", new WBD.Filter());
+    
+    // init X data range and Y data range
+    this.updateXYDataRanges();
+
     this.set("selDataXYPlot", []);
     this.applyFilter();
 
@@ -85,6 +92,102 @@ WBD.Entries = Backbone.Model.extend({
     this.get("filter").bind("change", this.applyFilter, this);
 		//this.get("filter").bind("change:countries", this.applyFilter, this);
   },
+
+  updateXYDataRanges: function(){
+    var that = this;
+    var filter = this.get("filter");
+    console.log("filter");
+    console.log(filter);
+
+    filter.set(
+      { 
+        xDataRange: this.findExtendOfAnIndicator(this.xDatasetName),
+        yDataRange: this.findExtendOfAnIndicator(this.yDatasetName),
+        circleSizeRange: this.findExtendOfAnIndicator("population")
+      }
+    );
+    
+    console.log("Hello");
+    console.log(filter.get("xDataRange"));
+    console.log(filter.get("yDataRange"));
+
+  },
+
+  // @ind = indiciator, a string 
+  findExtendOfAnIndicator: function(ind)
+  {
+    var that = this;
+    var maxInd, minInd;
+    var tempIndicatorSet;
+    
+    console.log("indicator");
+    console.log(ind);
+    // find max value of X and Y
+    
+    // find max X
+    var dd = that.allData.map(function(d){
+     
+      tempIndicatorSet = d[ind] || []; 
+      // console.log(tempIndicatorSet);
+
+      return tempIndicatorSet
+        .reduce(
+          function(previousValue, currentValue, index, array){
+           
+            return Math.max(+previousValue, +currentValue[1]);
+          }, 
+          -Infinity
+        ) || 0;
+    });
+
+    console.log("dd");
+    console.log(dd);
+
+    maxInd = dd.reduce(
+      function(previousValue, currentValue, index, array){
+        return Math.max(previousValue, currentValue);
+      },
+      -Infinity
+    );
+
+    // find min
+    dd = that.allData.map(function(d){
+      
+      tempIndicatorSet = d[ind] || []; 
+      // console.log(tempIndicatorSet);
+
+      return tempIndicatorSet
+        .reduce(
+          function(previousValue, currentValue, index, array){
+            return Math.min(previousValue, currentValue[1]);
+          }, 
+          Infinity
+        ) || 0;
+    });
+
+    console.log("dd");
+    console.log(dd);
+
+    minInd = dd.reduce(
+      function(previousValue, currentValue, index, array){
+        console.log(ind);
+        // console.log(array);
+        console.log(previousValue);
+        console.log(currentValue);
+        console.log(array[0]);
+        console.log(Math.min( previousValue, currentValue));
+        return Math.min(previousValue, currentValue);
+      },
+      Infinity
+    );
+
+
+    console.log("extend");
+    console.log([minInd, maxInd]);
+
+    return [minInd, maxInd];
+  },
+
 
   // filter allData to selectedData
   applyFilter: function(){
