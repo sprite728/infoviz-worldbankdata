@@ -152,6 +152,9 @@ WBD.XYPlot = Backbone.View.extend({
       .domain(this.model.get("filter").get("yDataRange"))
       .range([that.height, 0]);
 
+    this.popuScale = d3.scale.linear()
+      .domian(this.model.get("filter").get("populatonRange"))
+      .range([0, 10]);
 
     // Create Axes
     this.xAxis = d3.svg.axis()
@@ -268,7 +271,7 @@ WBD.XYPlot = Backbone.View.extend({
           return that.yScale(d[that.yAxisDatasetName] || 0 ); 
         })
         .attr("r", function(d){
-          return that.dotSize;
+          //return that.popuScale(d[yAxisData;
         });
 
     

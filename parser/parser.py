@@ -169,6 +169,7 @@ for countryName in countries:
 		print countryName
 		try:
 			continent = myManualCountryToContinent[countryName]
+			countryStore["continent"] = continent
 			print " check"
 		except: 
 			myManualCountryToContinent[countryName] = []

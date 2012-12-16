@@ -65,7 +65,7 @@ WBD.Filter = Backbone.Model.extend({
   
   toggleContinent: function(continent) {
 
-	  var tempContinents = this.get("regions");
+	  var tempContinents = this.get("continents");
 
 	  if(tempContinents.indexOf(continent)>-1){
 		  tempContinents.remove(continent);
@@ -103,6 +103,7 @@ WBD.Entries = Backbone.Model.extend({
 
   initialize: function(opts){
     this.allData = opts.allData;
+
     this.xDatasetName = opts.xDatasetName;
     this.yDatasetName = opts.yDatasetName;
 
@@ -239,32 +240,14 @@ WBD.Entries = Backbone.Model.extend({
 				return;
 			}
 
-/*			
-			if( !that.isSelectedContinent(d.continent) ){
-				return;
-			}
-
-			var yDataRange = that.get("filter").get("yDataRange");
-			//console.log(xDataRange[0]);
-			console.log(d.country);
-			console.log(d.gni);
-			//console.log(d[that.get("yDatasetName")]);
-			console.log(typeof yDataRange[0]);
-
-			
-			if(d[that.get("yDatasetName")] > yDataRange[0] && d[that.get("yDatasetName")] < yDataRange[1]){
-				console.log("True!");
-				//return;
-			}			
-*/  
       for( key in d){
         if(d.hasOwnProperty(key)){
           // Only check the parts that's not inherited from other places
-				if(d[key] instanceof Array){
-				// it is an indicator, such as "gni" ... 
-				returnObj[key] = that.interpolateValues(d[key], that.get("filter").get("year"));
+				  if(d[key] instanceof Array){
+				  // it is an indicator, such as "gni" ... 
+				    returnObj[key] = that.interpolateValues(d[key], that.get("filter").get("year"));
+				  }
 				}
-					}
       }
 
       if(returnObj === {}){
