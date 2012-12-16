@@ -4,38 +4,29 @@
     <meta charset="utf-8">
     <!-- The sequence of the libraries is very important! d3 > jq > under > backbone -->
     <!--link href="css/reset.css" rel="stylesheet" type="text/css" /-->
-    <link href="css/scripts.css" rel="stylesheet" type="text/css" />
+    <link type="text/css" rel="stylesheet" href="css/script.css" />
     <!--link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" /-->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+    <link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" />
     <link href="css/jquery.tagit.css" rel="stylesheet" type="text/css" />
     <link href="css/example.css" rel="stylesheet" type="text/css" />
     <link href="css/tipsy.css" rel="stylesheet" type="text/css" />
     <link href="css/colorbrewer.css" rel="stylesheet" type="text/css" />    
+    <link href="css/jquery.tagit.css" type="text/css" rel="stylesheet" />
+    <link href="css/jquery.dropdown.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
     <div id="main">
     	<div id="options">
 
-		<div id="ccTabs">
-        <div id="tabSearch">
+		  <div id="ccTabs">
+      	<a href="#" data-dropdown="#countries_filter">Country</a> ||
+        <a href="#" data-dropdown="#continents_filter">Continent</a>
+        <!--div id="tabSearch">
           <ul id="countries_tags"></ul> 
-          <!--ul id="continents_tags"></ul-->
-        </div>
-        
-        <div id="openCloseIdentifier"></div>
-        <div id="slider">
-          <div id="sliderContent">
-            <div id="countries_filter"></div>
-            <!--div id="continents_filter"></div-->
-          </div>
-          <div id="openCloseWrap">
-            <a href="#" class="topMenuAction" id="topMenuImage">
-              <img src="css/images/open.png" alt="open" />
-            </a>
-          </div>
-        </div>
-     </div>
+          <ul id="continents_tags"></ul>
+        </div-->
+      </div>
   
         <!--div id="ccTabs">
           	<ul>
@@ -101,6 +92,7 @@
 <script src="js/libs/jquery-1.8.2.js"></script>
 <script src="js/libs/jquery-ui-1.9.2.custom.min.js"></script>
 <script src="js/libs/jquery.tag-it.min.js"></script>
+<script src="js/libs/jquery.dropdown.js"></script>
 <script src="js/libs/jquery.qtip-1.0.0-rc3.js"></script>
 <script src="js/libs/underscore.js"></script>
 <script src="js/libs/backbone.js"></script>
@@ -116,26 +108,10 @@
 <script src="js/wbd.map.js"></script>
 <script src="js/wbd.display-options.js"></script>
 <script src="js/scripts.js"></script>
-
- 	<script type="text/javascript">
-	$(document).ready(function() {
-		$(".topMenuAction").click( function() {
-			if ($("#openCloseIdentifier").is(":hidden")) {
-				$("#slider").animate({ 
-					marginTop: "-450px"
-					}, 500 );
-				$("#topMenuImage").html('<img src="css/images/open.png" alt="open" />');
-				$("#openCloseIdentifier").show();
-			} else {
-				$("#slider").animate({ 
-					marginTop: "-50px"
-					}, 500 );
-				$("#topMenuImage").html('<img src="css/images/open.png" alt="close" />');
-				$("#openCloseIdentifier").hide();
-			}
-		});  
-	});
-	</script>
   
+  
+<div id="countries_filter" class="dropdown-menu has-tip"></div>
+<div id="continents_filter" class="dropdown-menu has-tip"></div>  
+
 </body>
 </html>
