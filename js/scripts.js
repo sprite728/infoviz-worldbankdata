@@ -7,7 +7,7 @@ $(document).ready(function(){
 
   // Prepare all the indicators, countries and continents
 
-  d3.json("worldbankdata2.json", function(data){
+  d3.json("parser/worldbankdata2.json", function(data){
       // Main Variables 
     var myEntries;
     var mySelectedData;

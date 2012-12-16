@@ -39,6 +39,11 @@ for currentFileName in files:
 				# get or create a country object (a dictionary)
 				if colnum == 0: # country name
 					countryName = col
+
+					# if countryName = World, continue
+					if countryName == "World":
+						break
+
 					if countries.get(countryName):
 						country = countries.get(countryName)
 
@@ -135,8 +140,6 @@ myManualCountryToContinent = json.loads(json_data)
 
 records = []
 for countryName in countries:
-	if countryName == "World":
-		continue
 
 	countryRecord = countries[countryName]
 	countryStore = {} 
@@ -186,8 +189,12 @@ f = open('worldbankdata2.json', 'w')
 f.write(json.dumps(records, sort_keys=True, indent=4))
 f.close()
 
+allCountries = []
+for record in records:
+	allCountries.append(record['country'])
+
 f = open("countries.json", "w")
-f.write(json.dumps(countries.keys(), sort_keys=True, indent=4))
+f.write(json.dumps(allCountries, sort_keys=True, indent=4))
 f.close()
 
 f = open("continents.json", "w")
@@ -198,5 +205,6 @@ f = open("indicators.json", "w")
 f.write(json.dumps(files, sort_keys=True, indent=4))
 f.close()
 
-
+for i in range(0, 214):
+	print records[i]['country'] + "  " + allCountries[i] 
 
