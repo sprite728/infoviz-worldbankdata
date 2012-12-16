@@ -114,6 +114,7 @@ WBD.Entries = Backbone.Model.extend({
   defaults: {
     allData: [], // [{'country': 'taiwan', 'year': '1234' ... }, ...]
     selDataXYPlot: [],
+    selDataMap: [],
     filter: {},
 
     // Constants
@@ -295,6 +296,7 @@ WBD.Entries = Backbone.Model.extend({
 		});
 				
     this.set("selDataXYPlot", filteredData);
+    this.set("selDataMap", filteredData);
   },
 
   isSelectedCountry: function(country){

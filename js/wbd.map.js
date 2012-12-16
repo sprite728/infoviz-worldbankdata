@@ -6,7 +6,9 @@ WBD.Map = Backbone.View.extend({
   className: 'map',
   id: 'map',
   tagName: 'div',
+
   countryElements: [],
+  showXValuesOnMap: true,
 
   initialize: function(opts){
     console.log("map_initialize");
@@ -15,7 +17,7 @@ WBD.Map = Backbone.View.extend({
     this.model = opts.model;
 
     // Listen to changes on model
-    this.model.bind("change:selDataXYPlot", this.updateColorMap, this );
+    this.model.bind("change:selDataMap", this.renderColorMap, this );
 
     // Create the map object, append it to this.el
     this.map = org.polymaps.map()
@@ -29,6 +31,9 @@ WBD.Map = Backbone.View.extend({
     .add(org.polymaps.dblclick())
     .add(org.polymaps.arrow());
 
+    // Init tab 
+    this.showXValuesOnMap = true;
+
     // Add the compass control on top.
     this.map.add(org.polymaps.compass()
         .pan("none"));
@@ -36,12 +41,30 @@ WBD.Map = Backbone.View.extend({
     // Custom layer implementation.  || TO BE CHANGED
     this.map.container().setAttribute("class", "Blues");    
 
+    // set current indicator according to the current tabs
+    this.updateCurrentInd();
 
-
+    // Initialize color scale
+    this.initColorScale();
     this.initBottomMap();
     this.initColorMap();
     //this.initTopMap(); //d3, circles over the map
     // this.updateColorMap();
+  },
+
+  initColorScale: function(){
+    var that = this;
+
+    if(this.showXValuesOnMap){
+      that.colorScale = d3.scale.linear()
+        .domain(this.model.get("filter").get("xDataRange"))
+        .range([1, 255]);
+    }
+    else {
+      that.colorScale = d3.scale.linear()
+        .domain(this.model.get("filter").get("yDataRange"))
+        .range([1, 255]);
+    }
   },
 
   initBottomMap: function(){
@@ -57,6 +80,16 @@ WBD.Map = Backbone.View.extend({
         .hosts(["a.", "b.", "c.", ""])));
   },
 
+  updateCurrentInd: function(){
+    if(this.showXValuesOnMap){
+      this.currentInd = this.model.get("xDatasetName");
+    } else {
+      this.currentInd = this.model.get("xDatasetName");
+    }
+
+    return this.currentInd;
+  },
+
   initColorMap: function(){
     var that = this;
     
@@ -69,7 +102,8 @@ WBD.Map = Backbone.View.extend({
         .on("load", function(event){
 
           var i, feature, countryName;
-          var mapData = that.model.get("selDataXYPlot"); 
+          var allMapData = that.model.get("selDataMap"); 
+          var mapData; //temp data to store filtered map data
           var aCountryData;
           that.countryElements = event;
           
@@ -82,69 +116,87 @@ WBD.Map = Backbone.View.extend({
             console.log("country name");
             console.log(countryName);
 
-            mapData = mapData.filter(function(element, index, array){
+            console.log(mapData);
+            mapData = allMapData.filter(function(element, index, array){
               return element.country == countryName;
             });
             
+            // console.log(mapData);
             aCountryData = mapData[0] || null;
-            console.log("ACountryData");
-            console.log(aCountryData);
+            // console.log("ACountryData");
+            // console.log(aCountryData);
 
             if(aCountryData){
               console.log("ACountryData");
               console.log(aCountryData);
-              // feature.element.setAttribute("class", "q" + ~~(v * 1) + "-" + 9);
-              // feature.element.setAttribute("title", countryName);
+
+              console.log("Current indicator");
+              console.log(that.currentInd);
+              console.log(aCountryData[that.currentInd]);
+
+              var countryColor = parseInt(that.colorScale(aCountryData[that.currentInd]), 10);
+              console.log("countryColor");
+              console.log(countryColor);
+              // setAttribute("style", "color: red;");
+              
+              // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
+              feature.element.setAttribute("class", "country-tile");
+              feature.element.setAttribute("id", aCountryData['country']);
+              feature.element.setAttribute("fill", "rgb(173,221,"+countryColor+")");
+              feature.element.setAttribute("title", aCountryData['country']);
             }
           }
         }
       );
-
-    console.log("TEST GeoMap");
-    console.log(geoMap);
-
     this.map.add(geoMap);
 
   },
 
 
-  renderColorMap: function(event, hi){
+  renderColorMap: function(){
+    var that = this;
     var i, feature, countryName;
-    var mapData;
 
-    console.log("loadMap")
-    this.countryElements = event;
-    // console.log(this.countryElements);
-    // console.log(e);
-    console.log(hi);
-    // var that = this;
-    console.log("that");
-    console.log(that);
-
-    var mapData = this.model.get("selDataXYPlot"); 
-
-    console.log("country elements");
-    console.log(this.countryElements);
-
-    for (i = 0; i < this.countryElements.features.length; i++) {
+    var allMapData = that.model.get("selDataMap"); 
+    var mapData; //temp data to store filtered map data
+    var aCountryData;
       
-      feature = this.countryElements.features[i];
+
+    for (i = 0; i < that.countryElements.features.length; i++) {
+      
+      feature = that.countryElements.features[i];
       countryName = feature.data.properties.name;
 
-      mapData.filter(function(element, index, array){
-        console.log("in filter");
-        console.log(countryName);
+      // Get current country from allMapData 
+      mapData = allMapData.filter(function(element, index, array){
         return element.country == countryName;
       });
+      
+      aCountryData = mapData[0] || null;
+     
 
-      console.log("mapData");
-      console.log(mapData);
+      // reset country's attributes
+      if(aCountryData){
+        console.log("ACountryData");
+        console.log(aCountryData);
 
-      var v = Math.floor(Math.random()*11);  
+        console.log("Current indicator");
+        console.log(that.currentInd);
+        console.log(aCountryData[that.currentInd]);
 
-      feature.element.setAttribute("class", "q" + ~~(v * 1) + "-" + 9);
-      feature.element.setAttribute("title", countryName);
-    }
+        var countryColor = parseInt(that.colorScale(aCountryData[that.currentInd]), 10);
+        console.log("countryColor");
+        console.log(countryColor);
+        // setAttribute("style", "color: red;");
+        
+        // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
+        feature.element.setAttribute("class", "country-tile");
+        feature.element.setAttribute("id", aCountryData['country']);
+        feature.element.setAttribute("fill", "rgb(173,221,"+countryColor+")");
+        feature.element.setAttribute("title", aCountryData['country']);
+      }
+    };
+    
     
   },
 
@@ -161,6 +213,7 @@ WBD.Map = Backbone.View.extend({
       var blurb = "<div class='info_blurb'>" + f.getAttribute("title") + " to be passed" + "</div>";
 
       var infowin = document.getElementById('detail')
+      
       infowin.style.width = "200px";
       infowin.style.maxHeight = "200px";
       infowin.style.overflow = "auto";
@@ -189,38 +242,8 @@ WBD.Map = Backbone.View.extend({
 
   setCountry: function(name){
     console.log("setCountry");
-  },
-
-  updateColorMap: function(){
-
-    var that = this;
-    var mapData = this.model.get("selDataXYPlot"); 
-    console.log("country elements");
-    console.log(this.countryElements);
-
-        for (var i = 0; i < this.countryElements.features.length; i++) {
-          var feature = this.countryElements.features[i];
-          var countryName = feature.data.properties.name;
-
-          mapData.filter(function(d){
-            return d.country == countryName;
-          });
-
-          console.log("mapData");
-          console.log(mapData);
-
-          var v = Math.floor(Math.random()*11);
-          
-
-
-
-          feature.element.setAttribute("class", "q" + ~~(v * 1) + "-" + 9);
-          feature.element.setAttribute("title", n);
-          // feature.element.addEventListener("click", function(e){clickFeature(this,this.countryElements);}, false);
-          // feature.element.addEventListener("mouseover", function(e){mouseOverFeature(this,this.countryElements);}, false);
-        }
-
   }
+
 
 });
 
