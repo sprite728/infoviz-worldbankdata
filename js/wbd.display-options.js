@@ -77,7 +77,9 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		//console.log("yDataRange: ", yDataRange[1]);
 	
 		var allData = this.model.get("allData");
-		$( "#ccTabs" ).tabs();
+		$( "#ccTabs" ).tabs({
+            collapsible: true
+        });
 		 $("div.ui-tabs-panel").css('padding','0px');
 		
 		
