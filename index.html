@@ -12,57 +12,66 @@
 <body>
     <div id="main">
     	<div id="options">
-        	<div id="country_or_continent">
-          	<h4>Display Options</h4>
-            <button id="countryTab">Country</button> || <button id="continentTab">Continent</button>
-            <br>
+	
+        <div id="ccTabs">
+          	<ul>
+            	<li><a href="#tabCountry">Country</a></li>
+              <li><a href="#tabContinent">Continent</a></li>
+            </ul>
+            
+            <div id="tabCountry">
+              <ul id="countries_tags"></ul> 
+              <div id="countries_filter"></div>
+            </div>
+          	
+            <div id="tabContinent">
+              <ul id="continents_tags"></ul>
+              <div id="continents_filter"></div>
+             </div>
+             
+             <div id="slider_tab"><img src="css/images/open.png" /></div>
           </div>
-        	<div id="xyAxis">
-            <h4>Select Dataset</h4>
-            <label for="xAxisPicker">X Axis:&nbsp;&nbsp;</label><select id="xAxisPicker"></select><br>
-            <label for="yAxisPicker">Y Axis:&nbsp;&nbsp;</label><select id="yAxisPicker"></select><br>
+      
+      		<!--div id="logo"><img src="css/images/logo.jpg" /></div--> 
+          
+        	<div id="xyAxes">
+          	<div class="singleAxis">
+            	<label for="xAxisPicker">X Axis:&nbsp;&nbsp;</label><select id="xAxisPicker"></select>&nbsp;&nbsp;
+            </div>
+            <div class="singleAxis">
+            	<label for="yAxisPicker">Y Axis:&nbsp;&nbsp;</label><select id="yAxisPicker"></select>
+            </div>
+            <div class="singleAxis">Population</div>
             <!--select id="zAxisPicker"></select-->
           </div>
             
-        	<div id="range-value">
-            <h4>Value Range</h4>
-            
+        	<div id="range-value">            
             <!-- X Axis Filter, hi-->
-            <p>
-            	<label for="xRangeText">X Axis:</label>
-              <input type="text" id="xRangeText" />
-            </p>
-            <div id="slider-xAxis"></div>
-            
+            <div class="singleFilter">
+              <p>
+                <input type="text" id="xRangeText" />
+                <label for="xRangeText"></label>
+              </p>
+              <div id="slider-xAxis"></div>
+            </div>
             <!-- Y Axis Filter -->
-            <p>
-            	<label for="yRangeText">Y Axis:</label>
-              <input type="text" id="yRangeText" />
-            </p>
-            <div id="slider-yAxis"></div>
-            
-            <!-- Circle Size Filter -->
-            <p>
-            	<label for="circleSizeText">Cicle Size:</label>
-              <input type="text" id="circleSizeText" />
-            </p>
-            <div id="slider-circleSize"></div>
-            
+            <div class="singleFilter">
+              <p>
+                <input type="text" id="yRangeText" />
+                <label for="yRangeText"></label>
+              </p>
+              <div id="slider-yAxis"></div>
+            </div>
+            <!-- Bubble Size Filter -->
+            <div class="singleFilter">
+              <p>
+                <input type="text" id="bubbleSizeText" />
+                <label for="bubbleSizeText"></label>
+              </p>
+              <div id="slider-circleSize"></div>
+            </div>
           </div>
-
-
-          <ul id="countries_tags"></ul>
-          
-        	<div id="countries_filter">
-           	<h4>Country Options</h4>
-          </div>
-          
-          <ul id="continents_tags"></ul>
-          
-        	<div id="continents_filter">
-           	<h4>Continent Options</h4>
-          </div>
-          
+          <div class="clear"></div>
         </div>
     </div>
 
