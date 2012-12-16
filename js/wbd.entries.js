@@ -12,22 +12,23 @@ WBD.Filter = Backbone.Model.extend({
   defaults: {
     year: 2000, // year filter 
     countries: [], // countries filter 
-    continents: [], // regions filter
+    continents: [], // continents filter
     categories: [],
     xDataRange: [], // [ min, max] if empty or only 1 element -> wrong
     yDataRange: [], // [ min, max] if empty or only 1 element -> wrong
-    circleSizeRange: []
+    populationRange: []
   },
 
 
   toggleCountry: function(country) {
-	  var tempCountries = this.get("countries");
+	  var isNew = this.isNewCountry(country);
+		var tempCountries = this.get("countries");
 
-	  if(tempCountries.indexOf(country)>-1){
-		  tempCountries.remove(country);
+	  if(isNew){
+		  tempCountries.push(country);
 	  }
 	  else{
-		  tempCountries.push(country);
+		  tempCountries.remove(country);
 	  }
 	  
 	  this.set({countries : tempCountries});
@@ -64,20 +65,46 @@ WBD.Filter = Backbone.Model.extend({
 	},
   
   toggleContinent: function(continent) {
+	  var isNew = this.isNewContinent(continent);
+		var tempContinents = this.get("continents");
 
-	  var tempContinents = this.get("regions");
-
-	  if(tempContinents.indexOf(continent)>-1){
-		  tempContinents.remove(continent);
-	  }
-	  else{
+	  if(isNew){
 		  tempContinents.push(continent);
 	  }
+	  else{
+		  tempContinents.remove(continent);
+	  }
 	  
-	  this.set({regions : tempContinents});
-	  //this.trigger("change:regions");
+	  this.set({continents : tempContinents});
+	  //this.trigger("change:continents");
   },
-  
+	
+	isNewContinent: function(continent) {
+	  var tempContinents = this.get("continents");
+		var isNewContinent = true;
+
+	  if(tempContinents.indexOf(continent)>-1){
+			isNewContinent = false;
+	  }
+	  else{
+			isNewContinent = true;
+	  }
+		return isNewContinent;
+  },
+	
+  addContinent: function(continent) {
+		var tempContinents = this.get("continents");
+		tempContinents.push(continent);
+	  this.set({continents : tempContinents});
+		console.log("Changed Continents:" + this.get("continents"));
+  },
+	
+	removeContinent: function(continent) {
+		var tempContinents = this.get("continents");
+		tempContinents.remove(continent);	  
+	  this.set({continents : tempContinents});
+		console.log("Changed Continents:" + this.get("continents"));
+	},
   
 });
 
@@ -132,7 +159,7 @@ WBD.Entries = Backbone.Model.extend({
       { 
         xDataRange: this.findExtendOfAnIndicator(this.xDatasetName),
         yDataRange: this.findExtendOfAnIndicator(this.yDatasetName),
-        circleSizeRange: this.findExtendOfAnIndicator("population")
+        populationRange: this.findExtendOfAnIndicator("population")
       }
     );
     
