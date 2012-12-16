@@ -1,4 +1,5 @@
 // Author: An Yang anyang@umich.edu
+
 var WBD = WBD || {};
 
 // 
@@ -38,9 +39,32 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		var allIndicators = WBD.allIndicators;
 		var allCategories = WBD.allCategories;
 		
+		//console.log("=================All Indicators==============");
+		//console.log(allIndicators);
+		
+		
 		var xDataRange = this.model.get("filter").get("xDataRange");
 		var yDataRange = this.model.get("filter").get("yDataRange");
 		var circleSizeRange = this.model.get("filter").get("circleSizeRange");
+		
+		//Indicator Pickers Initialized here
+		var defaultX = that.model.get("xDatasetName");
+		var defaultY = that.model.get("yDatasetName");
+		
+		$("#xAxisPicker").append("<option class='xIndicator'>" + defaultX + "</option>");
+		$("#yAxisPicker").append("<option class='yIndicator'>" + defaultY + "</option>");
+		
+		for (var indicator in allIndicators){
+			if(allIndicators.hasOwnProperty(indicator) && allIndicators[indicator] != "population" ){
+					if(allIndicators[indicator] != defaultX ){
+						$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[indicator] + "</option>");
+					}
+					if(allIndicators[indicator] != defaultY){
+						$("#yAxisPicker").append("<option class='yIndicator'>" + allIndicators[indicator] + "</option>");
+					}
+			}
+		}
+		
 		
 		/*
 		console.log("X Data Ranges: " +  xDataRange);
@@ -51,57 +75,50 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		//console.log("xDataRange: ", xDataRange[0]);
 		//console.log("yDataRange: ", yDataRange[1]);
 		
-		
-		for (var country in allCountries){
+		var country, continent;
+		var allData =  this.model.get("allData");
+		for (country in allCountries){
 			if(allCountries.hasOwnProperty(country)){
-				//console.log(allCountries[country]);
 				$("#countries_filter").append("<button class='country'>" + allCountries[country] + "</button><br />");
+				console.log("Test: " + allData[country]["country"] + " C1:"+ allData[country]["continent"]);
+			}
+		}
+		
+		for (continent in allContinents){
+			if(allContinents.hasOwnProperty(continent)){
+				$("#continents_filter").append("<button class='continent'>" + allContinents[continent] + "</button><br />");
 			}
 		}
 		
 		$("#countries_tags").tagit({
 			availableTags: allCountries,
-			beforeTagAdded: function(evt, ui) {
-				if (!ui.duringInitialization) {
-					addEvent('beforeTagAdded: ' + eventTags.tagit('tagLabel', ui.tag));
-				}
-			},
+			autocomplete: {delay: 0, minLength: 2},
+			caseSensitive: true,
+			allowDuplicates: false,
+			//removeConfirmation: true,
+			
 			afterTagAdded: function(evt, ui) {
-				if (!ui.duringInitialization) {
-					addEvent('afterTagAdded: ' + eventTags.tagit('tagLabel', ui.tag));
-				}
-                },
-                beforeTagRemoved: function(evt, ui) {
-                    addEvent('beforeTagRemoved: ' + eventTags.tagit('tagLabel', ui.tag));
-                },
-                afterTagRemoved: function(evt, ui) {
-                    addEvent('afterTagRemoved: ' + eventTags.tagit('tagLabel', ui.tag));
-                },
-                onTagClicked: function(evt, ui) {
-                    addEvent('onTagClicked: ' + eventTags.tagit('tagLabel', ui.tag));
-                },
-                onTagExists: function(evt, ui) {
-                    addEvent('onTagExists: ' + eventTags.tagit('tagLabel', ui.existingTag));
-                }			
+				that.model.get("filter").addCountry($(this).tagit("tagLabel", ui.tag));
+			},
+			afterTagRemoved: function(evt, ui) {
+				that.model.get("filter").removeCountry($(this).tagit("tagLabel", ui.tag));
+			},
 		});
 		
-		//Indicator Pickers Initialized here
-		var defaultX = that.model.get("xDatasetName");
-		var defaultY = that.model.get("yDatasetName");
-		
-		$("#xAxisPicker").append("<option class='xIndicator'>" + defaultX + "</option>");
-		$("#yAxisPicker").append("<option class='yIndicator'>" + defaultY + "</option>");
-		
-		for (var indicator in allIndicators){
-			if(allIndicators.hasOwnProperty(indicator)){
-					if(allIndicators[indicator] != defaultX){
-						$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[indicator] + "</option>");
-					}
-					if(allIndicators[indicator] != defaultY){
-						$("#yAxisPicker").append("<option class='yIndicator'>" + allIndicators[indicator] + "</option>");
-					}
-			}
-		}
+		$("#continents_tags").tagit({
+			availableTags: allContinent,
+			autocomplete: {delay: 0, minLength: 1},
+			caseSensitive: true,
+			allowDuplicates: false,
+			//removeConfirmation: true,
+			
+			afterTagAdded: function(evt, ui) {
+				that.model.get("filter").addContinent($(this).tagit("tagLabel", ui.tag));
+			},
+			afterTagRemoved: function(evt, ui) {
+				that.model.get("filter").removeContinent($(this).tagit("tagLabel", ui.tag));
+			},
+		});
 		
 		//Data Range Sliders here
 		$( "#slider-xAxis" ).slider({
@@ -149,7 +166,14 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		var that = this;
 		$("#countries_filter .country").click(function(){
 			//console.log($(this).text());
-			that.model.get("filter").toggleCountry($(this).text());
+			var isNewCountry = that.model.get("filter").isNewCountry($(this).text());
+			//console.log("TorF: " + isNewCountry);
+			if(isNewCountry){
+				$("#countries_tags").tagit("createTag", $(this).text());
+			}
+			else{
+				$("#countries_tags").tagit("removeTagByLabel", $(this).text());
+			}
 			//console.log("filter.get contries");
 			//console.log(that.model.get("filter").get("countries"));
 		});
@@ -160,7 +184,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			var yName = $("#yAxisPicker").val();
 			that.model.set("xDatasetName: xName");
 			that.model.set("yDatasetName: xName");
-			that.model.set("selDataXYPlot", that.model.get("allData")); 
+			//that.model.set("selDataXYPlot", that.model.get("allData")); 
 			
 			console.log("============== CHANGING XY AXIS ===============");
 			console.log("X Axis: ", $("#xAxisPicker").val());
