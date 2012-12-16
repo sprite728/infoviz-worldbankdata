@@ -77,15 +77,20 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		//console.log("yDataRange: ", yDataRange[1]);
 	
 		var allData = this.model.get("allData");
+		
 		console.log("==========All Data===========");
 		console.log(allData);
 		console.log(allCountries);
 		
 		for (index = 0; index < allCountries.length; index++){
 			//if(allCountries.hasOwnProperty(index)){
-				console.log("con: "+allCountries[index]);
+		/*		var aCountryName = allCountries[index];
+				console.log("Country Name: "+ aCountryName);
+				console.log(allData[aCountryName]);
+				console.log("Region Name: "+ allData[aCountryName]["country"]);
+		*/		
 				$("#countries_filter").append("<button class='country'>" + allCountries[index] + "</button><br />");
-				
+				/*
 				try{
 					var aCountryName = allCountries[index];
 					var aCountryObj = allData[aCountryName];
@@ -98,13 +103,15 @@ WBD.DisplayOptionView = Backbone.View.extend({
 					console.log("Catch: " + allData[index]["country"]);
 					//console.log(" Continent:" + allData[index]["continent"]);
 				}
+				*/
+				
 			//}
 		}
 		
-		for (index in allContinents){
-			if(allContinents.hasOwnProperty(index)){
-				$("#continents_filter").append("<button class='continent'>" + allContinents[index] + "</button><br />");
-			}
+		for (index=0; index<allContinents.length;index++){
+			//if(allContinents.hasOwnProperty(index)){
+				$("#continents_filter").append("<button class='continent "+ allContinents[index].replace(" ","_").toLowerCase() + "'>" + allContinents[index] + "</button><br />");
+			//}
 		}
 		
 		$("#countries_tags").tagit({
