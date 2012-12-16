@@ -213,7 +213,10 @@ WBD.XYPlot = Backbone.View.extend({
     // this.baseGraph is a selection ?
     var exitGroup = this.baseGraph
       // d.country is the key to identify different array element
-        .data(this.model.getSelDataXYPlot(), function(d){ return d.country})
+        .data(this.model.getSelDataXYPlot(), function(d){ 
+          console.log(d);
+          return d.country;})
+      .attr("visibility", "visible")
       .attr("cx", function(d){ 
         // It is possible that some countries won't have this indicator record
         // therefore, return 0 
@@ -242,37 +245,41 @@ WBD.XYPlot = Backbone.View.extend({
     
     // 
     console.log("enter group");
-    console.log(exitGroup.enter());
+    console.log(exitGroup.enter()[0].update);
 
-    exitGroup
-        .data(this.model.getSelDataXYPlot(), function(d){ return d.country})
-      .exit().append("circle")
-        .attr("class", "dot")
-        .attr("id", function(d){ return d.country; })
-        .attr("cx", function(d){ 
-          // It is possible that some countries won't have this indicator record
-          // therefore, return 0 
+    // Render new gra
+    // exitGroup
+    //   .enter().insert("circle")
+    //     .attr("class", "dot")
+    //     .attr("id", function(d){ return d.country; })
+    //     .attr("cx", function(d){ 
+    //       // It is possible that some countries won't have this indicator record
+    //       // therefore, return 0 
+    //       country.log(d);
+    //       if(d.country == "Canada"){
+    //         //console.log(d.country);
+    //         //console.log(d.gni);
+    //         //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
+    //       }
+    //       return that.xScale(d[that.xAxisDatasetName] || 0 ); 
+    //     })
+    //     .attr("cy", function(d){ 
+    //       // It is possible that some countries won't have this indicator record
+    //       // therefore, return 0 
+    //       return that.yScale(d[that.yAxisDatasetName] || 0 ); 
+    //     })
+    //     .style("fill", function(d){
+    //       return WBD.mapContinentToColor[d["continent"]];
+    //     })
+    //     .attr("r", function(d){
+    //       return that.popuScale(d["population"] || 0 );
+    //     })
+    //   .call(function(d){
+    //     console.log(d);
+    //   });
 
-          if(d.country == "Canada"){
-            //console.log(d.country);
-            //console.log(d.gni);
-            //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
-          }
-          return that.xScale(d[that.xAxisDatasetName] || 0 ); 
-        })
-        .attr("cy", function(d){ 
-          // It is possible that some countries won't have this indicator record
-          // therefore, return 0 
-          return that.yScale(d[that.yAxisDatasetName] || 0 ); 
-        })
-        .style("fill", function(d){
-          return WBD.mapContinentToColor[d["continent"]];
-        })
-        .attr("r", function(d){
-          return that.popuScale(d["population"] || 0 );
-        });
-
-    exitGroup.exit().remove()
+    exitGroup.exit()
+      .attr("visibility", "hidden");
 
     console.log("exit group");
     // console.log(this.baseGraph.data(this.model.getSelDataXYPlot(), function(d){ return d.country}));
