@@ -46,7 +46,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		var xDataRange = this.model.get("filter").get("xDataRange");
 		var yDataRange = this.model.get("filter").get("yDataRange");
-		var circleSizeRange = this.model.get("filter").get("circleSizeRange");
+		var populationRange = this.model.get("filter").get("populationRange");
 		
 		//Indicator Pickers Initialized here
 		var defaultX = that.model.get("xDatasetName");
@@ -70,22 +70,27 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		/*
 		console.log("X Data Ranges: " +  xDataRange);
 		console.log("Y Data Ranges: " +  yDataRange);
-		console.log("Z Data Ranges: " +  circleSizeRange);
+		console.log("Z Data Ranges: " +  populationRange);
 		*/
 		
 		//console.log("xDataRange: ", xDataRange[0]);
 		//console.log("yDataRange: ", yDataRange[1]);
 	
 		var allData = this.model.get("allData");
+		
 		console.log("==========All Data===========");
 		console.log(allData);
 		console.log(allCountries);
 		
 		for (index = 0; index < allCountries.length; index++){
 			//if(allCountries.hasOwnProperty(index)){
-				console.log("con: "+allCountries[index]);
+		/*		var aCountryName = allCountries[index];
+				console.log("Country Name: "+ aCountryName);
+				console.log(allData[aCountryName]);
+				console.log("Region Name: "+ allData[aCountryName]["country"]);
+		*/		
 				$("#countries_filter").append("<button class='country'>" + allCountries[index] + "</button><br />");
-				
+				/*
 				try{
 					var aCountryName = allCountries[index];
 					var aCountryObj = allData[aCountryName];
@@ -98,13 +103,15 @@ WBD.DisplayOptionView = Backbone.View.extend({
 					console.log("Catch: " + allData[index]["country"]);
 					//console.log(" Continent:" + allData[index]["continent"]);
 				}
+				*/
+				
 			//}
 		}
 		
-		for (index in allContinents){
-			if(allContinents.hasOwnProperty(index)){
-				$("#continents_filter").append("<button class='continent'>" + allContinents[index] + "</button><br />");
-			}
+		for (index=0; index<allContinents.length;index++){
+			//if(allContinents.hasOwnProperty(index)){
+				$("#continents_filter").append("<button class='continent "+ allContinents[index].replace(" ","_").toLowerCase() + "'>" + allContinents[index] + "</button><br />");
+			//}
 		}
 		
 		$("#countries_tags").tagit({
@@ -167,12 +174,12 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		$( "#slider-circleSize" ).slider({
 			range: true,
-			min: circleSizeRange[0],
-			max: circleSizeRange[1],
-			values: circleSizeRange,
+			min: populationRange[0],
+			max: populationRange[1],
+			values: populationRange,
 			slide: function( event, ui ) {
 				$( "#circleSizeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-				that.model.get("filter").set({ circleSizeRange: ui.values});
+				that.model.get("filter").set({ populationRange: ui.values});
 			}
 		});
 		$( "#circleSizeText" ).val( "$" + $( "#slider-circleSize" ).slider( "values", 0 ) +
