@@ -1,49 +1,26 @@
-#slider {
-position: absolute;
-top: 0px;
-background-image:url(images/back.png);
-background-repeat:no-repeat;
-background-position: bottom;
-width: 320px;
-height: 500px;
-margin-top: -450px;
-z-index: 0;
-}
-#slider img {
-border: 0;
-margin-top:312px;
-margin-left:-99px;
-}
-#sliderContent {
-margin: 20px 0;
-position: relative;
-text-align:center;
-color:#333333;
-font-weight:bold;
-}
-#openCloseWrap {
-position:relative;
-margin: 0 0 0 120px;
-font-size:12px;
-font-weight:bold;
-}
-
-
 .clear {
 	clear: both;
+	after: 
 }
 
 #main{
-	width: 960px;
+	width: 1280px;
 	height: auto;
 	margin: 0 auto;
 	float: none;
 }
 
 #xy-plot {
-  margin-left: 0px;
-  height: 550px;
   float: right;
+	width: 610px;
+	margin-left: 0;
+}
+
+#map {
+	float: left;
+	width: 610px;
+	height: 550px;
+	margin: 25px 30px;
 }
 
 text {

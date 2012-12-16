@@ -83,10 +83,10 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				console.log("Country Name: "+ aCountryName);	
 				console.log("Continent: " + WBD.getContinentByCountry(aCountryName));
 				if(WBD.getContinentByCountry(aCountryName)){
-					$("#countries_filter").append("<button class='country " + WBD.getContinentByCountry(aCountryName).replace(" ", "_").toLowerCase() + "'>" + allCountries[index] + "</button><br />");
+					$("#countries_filter").append("<li><button class='country " + WBD.getContinentByCountry(aCountryName).replace(" ", "_").toLowerCase() + "'>" + allCountries[index] + "</button></li>");
 				}
 				else{
-					$("#countries_filter").append("<button class='country undefined'>" + allCountries[index] + "</button><br />");
+					$("#countries_filter").append("<li><button class='country undefined'>" + allCountries[index] + "</button></li>");
 				}
 				/*
 				
@@ -127,7 +127,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 
 		for (index=0; index<allContinents.length;index++){
 			//if(allContinents.hasOwnProperty(index)){
-				$("#continents_filter").append("<button class='continent "+ allContinents[index].replace(" ","_").toLowerCase() + "'>" + allContinents[index] + "</button><br />");
+				$("#continents_filter").append("<li><button class='continent "+ allContinents[index].replace(" ","_").toLowerCase() + "'>" + allContinents[index] + "</button></li>");
 			//}
 		}
 		

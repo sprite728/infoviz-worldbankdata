@@ -20,8 +20,8 @@
     	<div id="options">
 
 		  <div id="ccTabs">
-      	<a href="#" data-dropdown="#countries_filter">Country</a> ||
-        <a href="#" data-dropdown="#continents_filter">Continent</a>
+      	<a href="#" data-dropdown="#dropdown_countries">Country</a> ||
+        <a href="#" data-dropdown="#dropdown_continents">Continent</a>
         <!--div id="tabSearch">
           <ul id="countries_tags"></ul> 
           <ul id="continents_tags"></ul>
@@ -110,8 +110,11 @@
 <script src="js/scripts.js"></script>
   
   
-<div id="countries_filter" class="dropdown-menu has-tip"></div>
-<div id="continents_filter" class="dropdown-menu has-tip"></div>  
-
+<div id="dropdown_countries" class="dropdown-menu has-tip">
+	<ul id="countries_filter"></ul>
+</div>
+<div id="dropdown_continents" class="dropdown-menu has-tip">
+	<ul id="continents_filter"></ul>
+</div> 
 </body>
 </html>
