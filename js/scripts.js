@@ -17,9 +17,11 @@ $(document).ready(function(){
     WBD.prepareConstants();
 
 
+
+
     // --- Start program ---
     // Create Collection: myEntries
-    console.log("Read and store data ... ");
+    //console.log("Read and store data ... ");
 
     // read data into WBD.Record
     myEntries = new WBD.Entries({

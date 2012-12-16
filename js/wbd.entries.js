@@ -18,9 +18,9 @@ WBD.Filter = Backbone.Model.extend({
     yDataRange: [], // [ min, max] if empty or only 1 element -> wrong
     circleSizeRange: []
   },
-  
-  toggleCountry: function(country) {
 
+
+  toggleCountry: function(country) {
 	  var tempCountries = this.get("countries");
 
 	  if(tempCountries.indexOf(country)>-1){
@@ -31,8 +31,37 @@ WBD.Filter = Backbone.Model.extend({
 	  }
 	  
 	  this.set({countries : tempCountries});
+		console.log("Changed Courntries:" + this.get("countries"));
 	  //this.trigger("change:countries");
   },
+
+	
+	isNewCountry: function(country) {
+	  var tempCountries = this.get("countries");
+		var isNewCountry = true;
+
+	  if(tempCountries.indexOf(country)>-1){
+			isNewCountry = false;
+	  }
+	  else{
+			isNewCountry = true;
+	  }
+		return isNewCountry;
+  },
+	
+  addCountry: function(country) {
+		var tempCountries = this.get("countries");
+		tempCountries.push(country);
+	  this.set({countries : tempCountries});
+		console.log("Changed Courntries:" + this.get("countries"));
+  },
+	
+	removeCountry: function(country) {
+		var tempCountries = this.get("countries");
+		tempCountries.remove(country);	  
+	  this.set({countries : tempCountries});
+		console.log("Changed Courntries:" + this.get("countries"));
+	},
   
   toggleContinent: function(continent) {
 
