@@ -10,6 +10,7 @@ WBD.Map = Backbone.View.extend({
   countryElements: [],
   showXValuesOnMap: true,
 
+
   initialize: function(opts){
     console.log("map_initialize");
 
@@ -58,12 +59,12 @@ WBD.Map = Backbone.View.extend({
     if(this.showXValuesOnMap){
       that.colorScale = d3.scale.linear()
         .domain(this.model.get("filter").get("xDataRange"))
-        .range([1, 255]);
+        .range([0, 1]);
     }
     else {
       that.colorScale = d3.scale.linear()
         .domain(this.model.get("filter").get("yDataRange"))
-        .range([1, 255]);
+        .range([0, 1]);
     }
   },
 
@@ -134,7 +135,7 @@ WBD.Map = Backbone.View.extend({
               console.log(that.currentInd);
               console.log(aCountryData[that.currentInd]);
 
-              var countryColor = parseInt(that.colorScale(aCountryData[that.currentInd]), 10);
+              var countryColor = that.colorScale(aCountryData[that.currentInd]);
               console.log("countryColor");
               console.log(countryColor);
               // setAttribute("style", "color: red;");
@@ -142,8 +143,10 @@ WBD.Map = Backbone.View.extend({
               // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
               feature.element.setAttribute("class", "country-tile");
               feature.element.setAttribute("id", aCountryData['country']);
-              feature.element.setAttribute("fill", "rgb(173,221,"+countryColor+")");
+              feature.element.setAttribute("fill", "rgba(173,221,10,"+countryColor+")");
               feature.element.setAttribute("title", aCountryData['country']);
+              feature.element.addEventListener("click", that.clickFeature , false);
+              feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
             }
           }
         }
@@ -184,7 +187,7 @@ WBD.Map = Backbone.View.extend({
         console.log(that.currentInd);
         console.log(aCountryData[that.currentInd]);
 
-        var countryColor = parseInt(that.colorScale(aCountryData[that.currentInd]), 10);
+        var countryColor = that.colorScale(aCountryData[that.currentInd]);
         console.log("countryColor");
         console.log(countryColor);
         // setAttribute("style", "color: red;");
@@ -192,8 +195,10 @@ WBD.Map = Backbone.View.extend({
         // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
         feature.element.setAttribute("class", "country-tile");
         feature.element.setAttribute("id", aCountryData['country']);
-        feature.element.setAttribute("fill", "rgb(173,221,"+countryColor+")");
+        feature.element.setAttribute("fill", "rgba(173,221,10,"+countryColor+")");
         feature.element.setAttribute("title", aCountryData['country']);
+        feature.element.addEventListener("click", that.clickFeature  , false);
+        feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
       }
     };
     
@@ -203,32 +208,29 @@ WBD.Map = Backbone.View.extend({
   clickFeature: function(f, evt){
     console.log("clickFeature");
 
-      var v = Math.floor(Math.random()*11);
-      if(v>8){
-          v= 4;
-      }
-      $(".Blues .selected").attr("class", "q" + ~~(v * 1) + "-" + 9);
-      f.setAttribute("class", "selected");
+    f.setAttribute("class", "selected");
 
-      var blurb = "<div class='info_blurb'>" + f.getAttribute("title") + " to be passed" + "</div>";
+    var blurb = "<div class='info_blurb'>" + f.getAttribute("title") + " to be passed" + "</div>";
 
-      var infowin = document.getElementById('detail')
-      
-      infowin.style.width = "200px";
-      infowin.style.maxHeight = "200px";
-      infowin.style.overflow = "auto";
-      infowin.style.left = evt.clientX + "px";
-      infowin.style.top = evt.clientY + "px";
-      infowin.style.position = 'absolute';
-      infowin.style.display = 'block';
-          
-      infowin.innerHTML = blurb; 
+    var infowin = document.getElementById('detail')
+    
+    infowin.style.width = "200px";
+    infowin.style.maxHeight = "200px";
+    infowin.style.overflow = "auto";
+    infowin.style.left = evt.clientX + "px";
+    infowin.style.top = evt.clientY + "px";
+    infowin.style.position = 'absolute';
+    infowin.style.display = 'block';
+        
+    infowin.innerHTML = blurb; 
 
-      setCountry(f.getAttribute("title"));
+    setCountry(f.getAttribute("title"));
   },
 
   mouseOverFeature: function(f, evt){
+
     console.log("mouseOverFeature");
+    console.log(f);
     $(f).tipsy({ 
         gravity: 'w', 
         html: true, 

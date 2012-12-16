@@ -16,8 +16,8 @@ WBD.XYPlot = Backbone.View.extend({
   yearLabel: "", // default
   
   // Style Members
-  width: 300,
-  height: 300,
+  width: 550,
+  height: 550,
   margins: {
     top: 25,
     bottom: 25,
