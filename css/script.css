@@ -13,6 +13,8 @@
 #xy-plot {
   float: right;
 	width: 610px;
+	height: 600px;
+	overflow: hidden;
 	margin-left: 0;
 }
 
@@ -21,9 +23,10 @@
 	width: 610px;
 	height: 550px;
 	margin: 25px 30px;
+	overflow: hidden;
 }
 
-text {
+.text {
   font: 10px sans-serif;
 }
 
