@@ -24,7 +24,7 @@ WBD.XYPlot = Backbone.View.extend({
     right: 30,
     left: 30
   },
-  dotSize: 3,  // default dot size 
+  dotSizeRange: [3, 50],  // default dot size 
 
   initialize: function(opts){
     $('#main').append(this.el);
@@ -55,8 +55,8 @@ WBD.XYPlot = Backbone.View.extend({
         .attr("width", this.width + this.margins.left + this.margins.right ) // hard-coded right now
         .attr("height", this.height + this.margins.top + this.margins.bottom ) // hard-coded right now
       .append("g")
-        .attr("transform","translate("+this.margins.left+","+this.margins.top+")");
-
+        .attr("transform","translate("+this.margins.left+","+this.margins.top+")")
+        .attr("class", "xy-plot");
 
     this.initAxes();
     this.initYearSelector();
@@ -153,8 +153,11 @@ WBD.XYPlot = Backbone.View.extend({
       .range([that.height, 0]);
 
     this.popuScale = d3.scale.linear()
-      .domian(this.model.get("filter").get("populatonRange"))
-      .range([0, 10]);
+      .domain(this.model.get("filter").get("populationRange"))
+      .range(this.dotSizeRange);
+
+    // this.colorScale = d3.scale.ordinal()
+    //   .domain(WBD.)
 
     // Create Axes
     this.xAxis = d3.svg.axis()
@@ -208,10 +211,10 @@ WBD.XYPlot = Backbone.View.extend({
 
     // Add a dot per nation
     // this.baseGraph is a selection ?
-    this.baseGraph
-        // d.country is the key to identify different array element
+    var exitGroup = this.baseGraph
+      // d.country is the key to identify different array element
         .data(this.model.getSelDataXYPlot(), function(d){ return d.country})
-      		.attr("cx", function(d){ 
+      .attr("cx", function(d){ 
         // It is possible that some countries won't have this indicator record
         // therefore, return 0 
 
@@ -228,12 +231,53 @@ WBD.XYPlot = Backbone.View.extend({
         return that.yScale(d[that.yAxisDatasetName] || 0 ); 
       })
       .attr("r", function(d){
-        return that.dotSize;
+        return that.popuScale(d["population"] || 0 );
+      })
+      .style("fill", function(d){
+        return WBD.mapContinentToColor[d["continent"]];
       })
       .on("mouseover", that.addDotLabel)
       .on("mouseout", that.removeDotLabel)
       .call( that.addToolTip );
     
+    // 
+
+    exitGroup.enter()
+      .append("circle")
+        .attr("class", "dot")
+        .attr("id", function(d){ return d.country; })
+        .attr("cx", function(d){ 
+          // It is possible that some countries won't have this indicator record
+          // therefore, return 0 
+
+          if(d.country == "Canada"){
+            //console.log(d.country);
+            //console.log(d.gni);
+            //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
+          }
+          return that.xScale(d[that.xAxisDatasetName] || 0 ); 
+        })
+        .attr("cy", function(d){ 
+          // It is possible that some countries won't have this indicator record
+          // therefore, return 0 
+          return that.yScale(d[that.yAxisDatasetName] || 0 ); 
+        })
+        .style("fill", function(d){
+          return WBD.mapContinentToColor[d["continent"]];
+        })
+        .attr("r", function(d){
+          return that.popuScale(d["population"] || 0 );
+        });
+
+    exitGroup.exit().remove()
+
+    console.log("exit group");
+    // console.log(this.baseGraph.data(this.model.getSelDataXYPlot(), function(d){ return d.country}));
+    console.log(this.svg.selectAll("g .dots"));
+    // console.log(exitGroup.exit().remove());
+    console.log(this.model.get("selDataXYPlot"));
+
+
 
     // console.log("exit()");
     // console.log(circles.exit());
@@ -250,7 +294,7 @@ WBD.XYPlot = Backbone.View.extend({
     this.baseGraph = this.svg.append("g")
         .attr("class", "dots")
       .selectAll("dot")
-        .data(this.model.getSelDataXYPlot())
+        .data(this.model.getSelDataXYPlot(), function(d){ return d.country})
       .enter().append("circle")
         .attr("class", "dot")
         .attr("id", function(d){ return d.country; })
@@ -270,8 +314,11 @@ WBD.XYPlot = Backbone.View.extend({
           // therefore, return 0 
           return that.yScale(d[that.yAxisDatasetName] || 0 ); 
         })
+        .style("fill", function(d){
+          return WBD.mapContinentToColor[d["continent"]];
+        })
         .attr("r", function(d){
-          //return that.popuScale(d[yAxisData;
+          return that.popuScale(d["population"] || 0 );
         });
 
     

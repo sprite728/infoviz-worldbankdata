@@ -35,7 +35,7 @@ WBD.prepareData = function(data){
 WBD.prepareConstants = function(){
   // read all countries
   var data;
-  
+
   console.log("Read countries")
   $.ajax({
     url: 'parser/countries.json',
@@ -89,3 +89,6 @@ WBD.prepareConstants = function(){
   });
 
 }
+
+
+

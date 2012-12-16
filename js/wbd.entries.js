@@ -16,7 +16,7 @@ WBD.Filter = Backbone.Model.extend({
     categories: [],
     xDataRange: [], // [ min, max] if empty or only 1 element -> wrong
     yDataRange: [], // [ min, max] if empty or only 1 element -> wrong
-    circleSizeRange: []
+    populationRange: []
   },
 
 
@@ -133,13 +133,14 @@ WBD.Entries = Backbone.Model.extend({
       { 
         xDataRange: this.findExtendOfAnIndicator(this.xDatasetName),
         yDataRange: this.findExtendOfAnIndicator(this.yDatasetName),
-        circleSizeRange: this.findExtendOfAnIndicator("population")
+        populationRange: this.findExtendOfAnIndicator("population")
       }
     );
     
     console.log("Hello");
     console.log(filter.get("xDataRange"));
     console.log(filter.get("yDataRange"));
+    console.log(filter.get("populationRange"));
 
   },
 
@@ -222,7 +223,7 @@ WBD.Entries = Backbone.Model.extend({
   // filter allData to selectedData
   applyFilter: function(){
     var that = this;
-    // console.log("applyFilter");
+    console.log("applyFilter");
     // console.log(this.get("selDataXYPlot"));
     /* filter by year 
     * this.selDataXYPlot = [
@@ -255,6 +256,7 @@ WBD.Entries = Backbone.Model.extend({
         return;
       } else {
         returnObj.country = d.country;
+        returnObj.continent = d.continent;
         return returnObj;
       }
     });
