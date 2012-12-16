@@ -88,7 +88,26 @@ WBD.prepareConstants = function(){
     async: false
   });
 
+  $.ajax({
+    url: 'parser/mapCountryToContinent.json',
+    data: data,
+    success: function(data){
+      console.log(data);
+      if($.parseJSON(data) == null){
+        WBD.mapCountryToContinent = data;
+      } else {
+        WBD.mapCountryToContinent = $.parseJSON(data);
+      }
+      console.log(WBD.allContinents);
+    },
+    async: false
+  });
+
 }
 
-
+WBD.getContinentByCountry = function(country){
+  
+  return WBD.mapCountryToContinent[country];
+  
+}
 
