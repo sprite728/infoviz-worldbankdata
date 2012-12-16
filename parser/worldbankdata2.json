@@ -300,6 +300,7 @@
         ]
     }, 
     {
+        "continent": "Africa", 
         "country": "Sao Tome and Principe", 
         "gni": [
             [
@@ -859,6 +860,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Lao PDR", 
         "gni": [
             [
@@ -3444,6 +3446,7 @@
         ]
     }, 
     {
+        "continent": "North America", 
         "country": "Bahamas, The", 
         "gni": [
             [
@@ -4951,6 +4954,7 @@
         ]
     }, 
     {
+        "continent": "Europe", 
         "country": "Channel Islands", 
         "gni": [
             [
@@ -6508,6 +6512,7 @@
         ]
     }, 
     {
+        "continent": "Europe", 
         "country": "Russian Federation", 
         "gni": [
             [
@@ -7107,6 +7112,7 @@
         ]
     }, 
     {
+        "continent": "North America", 
         "country": "St. Lucia", 
         "gni": [
             [
@@ -7406,6 +7412,7 @@
         ]
     }, 
     {
+        "continent": "Africa", 
         "country": "Congo, Rep.", 
         "gni": [
             [
@@ -11353,6 +11360,7 @@
         ]
     }, 
     {
+        "continent": "Europe", 
         "country": "Slovak Republic", 
         "gni": [
             [
@@ -14468,6 +14476,7 @@
         ]
     }, 
     {
+        "continent": "South America", 
         "country": "Venezuela, RB", 
         "gni": [
             [
@@ -15679,6 +15688,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Korea, Rep.", 
         "gni": [
             [
@@ -16724,6 +16734,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Syrian Arab Republic", 
         "gni": [
             [
@@ -19089,6 +19100,7 @@
         ]
     }, 
     {
+        "continent": "Africa", 
         "country": "Cote d'Ivoire", 
         "gni": [
             [
@@ -19392,6 +19404,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "West Bank and Gaza", 
         "gni": [
             [
@@ -25466,6 +25479,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Korea, Dem. Rep.", 
         "life_expectency": [
             [
@@ -26817,6 +26831,7 @@
         ]
     }, 
     {
+        "continent": "Africa", 
         "country": "Egypt, Arab Rep.", 
         "gni": [
             [
@@ -27420,6 +27435,7 @@
         ]
     }, 
     {
+        "continent": "North America", 
         "country": "St. Vincent and the Grenadines", 
         "gni": [
             [
@@ -28023,6 +28039,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Brunei Darussalam", 
         "gni": [
             [
@@ -30098,6 +30115,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Kyrgyz Republic", 
         "gni": [
             [
@@ -31451,6 +31469,7 @@
         ]
     }, 
     {
+        "continent": "North America", 
         "country": "Virgin Islands (U.S.)", 
         "life_expectency": [
             [
@@ -33876,6 +33895,7 @@
         ]
     }, 
     {
+        "continent": "Europe", 
         "country": "Faeroe Islands", 
         "gni": [
             [
@@ -35771,6 +35791,7 @@
         ]
     }, 
     {
+        "continent": "North America", 
         "country": "St. Kitts and Nevis", 
         "gni": [
             [
@@ -41204,6 +41225,7 @@
         ]
     }, 
     {
+        "continent": "Europe", 
         "country": "Macedonia, FYR", 
         "gni": [
             [
@@ -41811,6 +41833,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Yemen, Rep.", 
         "gni": [
             [
@@ -42962,6 +42985,7 @@
         ]
     }, 
     {
+        "continent": "Europe", 
         "country": "Kosovo", 
         "gni": [
             [
@@ -43743,6 +43767,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Hong Kong SAR, China", 
         "gni": [
             [
@@ -47200,6 +47225,7 @@
         ]
     }, 
     {
+        "continent": "North America", 
         "country": "Curacao", 
         "population": [
             [
@@ -49065,6 +49091,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Macao SAR, China", 
         "gni": [
             [
@@ -49676,6 +49703,7 @@
         ]
     }, 
     {
+        "continent": "North America", 
         "country": "St. Martin (French part)", 
         "population": [
             [
@@ -49757,6 +49785,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Iran, Islamic Rep.", 
         "gni": [
             [
@@ -54734,6 +54763,7 @@
         ]
     }, 
     {
+        "continent": "Africa", 
         "country": "South Sudan", 
         "life_expectency": [
             [
@@ -55425,6 +55455,7 @@
         ]
     }, 
     {
+        "continent": "Asia", 
         "country": "Myanmar", 
         "health_expenditure": [
             [
@@ -56558,6 +56589,7 @@
         ]
     }, 
     {
+        "continent": "Africa", 
         "country": "Congo, Dem. Rep.", 
         "gni": [
             [
@@ -57725,6 +57757,7 @@
         ]
     }, 
     {
+        "continent": "Africa", 
         "country": "Gambia, The", 
         "gni": [
             [
@@ -58028,6 +58061,7 @@
         ]
     }, 
     {
+        "continent": "North America", 
         "country": "Sint Maarten (Dutch part)", 
         "population": [
             [
