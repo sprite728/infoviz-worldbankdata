@@ -15,51 +15,64 @@ $(document).ready(function(){
     var myMapView;
 
     // read all countries
-    console.log("Read countries")
+    // console.log("Read countries")
     $.ajax({
       url: 'parser/countries.json',
       data: data,
       success: function(data){
-        WBD.allCountries = $.parseJSON(data);
-				console.log("hello");
-				console.log(data);
-				console.log(WBD.allCountries);
+        //console.log(data);
+        if($.parseJSON(data) == null){
+          WBD.allCountries = data;
+        } else {
+          WBD.allCountries = $.parseJSON(data);
+        }
+        //console.log(WBD.allCountries);
       },
       async: false
     });
-    console.log(WBD.allCountries);
+    //console.log(WBD.allCountries);
 
 
     // read all indicators
-    console.log("Read indicators")
+    // console.log("Read indicators")
     $.ajax({
       url: 'parser/indicators.json',
       data: data,
       success: function(data){
-        console.log(data);
-        WBD.allIndicators = data;
+        //console.log(data);
+        if($.parseJSON(data) == null){
+          WBD.allIndicators = data;
+        } else {
+          WBD.allIndicators = $.parseJSON(data);
+        }
+        //console.log(WBD.allCountries);
       },
       async: false
     });
-    console.log(WBD.allIndicators);
-
+		console.log("===========WBD Indicators==========");
+		console.log(WBD.allIndicators);
     // read all continents
-    console.log("Read continents")
+    //console.log("Read continents")
     $.ajax({
       url: 'parser/continents.json',
       data: data,
       success: function(data){
-        WBD.allContinents = data;
+        //console.log(data);
+        if($.parseJSON(data) == null){
+          WBD.allContinents = data;
+        } else {
+          WBD.allContinents = $.parseJSON(data);
+        }
+        //console.log(WBD.allContinents);
       },
       async: false
     });
-    console.log(WBD.allContinents);
 
 
 
     // --- Start program ---
     // Create Collection: myEntries
-    console.log("Read and store data ... ");
+    //console.log("Read and store data ... ");
 
     // read data into WBD.Record
     myEntries = new WBD.Entries({
