@@ -87,8 +87,8 @@ text {
 	overflow-y: auto;
 	z-index: 1000;
 	text-align: center;
-	/*background-image: url(images/back.png);*/
-	background-color: #36F;
+	background: #fff url(images/back.png) repeat left top;
+	/*background-color: #36F;*/
 
 	position:absolute;
 	top: 200px;

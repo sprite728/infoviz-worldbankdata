@@ -78,6 +78,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 	
 		var allData = this.model.get("allData");
 		$( "#ccTabs" ).tabs();
+		 $("div.ui-tabs-panel").css('padding','0px');
 		
 		
 		console.log("==========All Data===========");
