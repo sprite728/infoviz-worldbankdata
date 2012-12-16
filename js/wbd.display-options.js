@@ -46,7 +46,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		var xDataRange = this.model.get("filter").get("xDataRange");
 		var yDataRange = this.model.get("filter").get("yDataRange");
-		var circleSizeRange = this.model.get("filter").get("circleSizeRange");
+		var populationRange = this.model.get("filter").get("populationRange");
 		
 		//Indicator Pickers Initialized here
 		var defaultX = that.model.get("xDatasetName");
@@ -70,7 +70,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		/*
 		console.log("X Data Ranges: " +  xDataRange);
 		console.log("Y Data Ranges: " +  yDataRange);
-		console.log("Z Data Ranges: " +  circleSizeRange);
+		console.log("Z Data Ranges: " +  populationRange);
 		*/
 		
 		//console.log("xDataRange: ", xDataRange[0]);
@@ -174,12 +174,12 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		$( "#slider-circleSize" ).slider({
 			range: true,
-			min: circleSizeRange[0],
-			max: circleSizeRange[1],
-			values: circleSizeRange,
+			min: populationRange[0],
+			max: populationRange[1],
+			values: populationRange,
 			slide: function( event, ui ) {
 				$( "#circleSizeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
-				that.model.get("filter").set({ circleSizeRange: ui.values});
+				that.model.get("filter").set({ populationRange: ui.values});
 			}
 		});
 		$( "#circleSizeText" ).val( "$" + $( "#slider-circleSize" ).slider( "values", 0 ) +
