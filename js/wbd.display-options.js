@@ -76,26 +76,21 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		//console.log("xDataRange: ", xDataRange[0]);
 		//console.log("yDataRange: ", yDataRange[1]);
 	
-		var allData = this.model.get("allData");
-		$( "#ccTabs" ).tabs({
-            collapsible: true
-        });
-		 $("div.ui-tabs-panel").css('padding','0px');
-		
-		
-		console.log("==========All Data===========");
-		//console.log(allData);
-		//console.log(allCountries);
+		var allData = this.model.get("allData");	
 				
 		for (index = 0; index < allCountries.length; index++){
-			//if(allCountries.hasOwnProperty(index)){
-		/*  var aCountryName = allCountries[index];
-				console.log("Country Name: "+ aCountryName);
-				console.log(allData[aCountryName]);
-				console.log("Region Name: "+ allData[aCountryName]["continent"]);
-		*/	
-				$("#countries_filter").append("<button class='country'>" + allCountries[index] + "</button><br />");
+				var aCountryName = allCountries[index];
+				console.log("Country Name: "+ aCountryName);	
+				console.log("Continent: " + WBD.getContinentByCountry(aCountryName));
+				if(WBD.getContinentByCountry(aCountryName)){
+					$("#countries_filter").append("<button class='country " + WBD.getContinentByCountry(aCountryName).replace(" ", "_").toLowerCase() + "'>" + allCountries[index] + "</button><br />");
+				}
+				else{
+					$("#countries_filter").append("<button class='country undefined'>" + allCountries[index] + "</button><br />");
+				}
 				/*
+				
+				
 				try{
 					var aCountryName = allCountries[index];
 					var aCountryObj = allData[aCountryName];

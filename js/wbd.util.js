@@ -106,8 +106,6 @@ WBD.prepareConstants = function(){
 }
 
 WBD.getContinentByCountry = function(country){
-  
   return WBD.mapCountryToContinent[country];
-  
 }
 

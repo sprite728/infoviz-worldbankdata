@@ -1,3 +1,34 @@
+#slider {
+position: absolute;
+top: 0px;
+background-image:url(images/back.png);
+background-repeat:no-repeat;
+background-position: bottom;
+width: 320px;
+height: 500px;
+margin-top: -450px;
+z-index: 0;
+}
+#slider img {
+border: 0;
+margin-top:312px;
+margin-left:-99px;
+}
+#sliderContent {
+margin: 20px 0;
+position: relative;
+text-align:center;
+color:#333333;
+font-weight:bold;
+}
+#openCloseWrap {
+position:relative;
+margin: 0 0 0 120px;
+font-size:12px;
+font-weight:bold;
+}
+
+
 .clear {
 	clear: both;
 }
@@ -72,26 +103,20 @@ text {
 }
 
 #countries_tags, #continents_tags{
-	width: 225px;
+	float: left;
+	width: 250px;
 	height: 100px;
-	margin: 0 auto;
+	margin-left: 25px;
+	z-index: 1000;
 }
 
-#tabCountry{}
-
 #countries_filter, #continents_filter{
-	width: 100%;
+	width: 250px;
 	height: auto;
-	max-height: 500px;
+	max-height: 380px;
 	margin: 10px auto 0;
 	overflow-y: auto;
-	z-index: 1000;
 	text-align: center;
-	background: #fff url(images/back.png) repeat left top;
-	/*background-color: #36F;*/
-
-	position:absolute;
-	top: 200px;
 }
 
 #xyAxes{
@@ -173,6 +198,9 @@ text {
 }
 .oceania{
 	background-color:#245d7c;
+}
+.undefined{
+	background-color:#520;
 }
 
 .country:hover {

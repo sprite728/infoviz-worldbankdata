@@ -14,7 +14,27 @@
     <div id="main">
     	<div id="options">
 
-        <div id="ccTabs">
+		<div id="ccTabs">
+        <div id="tabSearch">
+          <ul id="countries_tags"></ul> 
+          <!--ul id="continents_tags"></ul-->
+        </div>
+        
+        <div id="openCloseIdentifier"></div>
+        <div id="slider">
+          <div id="sliderContent">
+            <div id="countries_filter"></div>
+            <!--div id="continents_filter"></div-->
+          </div>
+          <div id="openCloseWrap">
+            <a href="#" class="topMenuAction" id="topMenuImage">
+              <img src="css/images/open.png" alt="open" />
+            </a>
+          </div>
+        </div>
+     </div>
+  
+        <!--div id="ccTabs">
           	<ul>
             	<li><a href="#tabCountry">Country</a></li>
               <li><a href="#tabContinent">Continent</a></li>
@@ -29,8 +49,6 @@
               <ul id="continents_tags"></ul>
               <div id="continents_filter"></div>
              </div>
-             
-             <div id="slider_tab"><img src="css/images/open.png" /></div>
           </div>
       
       		<!--div id="logo"><img src="css/images/logo.jpg" /></div--> 
@@ -92,5 +110,26 @@
 <script src="js/wbd.map.js"></script>
 <script src="js/wbd.display-options.js"></script>
 <script src="js/scripts.js"></script>
+
+ 	<script type="text/javascript">
+	$(document).ready(function() {
+		$(".topMenuAction").click( function() {
+			if ($("#openCloseIdentifier").is(":hidden")) {
+				$("#slider").animate({ 
+					marginTop: "-450px"
+					}, 500 );
+				$("#topMenuImage").html('<img src="css/images/open.png" alt="open" />');
+				$("#openCloseIdentifier").show();
+			} else {
+				$("#slider").animate({ 
+					marginTop: "-50px"
+					}, 500 );
+				$("#topMenuImage").html('<img src="css/images/open.png" alt="close" />');
+				$("#openCloseIdentifier").hide();
+			}
+		});  
+	});
+	</script>
+  
 </body>
 </html>

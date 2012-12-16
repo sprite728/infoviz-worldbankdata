@@ -16,9 +16,6 @@ $(document).ready(function(){
 
     WBD.prepareConstants();
 
-   
-
-
     // --- Start program ---
     // Create Collection: myEntries
     //console.log("Read and store data ... ");
