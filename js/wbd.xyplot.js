@@ -153,7 +153,7 @@ WBD.XYPlot = Backbone.View.extend({
       .range([that.height, 0]);
 
     this.popuScale = d3.scale.linear()
-      .domian(this.model.get("filter").get("populatonRange"))
+      .domian(this.model.get("filter").get("populationRange"))
       .range([0, 10]);
 
     // Create Axes
