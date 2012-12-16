@@ -135,6 +135,9 @@ myManualCountryToContinent = json.loads(json_data)
 
 records = []
 for countryName in countries:
+	if countryName == "World":
+		continue
+
 	countryRecord = countries[countryName]
 	countryStore = {} 
 	for year in countryRecord.keys():
@@ -166,6 +169,7 @@ for countryName in countries:
 			print " check"
 		except: 
 			myManualCountryToContinent[countryName] = []
+			continent = myManualCountryToContinent[countryName]
 
 
 	records.append(countryStore)
