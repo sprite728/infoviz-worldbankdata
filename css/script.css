@@ -378,23 +378,25 @@ body{
 }
 #legend {
     width:1280px;
-    height:50px;
-		float: left;
+    height:30px !important;
+		float: none;
+		margin:30px 25px 0px;
+		position: relative;
 }
 #legend_chart {
-    height:50px;
+		background-image:url(images/legend.png);
+    height:30px;
     width:600px;
     float:right;
-    margin-top:30px;
-    margin-right:0;
+    margin-right:0px;
 }
 
 #footer {
     width:1280px;
     padding-left:50px;
-    padding-top:5px;
+    padding-top:10px;
     padding-bottom:10px;
-		margin: 40px auto;
+		margin: 60px auto 40px;
 		text-align: center;
 		border-top: 1px solid #ccc;
 }
@@ -403,11 +405,19 @@ body{
     font-weight:bold;
     margin-left:10px;
 }
+
 #map_legend{
-	width: 400px;
+	float: left;
+	width: 600px;
+	margin-left: 20px;
+	height: 30px;
 	font-size: 16px;
 	color: #333;
-	display: inline;
+}
+
+#map_legend .map_ind{
+	float: left;
+	width: 200px;
 }
 
 #map_blue{
@@ -421,24 +431,13 @@ body{
 }
 
 #map_white{
+	margin-left: 20px;
 	width:16px;
 	height:16px;
 }
 
-#legend_title{
-	font-size: 20px;
-	font-weight: bold;
-	margin-left: 8px;
-	padding-bottom: 16px;
-}
-
 .legend_desc{
-	width: 240px;
-	margin-top: -18px;
-	margin-left:30px;
+	width: 140px;
+	margin-left:24px;
 	float: left;
-}
-
-.map_ind{
-	padding: 8px;	
 }

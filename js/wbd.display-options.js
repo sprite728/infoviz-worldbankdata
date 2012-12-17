@@ -64,10 +64,10 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		for (index = 0; index < allIndicators.length; index ++){
 			allIndicators[index] = allIndicators[index].replace("_", " ").toUpperCase();
 			if(allIndicators[index] != "POPULATION" ){
-					if(allIndicators[index] != defaultX ){
+					if(allIndicators[index] != defaultX.replace("_", " ").toUpperCase()){
 						$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[index] + "</option>");
 					}
-					if(allIndicators[index] != defaultY){
+					if(allIndicators[index] != defaultY.replace("_", " ").toUpperCase()){
 						$("#yAxisPicker").append("<option class='yIndicator'>" + allIndicators[index] + "</option>");
 					}
 			}
@@ -121,8 +121,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				var tempTagLabel = $(this).tagit("tagLabel", ui.tag);
 				if(!that.model.get("filter").isNewCountry(tempTagLabel)){
 					that.model.get("filter").removeCountry($(this).tagit("tagLabel", ui.tag));
+					that.colorCountriyOptions(tempTagLabel);
 				}
-				
 			},
 		});
 
@@ -154,6 +154,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				that.model.get("filter").removeContinent($(this).tagit("tagLabel", ui.tag));
 			},
 		});
+
 
 		$("#countries_filter").show();
 		$("#continents_filter").hide();
@@ -257,12 +258,14 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			}
 			//console.log("TorF: " + isNewCountry);
 			if(isNewCountry){
-				$("#countries_tags").tagit("createTag", tempCountryName);
+				that.model.get("filter").addCountry(tempCountryName);
+				//$("#countries_tags").tagit("createTag", tempCountryName);
 				$(this).addClass(WBD.getContinentByCountry(tempCountryName).replace(" ", "_").toLowerCase());
-				$(this).removeClass("grey");
+			  $(this).removeClass("grey");
 			}
 			else{
-				$("#countries_tags").tagit("removeTagByLabel",tempCountryName);
+				that.model.get("filter").removeCountry(tempCountryName);
+				//$("#countries_tags").tagit("removeTagByLabel",tempCountryName);
 				$(this).removeClass(WBD.getContinentByCountry(tempCountryName).replace(" ", "_").toLowerCase());
 				$(this).addClass("grey");
 			}
@@ -366,10 +369,10 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		var diffCountriesRemove = that.countriesCache.diff(that.model.get("filter").get("countries"));
 		var diffCountriesNew = that.model.get("filter").get("countries").diff(that.countriesCache);
-		// console.log("diffCountriesRemove");
-		// console.log(diffCountriesRemove);
-		// console.log("diffCountriesNew");
-		// console.log(diffCountriesNew);
+		console.log("diffCountriesRemove");
+		console.log(diffCountriesRemove);
+		console.log("diffCountriesNew");
+		console.log(diffCountriesNew);
 		
 		for(index=0; index < diffCountriesNew.length; index++){
 			//	$("#countries_tags").tagit("removeTagByLabel",that.countries[index]);
