@@ -329,7 +329,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		}	
 		*/
 		
-
+		/*
 		console.log("filter");
 		console.log(that.model.get("filter"));
 		
@@ -338,6 +338,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		console.log(that.countriesCache);
 		console.log("filter countries");
 		console.log(that.model.get("filter").get("countries"));
+		*/
 		
 		var diffCountriesRemove = that.countriesCache.diff(that.model.get("filter").get("countries"));
 		var diffCountriesNew = that.model.get("filter").get("countries").diff(that.countriesCache);
