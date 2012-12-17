@@ -22,6 +22,7 @@ WBD.Map = Backbone.View.extend({
 
     //this.model.bind("change:selDataMap", this.renderColorMap, this);
     this.model.bind("change:selDataMap", this.chooseRender, this);
+
     // this.model.get("filter").bind("change:countries", this.renderColorMap, this);
 
     // this.svg = 
@@ -83,9 +84,15 @@ WBD.Map = Backbone.View.extend({
     var that = this;
 
     if(this.showXValuesOnMap){
-      that.colorScale = d3.scale.log()
-        .domain(this.model.get("filter").get("xDataRange"))
-        .range([0,1]);
+      if(this.model.get("xDatasetName") == "health_expenditure"){
+        that.colorScale = d3.scale.linear()
+          .domain(this.model.get("filter").get("xDataRange"))
+          .range([0,1]);
+      } else {
+        that.colorScale = d3.scale.log()
+          .domain(this.model.get("filter").get("xDataRange"))
+          .range([0,1]);
+      }
     }
     else {
       that.colorScale = d3.scale.log()
@@ -113,12 +120,15 @@ WBD.Map = Backbone.View.extend({
     } else {
       this.currentInd = this.model.get("yDatasetName");
     }
+    this.initColorScale();
     return this.currentInd;
   },
 
   initColorMap: function(){
     var that = this;
-    
+    this.updateCurrentInd();
+
+
     console.log("initColorMap");
 
 
@@ -160,14 +170,7 @@ WBD.Map = Backbone.View.extend({
               population = "No data";
             }
 
-            try{
-              continent = aCountryData["population"];
-            }
-            catch(err){
-              continent = "No data";
-            }
-
-            var html1 = "<div><p>" + this.id + "</p><br>" + "<ul><li>" + that.currentInd + ": " + aCountryData[that.currentInd] + "</li><li>Population: " + continent + "</li><li>Continent: " + population + "</ul></div>";
+            var html1 = "<div><p>" + this.id + "</p><br>" + "<ul><li>" + that.model.get("xDatasetName") + ": " + aCountryData[that.model.get("xDatasetName")] + "</li><li>Population: " + population + "</li></ul></div>";
             return html1; 
           }
       });
@@ -192,6 +195,9 @@ WBD.Map = Backbone.View.extend({
             var allMapData = that.model.get("selDataMap"); 
             var mapData; //temp data to store filtered map data
             var aCountryData;
+            
+            this.updateCurrentInd();
+
             mapData = allMapData.filter(function(element, index, array){
               return element.country == countryName;
             });
@@ -208,14 +214,7 @@ WBD.Map = Backbone.View.extend({
               population = "No data";
             }
 
-            try{
-              continent = aCountryData["population"];
-            }
-            catch(err){
-              continent = "No data";
-            }
-
-            var html1 = "<div><p>" + this.id + "</p><br>" + "<ul><li>" + that.currentInd + ": " + aCountryData[that.currentInd] + "</li><li>Population: " + continent + "</li><li>Continent: " + population + "</ul></div>";
+            var html1 = "<div><p>" + this.id + "</p><br>" + "<ul><li>" + that.currentInd + ": " + aCountryData[that.currentInd] + "</li><li>Population: " + population + "</li><</ul></div>";
             return html1; 
           }
       });
@@ -374,6 +373,8 @@ WBD.Map = Backbone.View.extend({
     var allMapData = that.model.get("selDataMap"); 
     var mapData; //temp data to store filtered map data
     var aCountryData;
+
+    this.updateCurrentInd();
 
     if(this.model.get("filter").get("countries").length == 0){
       console.log("No countries selected, render all");

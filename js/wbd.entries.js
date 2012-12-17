@@ -140,7 +140,7 @@ WBD.Entries = Backbone.Model.extend({
       // yDatasetLabel
     // yearRage: [min, max]
     // currentViewTab: 'map' or 'xy-plot'
-    xDatasetName: "gni",
+    xDatasetName: "gni_per_capita",
     yDatasetName: "life_expectency",
     isViewedByCountry: false,
     xDatasetScale: "linear", //linear, log
