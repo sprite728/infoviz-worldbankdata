@@ -16,13 +16,13 @@ WBD.XYPlot = Backbone.View.extend({
   yearLabel: "", // default
   
   // Style Members
-  width: 550,
+  width: 530,
   height: 550,
   margins: {
     top: 25,
     bottom: 25,
     right: 30,
-    left: 30
+    left: 50
   },
   dotSizeRange: [3, 50],  // default dot size
   stroke: 'red',
