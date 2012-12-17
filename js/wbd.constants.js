@@ -14,7 +14,7 @@ WBD.mapContinentToColor = {
 	"North America": "#abaf89",
 	"South America": "#a084a2",
 	"Africa": "#71c7d6",
-	"Europe": "#84c6bd",
+	"Europe": "#f7c326",
 	"Oceanic": "#71c6d6"
 }
 
