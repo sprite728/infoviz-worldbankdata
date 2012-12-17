@@ -163,8 +163,10 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			slide: function( event, ui ) {
         $( "#xRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 				that.model.get("filter").set({xDataRange: ui.values});
-				// console.log("xDataRange");
-				// console.log(ui.values);
+				// that.model.get("filter").trigger("change");
+
+				console.log("====Slider===xDataRange======");
+				console.log(ui.values);
       	}
     });
 		$( "#xRangeText" ).val( "$" + $( "#slider-xAxis" ).slider( "values", 0 ) +
@@ -232,7 +234,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		$(".xyAxes select").change(function(e) {
 			var xName = $("#xAxisPicker").val();
 			var yName = $("#yAxisPicker").val();
-			that.model.set({xDatasetName: xName, yDatasetName: yName});
+
+			that.model.setXYDatasets({xDatasetName: xName, yDatasetName: yName});
 			
 			//that.model.set("selDataXYPlot", that.model.get("allData")); 
 			

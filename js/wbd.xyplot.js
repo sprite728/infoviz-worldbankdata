@@ -145,15 +145,15 @@ WBD.XYPlot = Backbone.View.extend({
 		
     // Create Scales 
     this.xScale = d3.scale.linear()
-      .domain(this.model.getXDataRange())
+      .domain(this.model.get("filter").get("xDataRange"))
 			.range([0, this.width]);
 
     this.yScale = d3.scale.linear()
-      .domain(this.model.getYDataRange())
+      .domain(this.model.get("filter").get("yDataRange"))
       .range([that.height, 0]);
 
     this.popuScale = d3.scale.linear()
-      .domain(this.model.get("filter").get("populationRange"))
+      .domain(this.model.findExtendOfAnIndicator('population'))
       .range(this.dotSizeRange);
 
     // this.colorScale = d3.scale.ordinal()
@@ -216,15 +216,15 @@ WBD.XYPlot = Backbone.View.extend({
 
     // Create Scales 
     this.xScale = d3.scale.linear()
-      .domain(this.model.getXDataRange())
+      .domain(this.model.get("filter").get("xDataRange"))
       .range([0, this.width]);
 
     this.yScale = d3.scale.linear()
-      .domain(this.model.getYDataRange())
+      .domain(this.model.get("filter").get("yDataRange"))
       .range([that.height, 0]);
 
     this.popuScale = d3.scale.linear()
-      .domain(this.model.get("filter").get("populationRange"))
+      .domain(this.model.findExtendOfAnIndicator("population"))
       .range(this.dotSizeRange);
 
 
@@ -266,18 +266,19 @@ WBD.XYPlot = Backbone.View.extend({
   },
 
   updateScalesAndAxes: function(){
+    console.log("update scales and axes");
     // Create Scales 
     var that = this;
     this.xScale = d3.scale.linear()
-      .domain(this.model.getXDataRange())
+      .domain(this.model.get("filter").get("xDataRange"))
       .range([0, this.width]);
 
     this.yScale = d3.scale.linear()
-      .domain(this.model.getYDataRange())
+      .domain(this.model.get("filter").get("yDataRange"))
       .range([that.height, 0]);
 
     this.popuScale = d3.scale.linear()
-      .domain(this.model.get("filter").get("populationRange"))
+      .domain(this.model.findExtendOfAnIndicator('population'))
       .range(this.dotSizeRange);
 
 
@@ -373,6 +374,7 @@ WBD.XYPlot = Backbone.View.extend({
     this.updateScalesAndAxes();
     // this.resetScalesAndAxes();
     // that.renderAxes();
+
 		console.log("done");
   },
 
