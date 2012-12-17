@@ -1,3 +1,13 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700)
+
+body{
+    background: #f9f9f9 url(images/bg.jpg);
+    font-family: "Lato", Calibri, Arial, sans-serif;
+	-webkit-font-smoothing: antialiased;
+	overflow-y: scroll;
+	overflow-x: hidden;
+    }
+
 .clear {
 	clear: both;
 	after: 
@@ -45,7 +55,7 @@
 }
 
 .year.label {
-  font: 500 96px "Helvetica Neue";
+  font: 500 96px ;
   fill: #ddd;
 }
 
