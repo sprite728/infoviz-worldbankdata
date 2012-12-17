@@ -4,9 +4,8 @@ var WBD = WBD || {};
 
 // main function 
 $(document).ready(function(){
-
   // Prepare all the indicators, countries and continents
-
+	$("#main").hide();
   d3.json("parser/worldbankdata2.json", function(data){
       // Main Variables 
     var myEntries;
@@ -15,10 +14,6 @@ $(document).ready(function(){
     var myMapView;
 
     WBD.prepareConstants();
-
-   
-
-
     // --- Start program ---
     // Create Collection: myEntries
     //console.log("Read and store data ... ");
@@ -28,14 +23,12 @@ $(document).ready(function(){
       allData: WBD.prepareData(data),
       xDatasetName: WBD.allIndicators[0],
       yDatasetName: WBD.allIndicators[1]
-
     });
 
 	  myAllCountries = WBD.allCountries;
 	  myAllContinents = WBD.allContinents; 
       // console.log("Check myEntries");
       // console.log(myEntries.get('allData'));
-      
 
       // Create a XY Plot
     myXYPlotView = new WBD.XYPlot(
@@ -53,4 +46,8 @@ $(document).ready(function(){
     });
     
   });
+	
+	$("#options").css("display","block");
+	$("#main").fadeIn(2000);
+	
 });

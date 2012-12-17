@@ -272,6 +272,13 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				$("#continents_filter").show();
 			}
 		});
+		
+		$("#resetBtn").click(function(){
+			that.model.get("filter").set({countries : []});
+		});
+		
+		
+		
 /*	
 	$("#tabs > button").click(function(){
 		var temp = $(this).text();
@@ -313,9 +320,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 	
   update: function() {
     var that = this, index = 0;
-		console.log("=============updating===============");
-		
-
+		console.log("=============updating countries===============");
 		
 		var diffCountriesRemove = that.countriesCache.diff(that.model.get("filter").get("countries"));
 		var diffCountriesNew = that.model.get("filter").get("countries").diff(that.countriesCache);
@@ -324,16 +329,17 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		// console.log("diffCountriesNew");
 		// console.log(diffCountriesNew);
 		
-		
 		for(index=0; index < diffCountriesNew.length; index++){
 			//	$("#countries_tags").tagit("removeTagByLabel",that.countries[index]);
 				$("#countries_tags").tagit("createTag",diffCountriesNew[index]);
+				that.colorCountriyOptions(diffCountriesNew[index]);
 				console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Add from Cache!");
 		}	
 		
 		for(index=0; index < diffCountriesRemove.length; index++){
 			try{
 				$("#countries_tags").tagit("removeTagByLabel",diffCountriesRemove[index]);
+				that.colorCountriyOptions(diffCountriesRemove[index]);
 				console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Remove from Cache!");
 			}
 			catch(err){
@@ -350,5 +356,18 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		//console.log(regions + " >> " + countries + " >> " + year);
 	
   },
+	
+	colorCountriyOptions: function(countryIn){
+		var that = this;
+		$("#countries_filter .country").each(function(index){
+			if($(this).text()==countryIn){
+				var continentName = WBD.getContinentByCountry(countryIn).replace(" ", "_").toLowerCase();
+				console.log("================"+continentName);
+				if($(this).hasClass(continentName)){$(this).removeClass(continentName).addClass("grey");}
+				else{$(this).addClass(continentName).removeClass("grey");}
+			}
+			
+		});		
+	}
   
 });
