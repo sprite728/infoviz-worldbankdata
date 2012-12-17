@@ -143,7 +143,7 @@ WBD.Entries = Backbone.Model.extend({
     xDatasetName: "gni",
     yDatasetName: "life_expectency",
     isViewedByCountry: false,
-    xDatasetScale: "linear",
+    xDatasetScale: "linear", //linear, log
     yDatasetScale: "linear",
   },
 

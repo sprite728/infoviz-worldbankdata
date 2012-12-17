@@ -311,27 +311,27 @@ body{
 }
 
 .asia{
-	background-color:#ffffff;
+	background-color:#e2afb1;
 
 }
 .africa {
-	background-color:#ffffff;
+	background-color:#71c7d6;
 
 }
 .north_america{
-	background-color:#ffffff;
+	background-color:#abaf89;
 
 }
 .south_america{
-	background-color:#ffffff;
+	background-color:#a084a2;
 
 }
 .europe{
-	background-color:#ffffff;
+	background-color:#f9e612;
 
 }
 .oceania{
-	background-color:#ffffff;
+	background-color:#fe4552;
 
 }
 .grey{
@@ -339,7 +339,6 @@ body{
 	border: none;
 }
 .undefined{
-<<<<<<< HEAD
 	background-color:#ffffff;
 	border:none;
 }
