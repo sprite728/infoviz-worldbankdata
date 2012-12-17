@@ -39,10 +39,11 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		var that = this; 
 		var index = 0;
 		
-		var allCountries = WBD.allCountries;
-		var allContinents = WBD.allContinents;
-		var allIndicators = WBD.allIndicators;
-		var allCategories = WBD.allCategories;
+		var allCountries = WBD.allCountries.sort();
+		var allContinents = WBD.allContinents.sort();
+		var allIndicators = WBD.allIndicators.sort();
+		var allCategories = WBD.allCategories.sort();
+		var allData = this.model.get("allData");
 		
 		//console.log("=================All Indicators==============");
 		//console.log(allIndicators);
@@ -75,19 +76,19 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		*/
 		
 		//console.log("xDataRange: ", xDataRange[0]);
-		//console.log("yDataRange: ", yDataRange[1]);
-	
-		var allData = this.model.get("allData");	
-				
+		//console.log("yDataRange: ", yDataRange[1]);	
+		
+		$("#tabs").tabs();
+		
 		for (index = 0; index < allCountries.length; index++){
 				var aCountryName = allCountries[index];
 				//console.log("Country Name: "+ aCountryName);	
 				//console.log("Continent: " + WBD.getContinentByCountry(aCountryName));
 				if(WBD.getContinentByCountry(aCountryName)){
-					$("#countries_filter").append("<button class='country " + WBD.getContinentByCountry(aCountryName).replace(" ", "_").toLowerCase() + "'>" + allCountries[index] + "</button><br>");
+					$("#countries_filter").append("<li><button class='country grey'>" + allCountries[index] + "</button></li>");
 				}
 				else{
-					$("#countries_filter").append("<button class='country undefined'>" + allCountries[index] + "</button><br>");
+					$("#countries_filter").append("<li><button class='country undefined'>" + allCountries[index] + "</button></li>");
 				}
 		}
 		
@@ -118,13 +119,14 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				if(!that.model.get("filter").isNewCountry(tempTagLabel)){
 					that.model.get("filter").removeCountry($(this).tagit("tagLabel", ui.tag));
 				}
+				
 			},
 		});
 
 
 		for (index=0; index<allContinents.length;index++){
 			//if(allContinents.hasOwnProperty(index)){
-				$("#continents_filter").append("<button class='continent "+ allContinents[index].replace(" ","_").toLowerCase() + "'>" + allContinents[index] + "</button><br>");
+				$("#continents_filter").append("<li><button class='continent "+ allContinents[index].replace(" ","_").toLowerCase() + "'>" + allContinents[index] + "</button></li>");
 			//}
 		}
 		
@@ -149,9 +151,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				that.model.get("filter").removeContinent($(this).tagit("tagLabel", ui.tag));
 			},
 		});
-		
-		$("#continents_tags").hide();
-		$("#countries_filter").hide();
+
+		$("#countries_filter").show();
 		$("#continents_filter").hide();
 		
 		//Data Range Sliders here
@@ -161,7 +162,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			max: xDataRange[1],
 			values: xDataRange,
 			slide: function( event, ui ) {
-        $( "#xRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        $( "#xRangeText" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 				that.model.get("filter").set({xDataRange: ui.values});
 				// that.model.get("filter").trigger("change");
 
@@ -169,8 +170,9 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				console.log(ui.values);
       	}
     });
-		$( "#xRangeText" ).val( "$" + $( "#slider-xAxis" ).slider( "values", 0 ) +
-            " - $" + $( "#slider-xAxis" ).slider( "values", 1 ) );
+		
+		$( "#xRangeText" ).val( $( "#slider-xAxis" ).slider( "values", 0 ) +
+            " - " + $( "#slider-xAxis" ).slider( "values", 1 ) );
 		
 		$( "#slider-yAxis" ).slider({
 			range: true,
@@ -191,7 +193,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			max: populationRange[1],
 			values: populationRange,
 			slide: function( event, ui ) {
-				$( "#populationRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+				$( "#populationRangeText" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 				that.model.get("filter").set({ populationRange: ui.values});
 			}
 		});
@@ -204,13 +206,23 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		var that = this;
 		$("#countries_filter .country").click(function(){
 			//console.log($(this).text());
-			var isNewCountry = that.model.get("filter").isNewCountry($(this).text());
+			var tempCountryName = $(this).text();
+			var isNewCountry = that.model.get("filter").isNewCountry(tempCountryName);
+			
+			if(WBD.getContinentByCountry(tempCountryName)){
+				$(this).addClass(WBD.getContinentByCountry(tempCountryName).replace(" ", "_").toLowerCase());
+				$(this).removeClass("grey");
+			}
 			//console.log("TorF: " + isNewCountry);
 			if(isNewCountry){
-				$("#countries_tags").tagit("createTag", $(this).text());
+				$("#countries_tags").tagit("createTag", tempCountryName);
+				$(this).addClass(WBD.getContinentByCountry(tempCountryName).replace(" ", "_").toLowerCase());
+				$(this).removeClass("grey");
 			}
 			else{
-				$("#countries_tags").tagit("removeTagByLabel", $(this).text());
+				$("#countries_tags").tagit("removeTagByLabel",tempCountryName);
+				$(this).removeClass(WBD.getContinentByCountry(tempCountryName).replace(" ", "_").toLowerCase());
+				$(this).addClass("grey");
 			}
 			//console.log("filter.get contries");
 			//console.log(that.model.get("filter").get("countries"));
@@ -225,6 +237,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			}
 			else{
 				$("#continents_tags").tagit("removeTagByLabel", $(this).text());
+				console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Remove from Cutton Click!");
 			}
 			//console.log("filter.get contries");
 			//console.log(that.model.get("filter").get("countries"));
@@ -244,7 +257,22 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			// console.log("Y Axis: ", $("#yAxisPicker").val());
 			// console.log("============== END of CHANGING XY AXIS ===============");
 		});
-	
+		
+		$("#tabs ul li").click(function(){
+			console.log($(this).text()+" View Selected!");
+			var temp = $(this).text();
+			if(temp == "Country"){
+				that.model.set("isViewedByCountry: true");
+				$("#continents_filter").hide();
+				$("#countries_filter").show();
+			}
+			if(temp == "Continent"){
+				that.model.set("isViewedByCountry: false");
+				$("#countries_filter").hide();
+				$("#continents_filter").show();
+			}
+		});
+/*	
 	$("#tabs > button").click(function(){
 		var temp = $(this).text();
 		if(temp == "Country"){
@@ -262,6 +290,23 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			$("#continents_filter").slideDown();
 		}
 	});
+	/*
+	$("body").click(function(){
+			$("#continents_tags").hide();
+			$("#countries_tags").hide();
+			$("#countries_filter").hide();
+			$("#continents_filter").hide();
+	});*/
+	
+	$(document).mouseup(function (e)
+	{
+    var container = $("countries_filter");
+
+    if (container.has(e.target).length === 0)
+    {
+        container.hide();
+    }
+	});
 	
 		//Data Range Slider Controllers here
 	},
@@ -273,9 +318,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		console.log("Previsou Countries:" + this.model.get("filter").previous("countries"));		
 		console.log("Previsou Attributes:");
 		console.log(this.model.get("filter").previousAttributes());	
-		*/
-		// console.log("filter");
-		// console.log(that.model.get("filter"));
+
 		
 		// //$("#countries_tags").tagit("removeAll");
 		// console.log("country cache");
@@ -294,14 +337,19 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		for(index=0; index < diffCountriesNew.length; index++){
 			//	$("#countries_tags").tagit("removeTagByLabel",that.countries[index]);
 				$("#countries_tags").tagit("createTag",diffCountriesNew[index]);
+				console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Add from Cache!");
 		}	
 		
 		for(index=0; index < diffCountriesRemove.length; index++){
-			$("#countries_tags").tagit("removeTagByLabel",diffCountriesRemove[index]);
+			try{
+				$("#countries_tags").tagit("removeTagByLabel",diffCountriesRemove[index]);
+				console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!Remove from Cache!");
+			}
+			catch(err){
+				continue;
+			}
 		}
 			
-		
-		
 		this.countriesCache = that.model.get("filter").get("countries").slice(); // clone the countries
 		/*
 		var year = this.model.get("filter").get("year");

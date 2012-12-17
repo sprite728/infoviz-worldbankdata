@@ -5,14 +5,14 @@
     <!-- The sequence of the libraries is very important! d3 > jq > under > backbone -->
     <!--link href="css/reset.css" rel="stylesheet" type="text/css" /-->
     <link type="text/css" rel="stylesheet" href="css/script.css" />
-    <!--link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" /-->
-    <link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" />
+    <link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
+    <!--link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" /-->
     <link href="css/jquery.tagit.css" rel="stylesheet" type="text/css" />
     <link href="css/example.css" rel="stylesheet" type="text/css" />
     <link href="css/tipsy.css" rel="stylesheet" type="text/css" />
     <link href="css/colorbrewer.css" rel="stylesheet" type="text/css" />    
     <link href="css/jquery.tagit.css" type="text/css" rel="stylesheet" />
-    <!--link href="css/jquery.dropdown.css" type="text/css" rel="stylesheet" /-->
+    <link href="css/jquery.dropdown.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
@@ -25,23 +25,30 @@
         <!-- Search Tabs and Search boxes -->
         <div id="ccTabs">
           <div id="tabs">
-            <button id="tab_country">Country</button>
+          	<ul>
+            	<li><a href="#tab-1">Country</a></li>
+              <li><a href="#tab-2">Continent</a></li>
+            </ul>
+            <div id="tab-1"><ul id="countries_tags"></ul></div>
+            <div id="tab-2"><ul id="continents_tags"></ul></div>
+            <!--button id="tab_country">Country</button>
             <button id="tab_continent">Continent</button>
             <!--button id="tab_country" data-dropdown="#dropdown_countries">Country</button>
             <button id="tab_continent" data-dropdown="#dropdown_continents">Continent</button-->
+            <img data-dropdown="#dropdown_filters" src="css/images/expand.png" />
           </div>
-          <div id="tabSearch">
+          <!--div id="tabSearch">
             <ul id="countries_tags"></ul> 
             <ul id="continents_tags"></ul>
-          </div>
-     
-          <div id="dropdown_filters">
+          </div-->
+          <!--div id="dropdown_filters">
             <div id="countries_filter"></div>
             <div id="continents_filter"></div>
-          </div> 
+          </div--> 
         </div>
-        <div id="selection_xy"> 
-        <div class="selection_float">
+        
+      	<div id="selection_xy"> 
+       	  <div class="selection_float">
             <div class="xyAxes">
                 <div class="singleAxis">
                 <label for="xAxisPicker"><stonrg class="title">X Axis:</strong></label>
@@ -119,6 +126,11 @@
 <script src="js/wbd.map.js"></script>
 <script src="js/wbd.display-options.js"></script>
 <script src="js/scripts.js"></script>
+
+          <div id="dropdown_filters" class="dropdown-menu has-scorll">
+            <ul id="countries_filter"></ul>
+            <ul id="continents_filter"></ul>
+          </div> 
 
 <!--div id="dropdown_countries" class="dropdown-menu has-scroll">
 	<ul id="countries_filter"></ul>

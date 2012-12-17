@@ -103,41 +103,52 @@ body{
 	margin: 0 10px 0 25px;
 	position: relative;
 }
+
 #tabs {
-    text-align:center;
+  text-align:center;
 	display: block;
 	line-height: 30px;
 	padding-left: -20px;
-	}
+	height: 170px;
+}
+
+#tabs > ul{
+	border: none;
+	background:#e4e9ed none;
+}
+
+#dropdown_filters{
+	height: 30px;
+	width: 300px;
+}
+	
+/*
 #tabs  button{
+<<<<<<< HEAD
     margin: 0 auto;
+=======
+  margin: 0 auto;
+>>>>>>> remotes/origin/an
 	padding: 10px 10px 5px;
 	border-radius: 10px;
 	box-shadow: 1px 1px 1px rgba(0,0,0,0.09) inset;
 }
-
+*/
 
 #countries_tags, #continents_tags{
 	float: left;
 	width: 250px;
-	height: 100px;
+	height: 80px;
 	z-index: 99999;
 }
 
-#dropdown_filters{
-	position: relative;
-}
-
 #countries_filter, #continents_filter{
-	width: 260px;
+	width: 300px;
 	height: auto;
 	max-height: 350px;
 	overflow-y: auto;
 	margin: 0 auto;
 	text-align: center;
-	position: absolute;
-	top: 120px;
-	background-color:#ffffff;
 }
 #selection_xy {
     width:900px;
@@ -194,19 +205,19 @@ body{
 
 .xyAxes #xAxisPicker, .xyAxes #yAxisPicker{
 	width: 250px !important;
-    height:35px !important;
+  height:35px !important;
 	border: none;
 	border-radius: 0px;
-    background:url(images/index.png) no-repeat 0 0;
-    padding: 0px 10px 10px 10px;
-    margin:10px;
-    font-weight: normal;
-    cursor:default;
-    text-indent:10px;
-    z-index:1;
-    -webkit-appearance: none;
-    box-sizing: none;
-    -webkit-box-align: center;
+  background:url(images/index.png) no-repeat 0 0;
+  padding: 0px 10px 10px 10px;
+  margin:10px;
+  font-weight: normal;
+  cursor:default;
+  text-indent:10px;
+  z-index:1;
+  -webkit-appearance: none;
+  box-sizing: none;
+  -webkit-box-align: center;
 }
 
 #slider-xAxis, #slider-yAxis, #slider-circleSize{
@@ -323,8 +334,14 @@ body{
 	background-color:#ffffff;
 
 }
+.grey{
+	background-color: white;
+	border: none;
+}
 .undefined{
+<<<<<<< HEAD
 	background-color:#ffffff;
+	border:none;
 }
 
 .country:hover {
@@ -333,6 +350,7 @@ body{
 	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#8da4b8', endColorstr='#acbecd');
 	background-color:#8da4b8;
 }
+
 .country:active {
 	position:relative;
 	top:1px;

@@ -20,12 +20,10 @@ WBD.Filter = Backbone.Model.extend({
     hoveredCountry: ''
   },
 
-
   setHoveredCountry: function(country){
     this.set({hoveredCountry: country});
     console.log("Hoved Courntries:" + country);    
   },
-
 
   toggleCountry: function(country) {
 	  var isNew = this.isNewCountry(country);

@@ -168,8 +168,10 @@ WBD.Map = Backbone.View.extend({
       var isNew = that.model.get("filter").isNewCountry(countryName);
       
       if(isNew){
+				//$("#countries_tags").tagit("createTag", countryName);
         that.model.get("filter").addCountry(countryName);
       } else {
+				//$("#countries_tags").tagit("removeTagByLabel", countryName);
         that.model.get("filter").removeCountry(countryName);
         // $(this).attr("class", "");
       }
