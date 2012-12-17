@@ -358,12 +358,13 @@ WBD.DisplayOptionView = Backbone.View.extend({
   },
 	
 	colorCountriyOptions: function(countryIn){
+		var that = this;
 		$("#countries_filter .country").each(function(index){
 			if($(this).text()==countryIn){
-				if($(this).hasClass(countryIn)){$(this).removeClass(countryIn).addClass("grey");}
-				else{$(this).addClass(countryIn).removeClass("grey");}
-				console.log("============Country items colored!==============");
-				console.log($(this).text(),countryIn);
+				var continentName = WBD.getContinentByCountry(countryIn).replace(" ", "_").toLowerCase();
+				console.log("================"+continentName);
+				if($(this).hasClass(continentName)){$(this).removeClass(continentName).addClass("grey");}
+				else{$(this).addClass(continentName).removeClass("grey");}
 			}
 			
 		});		
