@@ -19,7 +19,6 @@ WBD.Filter = Backbone.Model.extend({
     populationRange: []
   },
 
-
   toggleCountry: function(country) {
 	  var isNew = this.isNewCountry(country);
 		var tempCountries = this.get("countries");
@@ -52,18 +51,28 @@ WBD.Filter = Backbone.Model.extend({
 	
   addCountry: function(country) {
 		var tempCountries = this.get("countries");
-		tempCountries.push(country);
-	  this.set({countries : tempCountries});
-    this.trigger("change");
-		console.log("Changed Courntries:" + this.get("countries"));
-  },
+		if(this.isNewCountry(country)){
+			tempCountries.push(country);	
+			this.set({countries : tempCountries});
+	    this.trigger("change");
+			console.log("Changed Courntries:" + this.get("countries"));
+			return true;
+		} 
+		console.log("(No Changed) Courntries:" + this.get("countries"));
+  	return false;
+	},
 	
 	removeCountry: function(country) {
 		var tempCountries = this.get("countries");
-		tempCountries.remove(country);	  
-	  this.set({countries : tempCountries});
-    this.trigger("change");
-		console.log("Changed Courntries:" + this.get("countries"));
+		if(!this.isNewCountry(country)){
+			tempCountries.remove(country);	  
+	  	this.set({countries : tempCountries});
+    	this.trigger("change");
+			console.log("Changed Courntries:" + this.get("countries"));
+			return true;	
+		}
+		console.log("(No Changed) Courntries:" + this.get("countries"));
+		return false;
 	},
   
   toggleContinent: function(continent) {

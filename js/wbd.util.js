@@ -12,6 +12,16 @@ Array.prototype.remove = function(member) {
   return this;
 }
 
+Array.prototype.clone = function(array) {
+	var newArray = array.slice();
+	return newArray;
+}
+
+Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return !(a.indexOf(i) > -1);});
+}
+ 
+
 WBD.prepareData = function(data){
   // Put pre-processing code here ...
   //console.log("Prepare data ... ");

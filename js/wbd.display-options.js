@@ -12,6 +12,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
   year: 2000,
   countries: [],
   continents:[],
+	countriesCache: [],
   
   el: $("#options"),
   
@@ -23,8 +24,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		this.countries = this.model.get("filter").get("countries");
 		this.continents = this.model.get("filter").get("continents");
-		
-		this.model.bind("change:filter", this.render, this );
+		this.countriesCache = [];
+		this.model.get("filter").bind("change", this.update, this);
 		//var countries = $.ajax({url: "./countries.json", async: false});
 		//var names =_.map(JSON.parse(countries.responseText), function(country){return country.country});
 		//console.log(names);
@@ -107,10 +108,16 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				if(allCountries.indexOf(tempTagLabel)<0){return false;}
     	},
 			afterTagAdded: function(evt, ui) {
-				that.model.get("filter").addCountry($(this).tagit("tagLabel", ui.tag));
+				var tempTagLabel = $(this).tagit("tagLabel", ui.tag);
+				if(that.model.get("filter").isNewCountry(tempTagLabel)){
+					that.model.get("filter").addCountry($(this).tagit("tagLabel", ui.tag));
+				}
 			},
 			afterTagRemoved: function(evt, ui) {
-				that.model.get("filter").removeCountry($(this).tagit("tagLabel", ui.tag));
+				var tempTagLabel = $(this).tagit("tagLabel", ui.tag);
+				if(!that.model.get("filter").isNewCountry(tempTagLabel)){
+					that.model.get("filter").removeCountry($(this).tagit("tagLabel", ui.tag));
+				}
 			},
 		});
 
@@ -133,6 +140,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			beforeTagAdded: function(event, ui) {
 				var tempTagLabel = $(this).tagit("tagLabel", ui.tag);
 				if(allContinents.indexOf(tempTagLabel)<0){return false;}
+				if(this.countries.indexOf(tempTagLabel)<0){return false;}
     	},
 			afterTagAdded: function(evt, ui) {
 				that.model.get("filter").addContinent($(this).tagit("tagLabel", ui.tag));
@@ -253,11 +261,43 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		//Data Range Slider Controllers here
 	},
 	
-  render: function() {
-    var that = this;
+  update: function() {
+    var that = this, index = 0;
+		console.log("=============updating===============");
+		/*console.log("Whether Changed: " + this.model.get("filter").hasChanged("countries"));
+		console.log("Previsou Countries:" + this.model.get("filter").previous("countries"));		
+		console.log("Previsou Attributes:");
+		console.log(this.model.get("filter").previousAttributes());	
+		*/
+		console.log("filter");
+		console.log(that.model.get("filter"));
 		
-		console.log(this.model.get("filter").hasChanged("countries"));
+		//$("#countries_tags").tagit("removeAll");
+		console.log("country cache");
+		console.log(that.countriesCache);
+		console.log("filter countries");
+		console.log(that.model.get("filter").get("countries"));
 		
+		var diffCountriesRemove = that.countriesCache.diff(that.model.get("filter").get("countries"));
+		var diffCountriesNew = that.model.get("filter").get("countries").diff(that.countriesCache);
+		console.log("diffCountriesRemove");
+		console.log(diffCountriesRemove);
+		console.log("diffCountriesNew");
+		console.log(diffCountriesNew);
+		
+		
+		for(index=0; index < diffCountriesNew.length; index++){
+			//	$("#countries_tags").tagit("removeTagByLabel",that.countries[index]);
+				$("#countries_tags").tagit("createTag",diffCountriesNew[index]);
+		}	
+		
+		for(index=0; index < diffCountriesRemove.length; index++){
+			$("#countries_tags").tagit("removeTagByLabel",diffCountriesRemove[index]);
+		}
+			
+		
+		
+		this.countriesCache = that.model.get("filter").get("countries").slice(); // clone the countries
 		/*
 		var year = this.model.get("filter").get("year");
 		var countries = this.model.get("filter").get("countries");
