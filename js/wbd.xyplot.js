@@ -267,6 +267,7 @@ WBD.XYPlot = Backbone.View.extend({
 
   updateScalesAndAxes: function(){
     // Create Scales 
+    var that = this;
     this.xScale = d3.scale.linear()
       .domain(this.model.getXDataRange())
       .range([0, this.width]);
