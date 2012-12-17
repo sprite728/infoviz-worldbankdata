@@ -47,10 +47,11 @@ WBD.Map = Backbone.View.extend({
 
     // Initialize color scale
     this.initColorScale();
+
     this.initBottomMap();
     this.initColorMap();
     //this.initTopMap(); //d3, circles over the map
-    // this.updateColorMap();
+    //this.updateColorMap();
   },
 
   initColorScale: function(){
@@ -70,7 +71,7 @@ WBD.Map = Backbone.View.extend({
 
   initBottomMap: function(){
     console.log("initBottomMap");
-    console.log(this);
+    //console.log(this);
 
     // Add the CloudMade image tiles as a base layer
     this.map.add(org.polymaps.image()
@@ -85,9 +86,8 @@ WBD.Map = Backbone.View.extend({
     if(this.showXValuesOnMap){
       this.currentInd = this.model.get("xDatasetName");
     } else {
-      this.currentInd = this.model.get("xDatasetName");
+      this.currentInd = this.model.get("yDatasetName");
     }
-
     return this.currentInd;
   },
 
@@ -147,6 +147,8 @@ WBD.Map = Backbone.View.extend({
               feature.element.setAttribute("title", aCountryData['country']);
               feature.element.addEventListener("click", that.clickFeature , false);
               feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
+              console.log("Check country name");
+              console.log(aCountryData['country']);
             }
           }
         }
@@ -156,7 +158,62 @@ WBD.Map = Backbone.View.extend({
   },
 
 
+  clickFeature: function(f, evt){
+    console.log("clickFeature");
+
+    //this.model.get("filter").toggleCountry(this.id);
+
+    var that = this;
+    $(".selected").attr("class", "country-tile");
+    $(this).attr("class", "selected");
+
+    var blurb = "<div class='info_blurb'>" + this.id + " to be passed" + "</div>";
+    /*
+    var infowin = document.getElementById('detail')
+    
+    infowin.style.width = "200px";
+    infowin.style.maxHeight = "200px";
+    infowin.style.overflow = "auto";
+    infowin.style.left = evt.clientX + "px";
+    infowin.style.top = evt.clientY + "px";
+    infowin.style.position = 'absolute';
+    infowin.style.display = 'block';
+        
+    infowin.innerHTML = blurb; 
+    */
+
+    this.model.get("filter").addCountry(this.id);
+    //setCountry(this.id);
+  },
+
+  mouseOverFeature: function(f, evt){
+    console.log("mouseOverFeature");
+    console.log(f);
+    console.log(this);
+    console.log(this.id);
+    
+    
+    $(this).tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+          $('.tipsy').remove();
+          console.log("tipsy");
+          console.log(f.screenX);
+          console.log(f.screenY);
+          var html1 = "<div><span>" + this.id + "</span>";
+          return html1; 
+        }
+    });
+  },
+  
+
+
   renderColorMap: function(){
+
+    console.log("renderColorMap");
+    console.log(this);
+
     var that = this;
     var i, feature, countryName;
 
@@ -190,60 +247,23 @@ WBD.Map = Backbone.View.extend({
         var countryColor = that.colorScale(aCountryData[that.currentInd]);
         console.log("countryColor");
         console.log(countryColor);
-        // setAttribute("style", "color: red;");
-        
+
         // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
-        feature.element.setAttribute("class", "country-tile");
-        feature.element.setAttribute("id", aCountryData['country']);
+        //feature.element.setAttribute("class", "country-tile");
+        //feature.element.setAttribute("id", aCountryData['country']);
         feature.element.setAttribute("fill", "rgba(173,221,10,"+countryColor+")");
-        feature.element.setAttribute("title", aCountryData['country']);
-        feature.element.addEventListener("click", that.clickFeature  , false);
-        feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
+        //feature.element.setAttribute("title", aCountryData['country']);
+        // feature.element.addEventListener("click", that.clickFeature  , false);
+        //feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
       }
     };
     
     
   },
 
-  clickFeature: function(f, evt){
-    console.log("clickFeature");
-
-    f.setAttribute("class", "selected");
-
-    var blurb = "<div class='info_blurb'>" + f.getAttribute("title") + " to be passed" + "</div>";
-
-    var infowin = document.getElementById('detail')
-    
-    infowin.style.width = "200px";
-    infowin.style.maxHeight = "200px";
-    infowin.style.overflow = "auto";
-    infowin.style.left = evt.clientX + "px";
-    infowin.style.top = evt.clientY + "px";
-    infowin.style.position = 'absolute';
-    infowin.style.display = 'block';
-        
-    infowin.innerHTML = blurb; 
-
-    setCountry(f.getAttribute("title"));
-  },
-
-  mouseOverFeature: function(f, evt){
-
-    console.log("mouseOverFeature");
-    console.log(f);
-    $(f).tipsy({ 
-        gravity: 'w', 
-        html: true, 
-        title: function() {
-          $('.tipsy').remove();
-          var html1 = "<div><span>test POP UP </span><br>" + "<div><ul><li>test1</li><li>test2</li><li>test3</li></ul></div></div>";
-          return html1; 
-        }
-    });  
-  },
-
-  setCountry: function(name){
+  setCountry: function(){
     console.log("setCountry");
+    console.log(this.id);
   }
 
 
