@@ -10,12 +10,12 @@ WBD.allCategories = ["BRIC", "AIPEC", "WTO"];
 
 WBD.mapContinentToColor = {
 	//"Asia": "#aaae89",
-	"Asia": "#dd5d62",
+	"Asia": "#e2afb1",
 	"North America": "#abaf89",
 	"South America": "#a084a2",
 	"Africa": "#71c7d6",
-	"Europe": "#84c6bd",
-	"Oceanic": "#71c6d6"
+	"Europe": "#f9e612",
+	"Oceanic": "#fe4552"
 }
 
 WBD.mapCountryToContinent = {}
