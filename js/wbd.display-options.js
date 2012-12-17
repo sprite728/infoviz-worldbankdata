@@ -63,7 +63,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		for (index = 0; index < allIndicators.length; index ++){
 			allIndicators[index] = allIndicators[index].replace("_", " ").toUpperCase();
-			if(allIndicators[index] != "population" ){
+			if(allIndicators[index] != "POPULATION" ){
 					if(allIndicators[index] != defaultX ){
 						$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[index] + "</option>");
 					}
