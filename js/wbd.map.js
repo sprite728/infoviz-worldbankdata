@@ -151,7 +151,7 @@ WBD.Map = Backbone.View.extend({
             // console.log(aCountryData["population"]);
             var continent = aCountryData["population"];
             var population = aCountryData["continent"];
-            var html1 = "<div><span>" + this.id + "</span><br>" + "<ul><li>" + that.currentInd + ": " + aCountryData[that.currentInd] + "</li><li>Population: " + population + "</li><li>Continent: " + continent + "</ul></div>";
+            var html1 = "<div><p>" + this.id + "</p><br>" + "<ul><li>" + that.currentInd + ": " + aCountryData[that.currentInd] + "</li><li>Population: " + continent + "</li><li>Continent: " + population + "</ul></div>";
             return html1; 
           }
       });
