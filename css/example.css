@@ -2,11 +2,6 @@ html, body {
   height: 100%;
 }
 
-body {
-  margin: 0;
-  background: #E5E0D9;
-}
-
 svg {
   display: block;
   overflow: hidden;

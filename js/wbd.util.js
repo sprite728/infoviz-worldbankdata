@@ -12,6 +12,16 @@ Array.prototype.remove = function(member) {
   return this;
 }
 
+Array.prototype.clone = function(array) {
+	var newArray = array.slice();
+	return newArray;
+}
+
+Array.prototype.diff = function(a) {
+    return this.filter(function(i) {return !(a.indexOf(i) > -1);});
+}
+ 
+
 WBD.prepareData = function(data){
   // Put pre-processing code here ...
   //console.log("Prepare data ... ");
@@ -33,6 +43,7 @@ WBD.prepareData = function(data){
 
 
 WBD.prepareConstants = function(){
+  console.log("prepareConstants");
   // read all countries
   var data;
 
@@ -55,24 +66,24 @@ WBD.prepareConstants = function(){
 
 
   // read all indicators
-  //console.log("Read indicators")
+  console.log("Read indicators")
   $.ajax({
     url: 'parser/indicators.json',
     data: data,
     success: function(data){
-      //console.log(data);
+      console.log(data);
       if($.parseJSON(data) == null){
         WBD.allIndicators = data;
       } else {
         WBD.allIndicators = $.parseJSON(data);
       }
-      //console.log(WBD.allCountries);
+      console.log(WBD.allIndicators);
     },
     async: false
   });
 
   // read all continents
-  //console.log("Read continents")
+  console.log("Read continents")
   $.ajax({
     url: 'parser/continents.json',
     data: data,

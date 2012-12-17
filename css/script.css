@@ -1,8 +1,30 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:300,400,700);
+body{
+	background:#f7f7f7 url(images/bg_60.png) repeat top left;
+	color:#000;
+	font-family: "Lato", Calibri, Arial, sans-serif;
+	font-size:12px;
+}
+
 .clear {
 	clear: both;
 	after: 
 }
-
+#title {
+    margin:10px auto;
+	font-size:50px;
+	color:#666;
+	text-shadow:1px 1px 1px #fff;
+	padding-left:50px;
+	border-bottom-style : dashed; 
+	border-bottom-color: #666;
+	border-bottom-width: 1px;
+	}
+#title .explain {
+    font-size:15px;
+    font-style:normal;
+	text-transform:uppercase;
+	}
 #main{
 	width: 1280px;
 	height: auto;
@@ -82,42 +104,120 @@
 	position: relative;
 }
 
-#countries_tags, #continents_tags{
-	float: left;
-	width: 250px;
-	height: 100px;
-	z-index: 99999;
+#tabs {
+  text-align:center;
+	display: block;
+	line-height: 30px;
+	padding-left: -20px;
+	height: 170px;
+}
+
+#tabs > ul{
+	border: none;
+	background:#e4e9ed none;
 }
 
 #dropdown_filters{
-	position: relative;
+	height: 30px;
+	width: 300px;
+}
+	
+/*
+#tabs  button{
+<<<<<<< HEAD
+    margin: 0 auto;
+=======
+  margin: 0 auto;
+>>>>>>> remotes/origin/an
+	padding: 10px 10px 5px;
+	border-radius: 10px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,0.09) inset;
+}
+*/
+
+#countries_tags, #continents_tags{
+	float: left;
+	width: 250px;
+	height: 80px;
+	z-index: 99999;
 }
 
 #countries_filter, #continents_filter{
-	width: 250px;
+	width: 300px;
 	height: auto;
 	max-height: 350px;
 	overflow-y: auto;
 	margin: 0 auto;
 	text-align: center;
-	position: absolute;
-	top: 120px;
 }
-
-#xyAxes{
-	float: right;
-	width: 900px;
-}
-
-#xyAxes .singleAxis{
+#selection_xy {
+    width:900px;
+    float:right;
+    }
+#selection_xy .filter_opt {
+    font-size: 18px;
+    text-align:center;
+    width:900px;
+    color:#666;
+    margin-left:320px;
+    }
+.selection_float {
+    float:left;
+    width:250px;
+    padding:10px;
+    margin:5px;
+    background-color: rgba(200, 229, 234, 0.2);
+	box-shadow: 0 2px 6px rgba(0, 0, 0, .2);
+	-webkit-background-clip: padding;
+	-moz-background-clip: padding;     
+	background-clip: padding-box;
+	border: 10px solid #fff;
+	border: 10px solid rgba(255, 255, 255, 0.4);
+	outline: none;
+	-webkit-transition: background-color 1s linear;
+	-moz-transition: background-color 1s linear;
+	-o-transition: background-color 1s linear;
+	-ms-transition: background-color 1s linear;
+	transition: background-color 1s linear;
+    }
+.selection_float .title {
+    font-size:15px;
+    color:#666;
+    font-weight:bold;
+    }
+.selection_float p {
+    font-size:14px;
+    font-weight:normal;
+    color:#666;
+    }    
+.xyAxes{
 	float: left;
 	width: 250px;
-	margin: 0 20px;
+		
+}
+
+.xyAxes .singleAxis{
+	float: left;
+	width: 250px;
+	margin: 0 -10px;
 	text-align: center;
 }
 
-#xyAxes #xAxisPicker, #xyAxes #yAxisPicker{
-	width: 250px;
+.xyAxes #xAxisPicker, .xyAxes #yAxisPicker{
+	width: 250px !important;
+  height:35px !important;
+	border: none;
+	border-radius: 0px;
+  background:url(images/index.png) no-repeat 0 0;
+  padding: 0px 10px 10px 10px;
+  margin:10px;
+  font-weight: normal;
+  cursor:default;
+  text-indent:10px;
+  z-index:1;
+  -webkit-appearance: none;
+  box-sizing: none;
+  -webkit-box-align: center;
 }
 
 #slider-xAxis, #slider-yAxis, #slider-circleSize{
@@ -125,78 +225,140 @@
 }
 
 
-#range-value{
+.range-value{
 	float: right;
-	width: 900px;
+	width: 250px;
+	margin-top:-10px;
 }
 
-#range-value > .singleFilter{
+.range-value > .singleFilter{
 	float: left;
 	width: 250px;
-	margin: 0 20px;
+	margin: 0 -2px;
 	text-align: center;
 }
 
-#range-value .ui-slider-handle{
+.range-value .ui-slider-handle{
 	width: 12px; height: 20px;
 }
 
-#range-value input{
+.range-value input{
 	border: 0; 
-	color: #f6931f; 
+	color: #666; 
+	background-color:transparent;
 	font-weight: bold;
 }
 
+.range-value2{
+	float: right;
+	width: 250px;
+	margin-top:0px;
+}
+
+.range-value2  .singleFilter{
+	float: left;
+	width: 250px;
+	margin: 0 -1px;
+	text-align: center;
+}
+
+.range-value2 .ui-slider-handle{
+	width: 12px; height: 20px;
+}
+
+.range-value2 input{
+	border: 0; 
+	color: #666; 
+	background-color:transparent;
+	font-weight: bold;
+}
+#xRangeText {
+	width:250px;
+	text-align:center;
+}
+#yRangeText {
+	width:250px;
+	text-align:center;
+}
+
+#populationRangeText {
+	width:250px;
+	text-align:center;
+}
+
+
+#slider-yAxis{
+	width:250px;
+	text-align:center;
+}
 
 /*Button Style in the filter list */
 .country, .continent{
 	width: 200px;
 	text-align: center;
-	-moz-box-shadow:inset 0px 1px 0px 0px #caefab;
-	-webkit-box-shadow:inset 0px 1px 0px 0px #caefab;
-	box-shadow:inset 0px 1px 0px 0px #caefab;
-	-moz-border-radius:6px;
-	-webkit-border-radius:6px;
-	border-radius:6px;
-	border:1px solid #268a16;
-	display:inline-block;
-	font-family:arial;
-	font-size:12px;
-	font-weight:bold;
-	padding:6px 20px;
-	text-decoration:none;
-	text-shadow:1px 1px 0px #aade7c;
+	margin: 0 auto;
+    padding: 6px 7px;
+	background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
+    outline: none;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
 }
 
 .asia{
-	background-color:#9ad251;
+	background-color:#ffffff;
+
 }
 .africa {
-	background-color:#ce74ee;
+	background-color:#ffffff;
+
 }
 .north_america{
-	background-color:#ffdc00;
+	background-color:#ffffff;
+
 }
 .south_america{
-	background-color:#45a5a8;
+	background-color:#ffffff;
+
 }
 .europe{
-	background-color:#bf3300;
+	background-color:#ffffff;
+
 }
 .oceania{
-	background-color:#245d7c;
+	background-color:#ffffff;
+
+}
+.grey{
+	background-color: white;
+	border: none;
 }
 .undefined{
-	background-color:#520;
+<<<<<<< HEAD
+	background-color:#ffffff;
+	border:none;
 }
 
 .country:hover {
-	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #5cb811), color-stop(1, #77d42a) );
-	background:-moz-linear-gradient( center top, #5cb811 5%, #77d42a 100% );
-	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#5cb811', endColorstr='#77d42a');
-	background-color:#5cb811;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #8da4b8), color-stop(1, #acbecd) );
+	background:-moz-linear-gradient( center top, #8da4b8 5%, #acbecd 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#8da4b8', endColorstr='#acbecd');
+	background-color:#8da4b8;
 }
+
 .country:active {
 	position:relative;
 	top:1px;
+}
+
+.regend { 
+    width: 1280px;
+    height: 50px;
+    background: black;
+    float:left;
 }

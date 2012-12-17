@@ -63,7 +63,7 @@ WBD.XYPlot = Backbone.View.extend({
     // this.updateAxes();
   },
 
-  // first time draw the axes onto the chart
+  // re-render the axes onto the chart
   renderAxes : function() {
     console.log("init axes");
     var that = this;
@@ -145,15 +145,15 @@ WBD.XYPlot = Backbone.View.extend({
 		
     // Create Scales 
     this.xScale = d3.scale.linear()
-      .domain(this.model.getXDataRange())
+      .domain(this.model.get("filter").get("xDataRange"))
 			.range([0, this.width]);
 
     this.yScale = d3.scale.linear()
-      .domain(this.model.getYDataRange())
+      .domain(this.model.get("filter").get("yDataRange"))
       .range([that.height, 0]);
 
     this.popuScale = d3.scale.linear()
-      .domain(this.model.get("filter").get("populationRange"))
+      .domain(this.model.findExtendOfAnIndicator('population'))
       .range(this.dotSizeRange);
 
     // this.colorScale = d3.scale.ordinal()
@@ -198,8 +198,13 @@ WBD.XYPlot = Backbone.View.extend({
 
   },
 
+  updateScales: function(){
+
+  },
+
   resetScalesAndAxes: function(){
     var that = this;
+
     this.xAxisEl.remove();
     this.yAxisEl.remove();
     this.xAxisLabelEl.remove();
@@ -211,19 +216,17 @@ WBD.XYPlot = Backbone.View.extend({
 
     // Create Scales 
     this.xScale = d3.scale.linear()
-      .domain(this.model.getXDataRange())
+      .domain(this.model.get("filter").get("xDataRange"))
       .range([0, this.width]);
 
     this.yScale = d3.scale.linear()
-      .domain(this.model.getYDataRange())
+      .domain(this.model.get("filter").get("yDataRange"))
       .range([that.height, 0]);
 
     this.popuScale = d3.scale.linear()
-      .domain(this.model.get("filter").get("populationRange"))
+      .domain(this.model.findExtendOfAnIndicator("population"))
       .range(this.dotSizeRange);
 
-    // this.colorScale = d3.scale.ordinal()
-    //   .domain(WBD.)
 
     // Create Axes
     this.xAxis = d3.svg.axis()
@@ -262,6 +265,40 @@ WBD.XYPlot = Backbone.View.extend({
         .text(that.model.get("yDatasetName"));
   },
 
+  updateScalesAndAxes: function(){
+    console.log("update scales and axes");
+    // Create Scales 
+    var that = this;
+    this.xScale = d3.scale.linear()
+      .domain(this.model.get("filter").get("xDataRange"))
+      .range([0, this.width]);
+
+    this.yScale = d3.scale.linear()
+      .domain(this.model.get("filter").get("yDataRange"))
+      .range([that.height, 0]);
+
+    this.popuScale = d3.scale.linear()
+      .domain(this.model.findExtendOfAnIndicator('population'))
+      .range(this.dotSizeRange);
+
+
+    // Create Axes
+    this.xAxis = d3.svg.axis()
+      .scale(that.xScale)
+      .orient("bottom");
+
+    this.yAxis = d3.svg.axis()
+      .scale(that.yScale)
+      .orient("left");
+
+    // Init Axes elements
+    this.xAxisEl
+      .call(that.xAxis);
+
+    this.yAxisEl 
+      .call(that.yAxis);
+
+  },
 	
   initYearSelector: function(){
       // Add the year label; the value is set on transition.
@@ -298,6 +335,8 @@ WBD.XYPlot = Backbone.View.extend({
   render: function() {
     var that = this;
     console.log("Render XYPlot ... ");
+    console.log("======xDataRange============");
+    console.log(this.model.get("filter").get("xDataRange"));
 
     // Add a dot per nation
     // this.baseGraph is a selection ?
@@ -332,9 +371,11 @@ WBD.XYPlot = Backbone.View.extend({
       .attr("visibility", "hidden");
 
     this.updateYearSelector();
-		// this.initScalesAndAxes();
-		// this.updateAxes();
-    console.log("done");
+    this.updateScalesAndAxes();
+    // this.resetScalesAndAxes();
+    // that.renderAxes();
+
+		console.log("done");
   },
 
   initChart: function(){

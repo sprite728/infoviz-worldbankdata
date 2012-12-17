@@ -19,17 +19,20 @@ WBD.Map = Backbone.View.extend({
     this.model = opts.model;
 
     // Listen to changes on model
+
     //this.model.bind("change:selDataMap", this.renderColorMap, this);
     this.model.bind("change:selDataMap", this.chooseRender, this);
     // this.model.get("filter").bind("change:countries", this.renderColorMap, this);
 
     // Create the map object, append it to this.el
+    this.svg = d3.select(this.el).append("svg:svg");
+
     this.map = org.polymaps.map()
-    .container(d3.select(this.el).append("svg:svg").node())
+    .container(this.svg.node())
     .center({lat: 51, lon: 0})
     .zoomRange([2,4])
     .zoom(2)
-    //.add(org.polymaps.interact())
+    .add(org.polymaps.interact())
     .add(org.polymaps.drag())
     .add(org.polymaps.wheel().smooth(false))
     .add(org.polymaps.dblclick());
@@ -167,8 +170,10 @@ WBD.Map = Backbone.View.extend({
       var isNew = that.model.get("filter").isNewCountry(countryName);
       
       if(isNew){
+				//$("#countries_tags").tagit("createTag", countryName);
         that.model.get("filter").addCountry(countryName);
       } else {
+				//$("#countries_tags").tagit("removeTagByLabel", countryName);
         that.model.get("filter").removeCountry(countryName);
         // $(this).attr("class", "");
       }
@@ -237,19 +242,41 @@ WBD.Map = Backbone.View.extend({
 
       this.map.add(geoMap);
 
-/*
+      /*
+    // Create the map object, append it to this.el
+    this.map = org.polymaps.map()
+    .container(d3.select(this.el).append("svg:svg").node())  
+    */  
+
+
+
       console.log("append legend");
       var color = d3.scale.category10();
+
             //Create the legend
-      console.log("color: " + color);      
+      console.log("color: ");
+      console.log(color); 
+      console.log("this.map");
+      console.log(this.svg);
+      //console.log(d3.select(this.el).node();
 
-      var legend = d3.select(this.el = org.polymaps.svg("g")).selectAll(".legend")
+      console.log("color.domain()=======");
+      console.log(color.range());
+      //console.log(d3.select(".layer"));
+      var legend = this.svg.selectAll(".legend")
             .data(color.domain())
-          .enter().append("svg:g")
+          .enter().append("g")
             .attr("class", "legend")
-            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; })
+          .call(function(d){ 
+            console.log("==========d=======");
+            console.log(d);
+          });
 
+      console.log("this.el: ");
+      console.log(this.el);         
       console.log("legend: " + legend);
+      console.log(legend);
 
         legend.append("rect")
             .attr("x", 100 - 18)
@@ -257,15 +284,23 @@ WBD.Map = Backbone.View.extend({
             .attr("height", 18)
             .style("fill", "red");
 
+      console.log(legend);
+
         legend.append("text")
             .attr("x", 100 - 24)
             .attr("y", 9)
             .attr("dy", ".35em")
             .style("text-anchor", "end")
             .text(function(d) { return d; });
+      
+      console.log(legend);
 
-    },
-*/
+      this.map.add(legend);
+    
+
+  },
+
+
 
   
   /*
@@ -289,7 +324,7 @@ WBD.Map = Backbone.View.extend({
         }
     });
   */
-  },
+  
   
 
   renderColorMap: function(){

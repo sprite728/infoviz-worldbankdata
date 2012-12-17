@@ -20,7 +20,6 @@ WBD.Filter = Backbone.Model.extend({
     hoveredCountry: ''
   },
 
-
   setHoveredCountry: function(country){
     this.set({hoveredCountry: country});
     console.log("Hoved Courntries:" + country);    
@@ -58,18 +57,28 @@ WBD.Filter = Backbone.Model.extend({
 	
   addCountry: function(country) {
 		var tempCountries = this.get("countries");
-		tempCountries.push(country);
-	  this.set({countries : tempCountries});
-    this.trigger("change");
-		console.log("Changed Courntries:" + this.get("countries"));
-  },
+		if(this.isNewCountry(country)){
+			tempCountries.push(country);	
+			this.set({countries : tempCountries});
+	    this.trigger("change");
+			console.log("Changed Courntries:" + this.get("countries"));
+			return true;
+		} 
+		console.log("(No Changed) Courntries:" + this.get("countries"));
+  	return false;
+	},
 	
 	removeCountry: function(country) {
 		var tempCountries = this.get("countries");
-		tempCountries.remove(country);	  
-	  this.set({countries : tempCountries});
-    this.trigger("change");
-		console.log("Changed Courntries:" + this.get("countries"));
+		if(!this.isNewCountry(country)){
+			tempCountries.remove(country);	  
+	  	this.set({countries : tempCountries});
+    	this.trigger("change");
+			console.log("Changed Courntries:" + this.get("countries"));
+			return true;	
+		}
+		console.log("(No Changed) Courntries:" + this.get("countries"));
+		return false;
 	},
   
   toggleContinent: function(continent) {
@@ -236,6 +245,18 @@ WBD.Entries = Backbone.Model.extend({
     return [minInd, maxInd];
   },
 
+  setXYDatasets: function(opts){
+    var xDatasetName = opts.xDatasetName;
+    var yDatasetName = opts.yDatasetName;
+
+    var xDataRange = this.findExtendOfAnIndicator(xDatasetName);
+    var yDataRange = this.findExtendOfAnIndicator(yDatasetName);
+
+    this.get("filter").set({xDataRange: xDataRange, yDataRange: yDataRange});
+    this.set({xDatasetName: xDatasetName, yDatasetName: yDatasetName});
+    // this.get("filter").trigger("change");
+
+  },
 
   // filter allData to selectedData
   applyFilter: function(){
@@ -254,10 +275,14 @@ WBD.Entries = Backbone.Model.extend({
       // d is an attribute in the array
       var key;
       var returnObj = {};
+      var popuExtend = that.get("filter").get("populationRange");
+      var xDataRange = that.get("filter").get("xDataRange");
+      var yDataRange = that.get("filter").get("yDataRange");
 
+      // preprocess
 			if( !that.isSelectedCountry(d.country) ){
 				return;
-			}
+			} 
 
       for( key in d){
         if(d.hasOwnProperty(key)){
@@ -269,9 +294,30 @@ WBD.Entries = Backbone.Model.extend({
 				}
       }
 
+      // console.log(returnObj[that.get("xDatasetName")]);
+
       if(returnObj === {}){
         // empty, no indicator passed the year filter
         return;
+      } else if (returnObj.population < popuExtend[0] || returnObj.population > popuExtend[1] ){ // filter by population
+        return;
+      } else if ( returnObj[that.get("xDatasetName")] <= that.get("filter").get("xDataRange")[0] ||
+                  returnObj[that.get("xDatasetName")] > that.get("filter").get("xDataRange")[1]
+       )
+      { // filter by x range
+        // console.log("============Test==========");
+        // console.log(that.get("filter").get("xDataRange"));
+        // console.log(returnObj);
+        return;
+
+      } else if ( returnObj[that.get("yDatasetName")] <= that.get("filter").get("yDataRange")[0] ||
+                  returnObj[that.get("yDatasetName")] > that.get("filter").get("yDataRange")[1]
+      ) { // filter by y range
+        // console.log("============Test==========");
+        // console.log(that.get("filter").get("yDataRange"));
+        // console.log(returnObj);
+        return;
+
       } else {
         returnObj.country = d.country;
         returnObj.continent = d.continent;
