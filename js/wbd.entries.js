@@ -125,7 +125,7 @@ WBD.Entries = Backbone.Model.extend({
     // currentViewTab: 'map' or 'xy-plot'
     xDatasetName: "gni",
     yDatasetName: "life_expectency",
-    isViewByCountry: false,
+    isViewedByCountry: false,
     xDatasetScale: "linear",
     yDatasetScale: "linear",
   },
@@ -156,6 +156,7 @@ WBD.Entries = Backbone.Model.extend({
     var that = this;
     var filter = this.get("filter");
 
+
     filter.set(
       { 
         xDataRange: this.findExtendOfAnIndicator(this.get("xDatasetName")),
@@ -163,7 +164,7 @@ WBD.Entries = Backbone.Model.extend({
         populationRange: this.findExtendOfAnIndicator("population")
       }
     );
-  
+
 
   },
 
@@ -174,6 +175,7 @@ WBD.Entries = Backbone.Model.extend({
     var maxInd, minInd;
     var tempIndicatorSet;
     
+
     // find max value of X and Y
     
     // find max X
@@ -215,9 +217,9 @@ WBD.Entries = Backbone.Model.extend({
         ) || 0;
     });
 
-
     minInd = dd.reduce(
       function(previousValue, currentValue, index, array){
+
         return Math.min(previousValue, currentValue);
       },
       Infinity

@@ -70,7 +70,7 @@ WBD.Map = Backbone.View.extend({
 
   initBottomMap: function(){
     console.log("initBottomMap");
-    console.log(this);
+    //console.log(this);
 
     // Add the CloudMade image tiles as a base layer
     this.map.add(org.polymaps.image()
@@ -113,6 +113,7 @@ WBD.Map = Backbone.View.extend({
             
             feature = that.countryElements.features[i];
             countryName = feature.data.properties.name;
+
             mapData = allMapData.filter(function(element, index, array){
               return element.country == countryName;
             });
@@ -123,10 +124,10 @@ WBD.Map = Backbone.View.extend({
             // console.log(aCountryData);
 
             if(aCountryData){
-          
 
               var countryColor = that.colorScale(aCountryData[that.currentInd]);
             
+
               // setAttribute("style", "color: red;");
               
               // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
@@ -169,10 +170,10 @@ WBD.Map = Backbone.View.extend({
 
       // reset country's attributes
       if(aCountryData){
-    
 
         var countryColor = that.colorScale(aCountryData[that.currentInd]);
         
+
         // setAttribute("style", "color: red;");
         
         // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
@@ -188,7 +189,7 @@ WBD.Map = Backbone.View.extend({
   },
 
   clickFeature: function(f, evt){
-    console.log("clickFeature");
+    //console.log("clickFeature");
 
     f.setAttribute("class", "selected");
 
@@ -211,8 +212,8 @@ WBD.Map = Backbone.View.extend({
 
   mouseOverFeature: function(f, evt){
 
-    console.log("mouseOverFeature");
-    console.log(f);
+    //console.log("mouseOverFeature");
+    //console.log(f);
     $(f).tipsy({ 
         gravity: 'w', 
         html: true, 

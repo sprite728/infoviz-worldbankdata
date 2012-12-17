@@ -25,7 +25,6 @@ $(document).ready(function(){
       allData: WBD.prepareData(data),
       xDatasetName: WBD.allIndicators[0],
       yDatasetName: WBD.allIndicators[1]
-
     });
 
 	  myAllCountries = WBD.allCountries;
@@ -49,5 +48,5 @@ $(document).ready(function(){
       model: myEntries
     });
     
-  });
+  });	
 });
