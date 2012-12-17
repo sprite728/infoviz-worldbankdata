@@ -403,7 +403,7 @@ WBD.XYPlot = Backbone.View.extend({
     var that = self;
 
     self.yearScale = d3.scale.linear()
-            .domain([1990, 2012]) // hard-coded
+            .domain([1990, 2010]) // hard-coded
             .range([that.yearSelectorBox.x + 10, that.yearSelectorBox.x + that.yearSelectorBox.width - 10])
             .clamp(true);
 
