@@ -16,7 +16,8 @@ WBD.Filter = Backbone.Model.extend({
     categories: [],
     xDataRange: [], // [ min, max] if empty or only 1 element -> wrong
     yDataRange: [], // [ min, max] if empty or only 1 element -> wrong
-    populationRange: []
+    populationRange: [],
+    hoveredCountry: ''
   },
 
 
