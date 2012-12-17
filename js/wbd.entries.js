@@ -19,7 +19,7 @@ WBD.Filter = Backbone.Model.extend({
     populationRange: [],
     hoveredCountry: ''
   },
-
+	
   toggleCountry: function(country) {
 	  var isNew = this.isNewCountry(country);
 		var tempCountries = this.get("countries");

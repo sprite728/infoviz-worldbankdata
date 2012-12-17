@@ -1,7 +1,7 @@
 .dropdown-menu {
 	font: 14px sans-serif;
 	position: absolute;
-	z-index: 999;
+	z-index: 9999999;
 	display: none;
 }
 
@@ -16,8 +16,6 @@
 	overflow: visible;
 	padding: 4px 0;
 	margin: 0;
-	position: relative;
-	top: 110px;
 }
 
 .dropdown-menu.has-tip {
@@ -59,7 +57,7 @@
 
 
 .dropdown-menu.has-scroll UL {
-	max-height: 350px;
+	max-height: 358px;
 	overflow: auto;
 }
 
