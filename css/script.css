@@ -376,27 +376,30 @@ body{
 	position:relative;
 	top:1px;
 }
-#regend {
+#legend {
     width:1280px;
-    height:100px;
+    height:50px;
+		float: left;
 }
-#regend_chart {
+#legend_chart {
     height:50px;
     width:600px;
     float:right;
-    background: url(images/regend.png) no-repeat top left;
     margin-top:30px;
-    margin-left:50px;}
+    margin-right:0;
+}
 
 #footer {
     width:1280px;
     padding-left:50px;
-    padding-top:50px;
+    padding-top:5px;
     padding-bottom:10px;
-    float:left;
-    }
+		margin: 40px auto;
+		text-align: center;
+		border-top: 1px solid #ccc;
+}
 #footer .title {
     color:#666;
     font-weight:bold;
     margin-left:10px;
-    }
+}

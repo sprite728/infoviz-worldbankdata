@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0;">
     <!-- The sequence of the libraries is very important! d3 > jq > under > backbone -->
     <!--link href="css/reset.css" rel="stylesheet" type="text/css" /-->
     <link type="text/css" rel="stylesheet" href="css/script.css" />
@@ -104,11 +105,13 @@
         </div>
       </div>
       <div class="clear"></div>
-      
     </div>
-    
+     <div id="legend">
+      <div id="legend_chart"><img src="css/images/legend.png" /></div>
+     </div> 
+     <div class="clear"></div>	
    </div>
-       <div class="clear"></div>	
+   <div class="clear"></div>	
 <script src="js/libs/d3.v2.js"></script>
 <script src="js/libs/jquery-1.8.2.js"></script>
 <script src="js/libs/jquery-ui-1.9.2.custom.min.js"></script>
@@ -140,11 +143,6 @@
 	<ul id="continents_filter"></ul>
 </div-->
 </div> 
-<div id="regend">
-    <div id="regend_chart">
-        
-    </div>
-</div>
 <div id="footer">
 @Copyright GlobalLens : Wen | Jeff | Jiyoung | Lezhong | An  <strong class="title">SI 649 Information Visualization</strong>
 </div>
