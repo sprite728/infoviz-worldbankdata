@@ -314,17 +314,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
   update: function() {
     var that = this, index = 0;
 		console.log("=============updating===============");
-		/*console.log("Whether Changed: " + this.model.get("filter").hasChanged("countries"));
-		console.log("Previsou Countries:" + this.model.get("filter").previous("countries"));		
-		console.log("Previsou Attributes:");
-		console.log(this.model.get("filter").previousAttributes());	
-
 		
-		// //$("#countries_tags").tagit("removeAll");
-		// console.log("country cache");
-		// console.log(that.countriesCache);
-		// console.log("filter countries");
-		// console.log(that.model.get("filter").get("countries"));
+
 		
 		var diffCountriesRemove = that.countriesCache.diff(that.model.get("filter").get("countries"));
 		var diffCountriesNew = that.model.get("filter").get("countries").diff(that.countriesCache);
