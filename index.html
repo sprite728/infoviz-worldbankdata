@@ -18,75 +18,63 @@
 <body>
     <div id="main">
     	<div id="options">
-
-		  <div id="ccTabs">
-      	<a href="#" data-dropdown="#dropdown_countries">Country</a> ||
-        <a href="#" data-dropdown="#dropdown_continents">Continent</a>
-        <!--div id="tabSearch">
-          <ul id="countries_tags"></ul> 
-          <ul id="continents_tags"></ul>
-        </div-->
-      </div>
-  
-        <!--div id="ccTabs">
-          	<ul>
-            	<li><a href="#tabCountry">Country</a></li>
-              <li><a href="#tabContinent">Continent</a></li>
-            </ul>
-            
-            <div id="tabCountry">
-              <ul id="countries_tags"></ul> 
-              <div id="countries_filter"></div>
-            </div>
-          	
-            <div id="tabContinent">
-              <ul id="continents_tags"></ul>
-              <div id="continents_filter"></div>
-             </div>
+      	
+        <!-- Search Tabs and Search boxes -->
+        <div id="ccTabs">
+          <div id="tabSearch">
+            <ul id="countries_tags"></ul> 
+            <ul id="continents_tags"></ul>
           </div>
-      
-      		<!--div id="logo"><img src="css/images/logo.jpg" /></div--> 
-          
-        	<div id="xyAxes">
-          	<div class="singleAxis">
-            	<label for="xAxisPicker">X Axis:&nbsp;&nbsp;</label><select id="xAxisPicker"></select>&nbsp;&nbsp;
-            </div>
-            <div class="singleAxis">
-            	<label for="yAxisPicker">Y Axis:&nbsp;&nbsp;</label><select id="yAxisPicker"></select>
-            </div>
-            <div class="singleAxis">Population</div>
-            <!--select id="zAxisPicker"></select-->
+          <div id="tabs">
+            <button id="tab_country" data-dropdown="#dropdown_countries">Country</button>
+            <button id="tab_continent" data-dropdown="#dropdown_continents">Continent</button>
           </div>
-            
-        	<div id="range-value">            
-            <!-- X Axis Filter, hi-->
-            <div class="singleFilter">
-              <p>
-                <input type="text" id="xRangeText" />
-                <label for="xRangeText"></label>
-              </p>
-              <div id="slider-xAxis"></div>
-            </div>
-            <!-- Y Axis Filter -->
-            <div class="singleFilter">
-              <p>
-                <input type="text" id="yRangeText" />
-                <label for="yRangeText"></label>
-              </p>
-              <div id="slider-yAxis"></div>
-            </div>
-            <!-- Bubble Size Filter -->
-            <div class="singleFilter">
-              <p>
-                <input type="text" id="bubbleSizeText" />
-                <label for="bubbleSizeText"></label>
-              </p>
-              <div id="slider-circleSize"></div>
-            </div>
-          </div>
-          <div class="clear"></div>
         </div>
+        <div id="xyAxes">
+          <div class="singleAxis">
+            <label for="xAxisPicker">X Axis:&nbsp;&nbsp;</label><select id="xAxisPicker"></select>&nbsp;&nbsp;
+          </div>
+          <div class="singleAxis">
+            <label for="yAxisPicker">Y Axis:&nbsp;&nbsp;</label><select id="yAxisPicker"></select>
+          </div>
+          <div class="singleAxis">Population</div>
+          <!--select id="zAxisPicker"></select-->
+        </div>
+              
+        <div id="range-value">            
+          <!-- X Axis Filter, hi-->
+          <div class="singleFilter">
+            <p>
+              <input type="text" id="xRangeText" />
+              <label for="xRangeText"></label>
+            </p>
+            <div id="slider-xAxis"></div>
+          </div>
+         
+          <!-- Y Axis Filter -->
+          <div class="singleFilter">
+            <p>
+              <input type="text" id="yRangeText" />
+              <label for="yRangeText"></label>
+            </p>
+            <div id="slider-yAxis"></div>
+          </div>
+          
+          <!-- Bubble Size || Population Filter -->
+          <div class="singleFilter">
+            <p>
+              <input type="text" id="populationRangeText" />
+              <label for="populationRangeText"></label>
+            </p>
+            <div id="slider-population"></div>
+          </div>
+        </div>
+      </div>
+      <div class="clear"></div>
+      
     </div>
+
+
 
 <script src="js/libs/d3.v2.js"></script>
 <script src="js/libs/jquery-1.8.2.js"></script>

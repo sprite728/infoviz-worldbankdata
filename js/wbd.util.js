@@ -14,7 +14,7 @@ Array.prototype.remove = function(member) {
 
 WBD.prepareData = function(data){
   // Put pre-processing code here ...
-  console.log("Prepare data ... ");
+  //console.log("Prepare data ... ");
   // console.log(data);
   var entries = [];
   var i; // counter
@@ -36,18 +36,18 @@ WBD.prepareConstants = function(){
   // read all countries
   var data;
 
-  console.log("Read countries")
+  //console.log("Read countries")
   $.ajax({
     url: 'parser/countries.json',
     data: data,
     success: function(data){
-      console.log(data);
+      //console.log(data);
       if($.parseJSON(data) == null){
         WBD.allCountries = data;
       } else {
         WBD.allCountries = $.parseJSON(data);
       }
-      console.log(WBD.allCountries);
+      //console.log(WBD.allCountries);
     },
     async: false
   });
@@ -55,35 +55,35 @@ WBD.prepareConstants = function(){
 
 
   // read all indicators
-  console.log("Read indicators")
+  //console.log("Read indicators")
   $.ajax({
     url: 'parser/indicators.json',
     data: data,
     success: function(data){
-      console.log(data);
+      //console.log(data);
       if($.parseJSON(data) == null){
         WBD.allIndicators = data;
       } else {
         WBD.allIndicators = $.parseJSON(data);
       }
-      console.log(WBD.allCountries);
+      //console.log(WBD.allCountries);
     },
     async: false
   });
 
   // read all continents
-  console.log("Read continents")
+  //console.log("Read continents")
   $.ajax({
     url: 'parser/continents.json',
     data: data,
     success: function(data){
-      console.log(data);
+      //console.log(data);
       if($.parseJSON(data) == null){
         WBD.allContinents = data;
       } else {
         WBD.allContinents = $.parseJSON(data);
       }
-      console.log(WBD.allContinents);
+      //console.log(WBD.allContinents);
     },
     async: false
   });
@@ -92,13 +92,13 @@ WBD.prepareConstants = function(){
     url: 'parser/mapCountryToContinent.json',
     data: data,
     success: function(data){
-      console.log(data);
+      //console.log(data);
       if($.parseJSON(data) == null){
         WBD.mapCountryToContinent = data;
       } else {
         WBD.mapCountryToContinent = $.parseJSON(data);
       }
-      console.log(WBD.allContinents);
+      //console.log(WBD.allContinents);
     },
     async: false
   });
@@ -108,4 +108,3 @@ WBD.prepareConstants = function(){
 WBD.getContinentByCountry = function(country){
   return WBD.mapCountryToContinent[country];
 }
-

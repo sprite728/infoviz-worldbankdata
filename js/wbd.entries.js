@@ -125,7 +125,7 @@ WBD.Entries = Backbone.Model.extend({
     // currentViewTab: 'map' or 'xy-plot'
     xDatasetName: "gni",
     yDatasetName: "life_expectency",
-    isViewByCountry: false,
+    isViewedByCountry: false,
     xDatasetScale: "linear",
     yDatasetScale: "linear",
   },
@@ -155,8 +155,8 @@ WBD.Entries = Backbone.Model.extend({
   updateXYDataRanges: function(){
     var that = this;
     var filter = this.get("filter");
-    console.log("filter");
-    console.log(filter);
+    //console.log("filter");
+    //console.log(filter);
 
     filter.set(
       { 
@@ -166,10 +166,10 @@ WBD.Entries = Backbone.Model.extend({
       }
     );
     
-    console.log("Hello");
-    console.log(filter.get("xDataRange"));
-    console.log(filter.get("yDataRange"));
-    console.log(filter.get("populationRange"));
+    //console.log("Hello");
+    //console.log(filter.get("xDataRange"));
+    //console.log(filter.get("yDataRange"));
+    //console.log(filter.get("populationRange"));
 
   },
 
@@ -180,8 +180,8 @@ WBD.Entries = Backbone.Model.extend({
     var maxInd, minInd;
     var tempIndicatorSet;
     
-    console.log("indicator");
-    console.log(ind);
+    //console.log("indicator");
+    //console.log(ind);
     // find max value of X and Y
     
     // find max X
@@ -225,17 +225,17 @@ WBD.Entries = Backbone.Model.extend({
         ) || 0;
     });
 
-    console.log("dd");
-    console.log(dd);
+    //console.log("dd");
+    //console.log(dd);
 
     minInd = dd.reduce(
       function(previousValue, currentValue, index, array){
-        console.log(ind);
+        //console.log(ind);
         // console.log(array);
-        console.log(previousValue);
-        console.log(currentValue);
-        console.log(array[0]);
-        console.log(Math.min( previousValue, currentValue));
+        //console.log(previousValue);
+        //console.log(currentValue);
+        //console.log(array[0]);
+        //console.log(Math.min( previousValue, currentValue));
         return Math.min(previousValue, currentValue);
       },
       Infinity
