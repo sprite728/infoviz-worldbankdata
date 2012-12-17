@@ -58,10 +58,11 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		var defaultX = that.model.get("xDatasetName");
 		var defaultY = that.model.get("yDatasetName");
 		
-		$("#xAxisPicker").append("<option class='xIndicator'>" + defaultX + "</option>");
-		$("#yAxisPicker").append("<option class='yIndicator'>" + defaultY + "</option>");
+		$("#xAxisPicker").append("<option class='xIndicator'>" + defaultX.replace("_", " ").toUpperCase() + "</option>");
+		$("#yAxisPicker").append("<option class='yIndicator'>" + defaultY.replace("_", " ").toUpperCase() + "</option>");
 		
 		for (index = 0; index < allIndicators.length; index ++){
+			allIndicators[index] = allIndicators[index].replace("_", " ").toUpperCase();
 			if(allIndicators[index] != "population" ){
 					if(allIndicators[index] != defaultX ){
 						$("#xAxisPicker").append("<option class='xIndicator'>" + allIndicators[index] + "</option>");
@@ -286,8 +287,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		//Indicator Selection Controllers here
 		$(".xyAxes select").change(function(e) {
-			var xName = $("#xAxisPicker").val();
-			var yName = $("#yAxisPicker").val();
+			var xName = $("#xAxisPicker").val().replace(" ", "_").toLowerCase();
+			var yName = $("#yAxisPicker").val().replace(" ", "_").toLowerCase();
 
 			that.model.setXYDatasets({xDatasetName: xName, yDatasetName: yName});
 			
