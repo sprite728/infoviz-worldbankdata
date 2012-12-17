@@ -19,6 +19,7 @@ WBD.Map = Backbone.View.extend({
 
     // Listen to changes on model
     this.model.bind("change:selDataMap", this.renderColorMap, this );
+
     // this.model.get("filter").bind("change:countries", this.renderColorMap, this);
 
     // Create the map object, append it to this.el

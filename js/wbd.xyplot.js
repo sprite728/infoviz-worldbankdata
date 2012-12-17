@@ -63,7 +63,7 @@ WBD.XYPlot = Backbone.View.extend({
     // this.updateAxes();
   },
 
-  // first time draw the axes onto the chart
+  // re-render the axes onto the chart
   renderAxes : function() {
     console.log("init axes");
     var that = this;
@@ -262,6 +262,9 @@ WBD.XYPlot = Backbone.View.extend({
         .text(that.model.get("yDatasetName"));
   },
 
+  removeScalesAndAxes: function(){
+
+  },
 	
   initYearSelector: function(){
       // Add the year label; the value is set on transition.
@@ -332,9 +335,9 @@ WBD.XYPlot = Backbone.View.extend({
       .attr("visibility", "hidden");
 
     this.updateYearSelector();
-		// this.initScalesAndAxes();
-		// this.updateAxes();
-    console.log("done");
+    this.resetScalesAndAxes();
+    that.renderAxes();
+		console.log("done");
   },
 
   initChart: function(){
