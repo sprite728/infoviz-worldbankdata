@@ -163,7 +163,9 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			slide: function( event, ui ) {
         $( "#xRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
 				that.model.get("filter").set({xDataRange: ui.values});
-      }
+				// console.log("xDataRange");
+				// console.log(ui.values);
+      	}
     });
 		$( "#xRangeText" ).val( "$" + $( "#slider-xAxis" ).slider( "values", 0 ) +
             " - $" + $( "#slider-xAxis" ).slider( "values", 1 ) );
@@ -227,17 +229,17 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		});
 		
 		//Indicator Selection Controllers here
-		$("#xyAxes select").change(function(e) {
+		$(".xyAxes select").change(function(e) {
 			var xName = $("#xAxisPicker").val();
 			var yName = $("#yAxisPicker").val();
 			that.model.set({xDatasetName: xName, yDatasetName: yName});
 			
 			//that.model.set("selDataXYPlot", that.model.get("allData")); 
 			
-			console.log("============== CHANGING XY AXIS ===============");
-			console.log("X Axis: ", $("#xAxisPicker").val());
-			console.log("Y Axis: ", $("#yAxisPicker").val());
-			console.log("============== END of CHANGING XY AXIS ===============");
+			// console.log("============== CHANGING XY AXIS ===============");
+			// console.log("X Axis: ", $("#xAxisPicker").val());
+			// console.log("Y Axis: ", $("#yAxisPicker").val());
+			// console.log("============== END of CHANGING XY AXIS ===============");
 		});
 	
 	$("#tabs > button").click(function(){
@@ -269,21 +271,21 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		console.log("Previsou Attributes:");
 		console.log(this.model.get("filter").previousAttributes());	
 		*/
-		console.log("filter");
-		console.log(that.model.get("filter"));
+		// console.log("filter");
+		// console.log(that.model.get("filter"));
 		
-		//$("#countries_tags").tagit("removeAll");
-		console.log("country cache");
-		console.log(that.countriesCache);
-		console.log("filter countries");
-		console.log(that.model.get("filter").get("countries"));
+		// //$("#countries_tags").tagit("removeAll");
+		// console.log("country cache");
+		// console.log(that.countriesCache);
+		// console.log("filter countries");
+		// console.log(that.model.get("filter").get("countries"));
 		
 		var diffCountriesRemove = that.countriesCache.diff(that.model.get("filter").get("countries"));
 		var diffCountriesNew = that.model.get("filter").get("countries").diff(that.countriesCache);
-		console.log("diffCountriesRemove");
-		console.log(diffCountriesRemove);
-		console.log("diffCountriesNew");
-		console.log(diffCountriesNew);
+		// console.log("diffCountriesRemove");
+		// console.log(diffCountriesRemove);
+		// console.log("diffCountriesNew");
+		// console.log(diffCountriesNew);
 		
 		
 		for(index=0; index < diffCountriesNew.length; index++){

@@ -198,8 +198,13 @@ WBD.XYPlot = Backbone.View.extend({
 
   },
 
+  updateScales: function(){
+
+  },
+
   resetScalesAndAxes: function(){
     var that = this;
+
     this.xAxisEl.remove();
     this.yAxisEl.remove();
     this.xAxisLabelEl.remove();
@@ -222,8 +227,6 @@ WBD.XYPlot = Backbone.View.extend({
       .domain(this.model.get("filter").get("populationRange"))
       .range(this.dotSizeRange);
 
-    // this.colorScale = d3.scale.ordinal()
-    //   .domain(WBD.)
 
     // Create Axes
     this.xAxis = d3.svg.axis()
@@ -262,7 +265,36 @@ WBD.XYPlot = Backbone.View.extend({
         .text(that.model.get("yDatasetName"));
   },
 
-  removeScalesAndAxes: function(){
+  updateScalesAndAxes: function(){
+    // Create Scales 
+    this.xScale = d3.scale.linear()
+      .domain(this.model.getXDataRange())
+      .range([0, this.width]);
+
+    this.yScale = d3.scale.linear()
+      .domain(this.model.getYDataRange())
+      .range([that.height, 0]);
+
+    this.popuScale = d3.scale.linear()
+      .domain(this.model.get("filter").get("populationRange"))
+      .range(this.dotSizeRange);
+
+
+    // Create Axes
+    this.xAxis = d3.svg.axis()
+      .scale(that.xScale)
+      .orient("bottom");
+
+    this.yAxis = d3.svg.axis()
+      .scale(that.yScale)
+      .orient("left");
+
+    // Init Axes elements
+    this.xAxisEl
+      .call(that.xAxis);
+
+    this.yAxisEl 
+      .call(that.yAxis);
 
   },
 	
@@ -301,6 +333,8 @@ WBD.XYPlot = Backbone.View.extend({
   render: function() {
     var that = this;
     console.log("Render XYPlot ... ");
+    console.log("======xDataRange============");
+    console.log(this.model.get("filter").get("xDataRange"));
 
     // Add a dot per nation
     // this.baseGraph is a selection ?
@@ -323,8 +357,6 @@ WBD.XYPlot = Backbone.View.extend({
         return that.popuScale(d["population"] || 0 );
       })
       .style("fill", function(d){
-        console.log("Continent Color");
-        console.log(WBD.mapContinentToColor[d["continent"]]);
         return WBD.mapContinentToColor[d["continent"]];
       })
       .on("mouseover", that.addDotLabel)
@@ -337,6 +369,7 @@ WBD.XYPlot = Backbone.View.extend({
       .attr("visibility", "hidden");
 
     this.updateYearSelector();
+    this.updateScalesAndAxes();
     // this.resetScalesAndAxes();
     // that.renderAxes();
 		console.log("done");
@@ -408,7 +441,7 @@ WBD.XYPlot = Backbone.View.extend({
     var that = self;
 
     self.yearScale = d3.scale.linear()
-            .domain([1990, 2012]) // hard-coded
+            .domain([1990, 2010]) // hard-coded
             .range([that.yearSelectorBox.x + 10, that.yearSelectorBox.x + that.yearSelectorBox.width - 10])
             .clamp(true);
 
