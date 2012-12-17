@@ -17,6 +17,9 @@
 
 <body>
     <div id="main">
+        <div id="title">
+            GlobalLens <strong class="explain">Visualize Worldbank Data</strong>
+        </div>
     	<div id="options">
       	
         <!-- Search Tabs and Search boxes -->
@@ -30,44 +33,57 @@
             <button id="tab_continent" data-dropdown="#dropdown_continents">Continent</button>
           </div>
         </div>
-        <div id="xyAxes">
-          <div class="singleAxis">
-            <label for="xAxisPicker">X Axis:&nbsp;&nbsp;</label><select id="xAxisPicker"></select>&nbsp;&nbsp;
-          </div>
-          <div class="singleAxis">
-            <label for="yAxisPicker">Y Axis:&nbsp;&nbsp;</label><select id="yAxisPicker"></select>
-          </div>
-          <div class="singleAxis">Population</div>
-          <!--select id="zAxisPicker"></select-->
-        </div>
-              
-        <div id="range-value">            
-          <!-- X Axis Filter, hi-->
-          <div class="singleFilter">
-            <p>
-              <input type="text" id="xRangeText" />
-              <label for="xRangeText"></label>
-            </p>
-            <div id="slider-xAxis"></div>
-          </div>
-         
-          <!-- Y Axis Filter -->
-          <div class="singleFilter">
-            <p>
-              <input type="text" id="yRangeText" />
-              <label for="yRangeText"></label>
-            </p>
-            <div id="slider-yAxis"></div>
+        <div id="selection_xy"> 
+        <div class="selection_float">
+            <div class="xyAxes">
+                <div class="singleAxis">
+                <label for="xAxisPicker"><stonrg class="title">X Axis:</strong></label>
+                <select id="xAxisPicker"></select>
+                </div>
+                <!-- X Axis Filter, hi-->
+                <div class="range-value">  
+                    <div class="singleFilter">
+                    <p><input type="text" id="xRangeText" />
+                    <label for="xRangeText"></label>
+                     </p>
+                    <div id="slider-xAxis"></div>
+                    </div>
+                </div>
+            </div>
           </div>
           
-          <!-- Bubble Size || Population Filter -->
-          <div class="singleFilter">
-            <p>
-              <input type="text" id="populationRangeText" />
-              <label for="populationRangeText"></label>
-            </p>
-            <div id="slider-population"></div>
+          <div class="selection_float">
+            <div class="xyAxes">
+                <div class="singleAxis">
+                <label for="yAxisPicker"><stonrg class="title">Y Axis:</strong></label>
+                <select id="yAxisPicker"></select>
+                </div>
+                <div class="range-value">  
+                <!-- Y Axis Filter -->
+                    <div class="singleFilter">
+                    <p><input type="text" id="yRangeText" />
+                    <label for="yRangeText"></label>
+                    </p>
+                        <div id="slider-yAxis"></div>
+                    </div>
+                </div>
+            </div>
           </div>
+          
+        <div class="selection_float">  
+            <div class="xyAxes">
+                <div class="singleAxis"><stonrg class="title">Bubble</strong>
+                <p>Population</p>
+                </div>
+            </div>
+            <div class="range-value2">  
+                <div class="singleFilter">
+                <p><input type="text" id="populationRangeText" />
+                <label for="populationRangeText"></label>
+                </p>
+                    <div id="slider-population"></div>
+                </div>
+            </div>
         </div>
       </div>
       <div class="clear"></div>
