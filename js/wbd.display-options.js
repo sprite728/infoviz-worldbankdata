@@ -11,7 +11,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 */
   year: 2000,
   countries: [],
-  regions:[],
+  continents:[],
   
   el: $("#options"),
   
@@ -20,6 +20,9 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		
 		this.doInitialDrawing();
 		this.doHandle();
+		
+		this.countries = this.model.get("filter").get("countries");
+		this.continents = this.model.get("filter").get("continents");
 		
 		this.model.bind("change:filter", this.render, this );
 		//var countries = $.ajax({url: "./countries.json", async: false});
@@ -80,10 +83,10 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				//console.log("Country Name: "+ aCountryName);	
 				//console.log("Continent: " + WBD.getContinentByCountry(aCountryName));
 				if(WBD.getContinentByCountry(aCountryName)){
-					$("#countries_filter").append("<li><button class='country " + WBD.getContinentByCountry(aCountryName).replace(" ", "_").toLowerCase() + "'>" + allCountries[index] + "</button></li>");
+					$("#countries_filter").append("<button class='country " + WBD.getContinentByCountry(aCountryName).replace(" ", "_").toLowerCase() + "'>" + allCountries[index] + "</button><br>");
 				}
 				else{
-					$("#countries_filter").append("<li><button class='country undefined'>" + allCountries[index] + "</button></li>");
+					$("#countries_filter").append("<button class='country undefined'>" + allCountries[index] + "</button><br>");
 				}
 		}
 		
@@ -92,9 +95,17 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			autocomplete: {delay: 0, minLength: 2},
 			caseSensitive: true,
 			allowDuplicates: false,
+			allowSpaces: true,
 			removeConfirmation: true,
 			placeholderText: "Search for countries",
 			
+			beforeTagAdded: function(event, ui) {
+        //console.log("=================Tag Validation=====================");
+        //console.log(ui.tag);
+				//console.log($(this).tagit("tagLabel", ui.tag));
+				var tempTagLabel = $(this).tagit("tagLabel", ui.tag);
+				if(allCountries.indexOf(tempTagLabel)<0){return false;}
+    	},
 			afterTagAdded: function(evt, ui) {
 				that.model.get("filter").addCountry($(this).tagit("tagLabel", ui.tag));
 			},
@@ -106,7 +117,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 
 		for (index=0; index<allContinents.length;index++){
 			//if(allContinents.hasOwnProperty(index)){
-				$("#continents_filter").append("<li><button class='continent "+ allContinents[index].replace(" ","_").toLowerCase() + "'>" + allContinents[index] + "</button></li>");
+				$("#continents_filter").append("<button class='continent "+ allContinents[index].replace(" ","_").toLowerCase() + "'>" + allContinents[index] + "</button><br>");
 			//}
 		}
 		
@@ -115,9 +126,14 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			autocomplete: {delay: 0, minLength: 2},
 			caseSensitive: true,
 			allowDuplicates: false,
+			allowSpaces: true,
 			removeConfirmation: true,
 			placeholderText: "Search for continents",
 			
+			beforeTagAdded: function(event, ui) {
+				var tempTagLabel = $(this).tagit("tagLabel", ui.tag);
+				if(allContinents.indexOf(tempTagLabel)<0){return false;}
+    	},
 			afterTagAdded: function(evt, ui) {
 				that.model.get("filter").addContinent($(this).tagit("tagLabel", ui.tag));
 			},
@@ -127,8 +143,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		});
 		
 		$("#continents_tags").hide();
-		
-		
+		$("#countries_filter").hide();
+		$("#continents_filter").hide();
 		
 		//Data Range Sliders here
 		$( "#slider-xAxis" ).slider({
@@ -150,12 +166,12 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			max: yDataRange[1],
 			values: yDataRange,
 			slide: function( event, ui ) {
-				$( "#yRangeText" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+				$( "#yRangeText" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 				that.model.get("filter").set({ yDataRange: ui.values});
 			}
     });
-		$( "#yRangeText" ).val( "$" + $( "#slider-yAxis" ).slider( "values", 0 ) +
-            " - $" + $( "#slider-yAxis" ).slider( "values", 1 ) );
+		$( "#yRangeText" ).val( $( "#slider-yAxis" ).slider( "values", 0 ) +
+            " - " + $( "#slider-yAxis" ).slider( "values", 1 ) );
 		
 		$( "#slider-population" ).slider({
 			range: true,
@@ -167,8 +183,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				that.model.get("filter").set({ populationRange: ui.values});
 			}
 		});
-		$( "#populationRangeText" ).val( "$" + $( "#slider-population" ).slider( "values", 0 ) +
-            " - $" + $( "#slider-population" ).slider( "values", 1 ) );
+		$( "#populationRangeText" ).val( $( "#slider-population" ).slider( "values", 0 ) +
+            " - " + $( "#slider-population" ).slider( "values", 1 ) );
 		
 	},
   
@@ -213,6 +229,7 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			console.log("============== CHANGING XY AXIS ===============");
 			console.log("X Axis: ", $("#xAxisPicker").val());
 			console.log("Y Axis: ", $("#yAxisPicker").val());
+			console.log("============== END of CHANGING XY AXIS ===============");
 		});
 	
 	$("#tabs > button").click(function(){
@@ -221,11 +238,15 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			that.model.set("isViewedByCountry: true");
 			$("#continents_tags").hide();
 			$("#countries_tags").show();
+			$("#continents_filter").hide();
+			$("#countries_filter").slideDown();
 		}
 		if(temp == "Continent"){
 			that.model.set("isViewedByCountry: false");
 			$("#continents_tags").show();
 			$("#countries_tags").hide();
+			$("#countries_filter").hide();
+			$("#continents_filter").slideDown();
 		}
 	});
 	
@@ -235,8 +256,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
   render: function() {
     var that = this;
 		
-		this.doDrawing;
-		this.doHandle;
+		console.log(this.model.get("filter").hasChanged("countries"));
+		
 		/*
 		var year = this.model.get("filter").get("year");
 		var countries = this.model.get("filter").get("countries");
@@ -244,14 +265,6 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		*/
 		//console.log(regions + " >> " + countries + " >> " + year);
 	
-  },
-  
-  renderXYPlot: function(){
-	
-  },  
-  
-  renderMap: function(){
-	    
   },
   
 });

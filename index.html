@@ -12,7 +12,7 @@
     <link href="css/tipsy.css" rel="stylesheet" type="text/css" />
     <link href="css/colorbrewer.css" rel="stylesheet" type="text/css" />    
     <link href="css/jquery.tagit.css" type="text/css" rel="stylesheet" />
-    <link href="css/jquery.dropdown.css" type="text/css" rel="stylesheet" />
+    <!--link href="css/jquery.dropdown.css" type="text/css" rel="stylesheet" /-->
 </head>
 
 <body>
@@ -21,14 +21,21 @@
       	
         <!-- Search Tabs and Search boxes -->
         <div id="ccTabs">
+          <div id="tabs">
+            <button id="tab_country">Country</button>
+            <button id="tab_continent">Continent</button>
+            <!--button id="tab_country" data-dropdown="#dropdown_countries">Country</button>
+            <button id="tab_continent" data-dropdown="#dropdown_continents">Continent</button-->
+          </div>
           <div id="tabSearch">
             <ul id="countries_tags"></ul> 
             <ul id="continents_tags"></ul>
           </div>
-          <div id="tabs">
-            <button id="tab_country" data-dropdown="#dropdown_countries">Country</button>
-            <button id="tab_continent" data-dropdown="#dropdown_continents">Continent</button>
-          </div>
+     
+          <div id="dropdown_filters">
+            <div id="countries_filter"></div>
+            <div id="continents_filter"></div>
+          </div> 
         </div>
         <div id="xyAxes">
           <div class="singleAxis">
@@ -96,13 +103,12 @@
 <script src="js/wbd.map.js"></script>
 <script src="js/wbd.display-options.js"></script>
 <script src="js/scripts.js"></script>
-  
-  
-<div id="dropdown_countries" class="dropdown-menu has-tip has-scroll">
+
+<!--div id="dropdown_countries" class="dropdown-menu has-scroll">
 	<ul id="countries_filter"></ul>
 </div>
-<div id="dropdown_continents" class="dropdown-menu has-tip has-scroll">
+<div id="dropdown_continents" class="dropdown-menu has-scroll">
 	<ul id="continents_filter"></ul>
-</div> 
+</div--> 
 </body>
 </html>

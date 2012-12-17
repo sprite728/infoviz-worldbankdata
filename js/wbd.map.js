@@ -26,11 +26,11 @@ WBD.Map = Backbone.View.extend({
     .center({lat: 51, lon: 0})
     .zoomRange([2,4])
     .zoom(2)
-    .add(org.polymaps.interact())
+    //.add(org.polymaps.interact())
     .add(org.polymaps.drag())
     .add(org.polymaps.wheel().smooth(false))
-    .add(org.polymaps.dblclick())
-    .add(org.polymaps.arrow());
+    .add(org.polymaps.dblclick());
+    //.add(org.polymaps.arrow());
 
     // Init tab 
     this.showXValuesOnMap = true;
