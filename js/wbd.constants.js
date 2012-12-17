@@ -9,12 +9,13 @@ WBD.allIndicators = ["life_expectency", "health_expenditure", "gni", "population
 WBD.allCategories = ["BRIC", "AIPEC", "WTO"];
 
 WBD.mapContinentToColor = {
-	"Asia": "#9ad251",
-	"North America": "#ffdc00",
-	"South America": "#d5a5a8",
-	"Africa": "#ce74ee",
-	"Europe": "bf3300",
-	"Oceanic": "#245d70"
+	//"Asia": "#aaae89",
+	"Asia": "#dd5d62",
+	"North America": "#abaf89",
+	"South America": "#a084a2",
+	"Africa": "#71c7d6",
+	"Europe": "#84c6bd",
+	"Oceanic": "#71c6d6"
 }
 
 WBD.mapCountryToContinent = {}

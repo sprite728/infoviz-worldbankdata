@@ -323,6 +323,8 @@ WBD.XYPlot = Backbone.View.extend({
         return that.popuScale(d["population"] || 0 );
       })
       .style("fill", function(d){
+        console.log("Continent Color");
+        console.log(WBD.mapContinentToColor[d["continent"]]);
         return WBD.mapContinentToColor[d["continent"]];
       })
       .on("mouseover", that.addDotLabel)
