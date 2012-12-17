@@ -12,7 +12,8 @@ def num(s):
         return float(s)
 
 countries = {}
-files = ['gni', 'health_expenditure', 'life_expectency', 'population', 'gdp']
+files = ['gni_per_capita',  'health_expenditure', 'life_expectency', 'population', 'gdp', 'motor_vehicles_per_1k_people',
+	'birth_rate', 'death_rate', 'gni_per_capita', 'gni']
 
 print "Start parsing ... "
 for currentFileName in files:
