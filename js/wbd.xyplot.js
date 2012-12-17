@@ -335,8 +335,8 @@ WBD.XYPlot = Backbone.View.extend({
       .attr("visibility", "hidden");
 
     this.updateYearSelector();
-    this.resetScalesAndAxes();
-    that.renderAxes();
+    // this.resetScalesAndAxes();
+    // that.renderAxes();
 		console.log("done");
   },
 
