@@ -403,3 +403,42 @@ body{
     font-weight:bold;
     margin-left:10px;
 }
+#map_legend{
+	width: 400px;
+	font-size: 16px;
+	color: #333;
+	display: inline;
+}
+
+#map_blue{
+	width:16px;
+	height:16px;
+}
+
+#map_grey{
+	width:16px;
+	height:16px;
+}
+
+#map_white{
+	width:16px;
+	height:16px;
+}
+
+#legend_title{
+	font-size: 20px;
+	font-weight: bold;
+	margin-left: 8px;
+	padding-bottom: 16px;
+}
+
+.legend_desc{
+	width: 240px;
+	margin-top: -18px;
+	margin-left:30px;
+	float: left;
+}
+
+.map_ind{
+	padding: 8px;	
+}

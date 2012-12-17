@@ -304,7 +304,12 @@ WBD.Map = Backbone.View.extend({
 
     this.map.add(geoMap);
 
-
+    $("#map_legend").remove();
+    var html_legend = "";
+    html_legend = "<div id='map_legend'><div id='legend_title'>Map Legend</div>" + "<div class='map_ind'><div id='map_blue' style='background-color:rgba(30,47,114,0.8);'></div><div class='legend_desc'>" + this.model.get("xDatasetName") + "</div></div>" 
+    + "<div class='map_ind'><div id='map_grey' style='background-color:rgb(200,200,200);'></div><div class='legend_desc'>Unselected Country</div></div>" + "<div class='map_ind'><div id='map_white' style='background-color:rgb(255,255,255);'></div><div class='legend_desc'>Country without data</div></div>" +  "</div>";
+    $("#main").append(html_legend);
+		
     // console.log("append legend");
     // var color = d3.scale.category10();
           //Create the legend
@@ -438,6 +443,11 @@ WBD.Map = Backbone.View.extend({
           }
         }
       }
+	  $("#map_legend").remove();
+    var html_legend = "";
+    html_legend = "<div id='map_legend'><div id='legend_title'>Map Legend</div>" + "<div class='map_ind'><div id='map_blue' style='background-color:rgba(30,47,114,0.8);'></div><div class='legend_desc'>" + this.model.get("xDatasetName") + "</div></div>" 
+    + "<div class='map_ind'><div id='map_grey' style='background-color:rgb(200,200,200);'></div><div class='legend_desc'>Unselected Country</div></div>" + "<div class='map_ind'><div id='map_white' style='background-color:rgb(255,255,255);'></div><div class='legend_desc'>Country without data</div></div>" +  "</div>";
+    $("#main").append(html_legend);
   },
 
   renderContinentMap: function(){

@@ -1,150 +1,78 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0;">
-    <!-- The sequence of the libraries is very important! d3 > jq > under > backbone -->
-    <!--link href="css/reset.css" rel="stylesheet" type="text/css" /-->
-    <link type="text/css" rel="stylesheet" href="css/script.css" />
-    <link href="css/jquery-ui-1.9.2.custom.min.css" rel="stylesheet" type="text/css" />
-    <!--link href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" type="text/css" rel="stylesheet" /-->
-    <link href="css/jquery.tagit.css" rel="stylesheet" type="text/css" />
-    <link href="css/example.css" rel="stylesheet" type="text/css" />
-    <link href="css/tipsy.css" rel="stylesheet" type="text/css" />
-    <link href="css/colorbrewer.css" rel="stylesheet" type="text/css" />    
-    <link href="css/jquery.tagit.css" type="text/css" rel="stylesheet" />
-    <link href="css/jquery.dropdown.css" type="text/css" rel="stylesheet" />
-</head>
-
-<body>
-		<!--div id="cover"><img src="css/images/bg.png" /></div-->
-		
-    <div id="main">
-        <div id="title">
-            GlobalLens <strong class="explain">Visualize Worldbank Data</strong>
-        </div>
-    	<div id="options" style="display:none;">
-      	
-        <!-- Search Tabs and Search boxes -->
-        <div id="ccTabs">
-          <div id="tabs">
-          	<ul>
-            	<li><a href="#tab-1">Country</a></li>
-              <li><a href="#tab-2">Continent</a></li>
-              <span id="resetBtn">Reset</span>
-            </ul>
-            <div id="tab-1"><ul id="countries_tags"></ul></div>
-            <div id="tab-2"><ul id="continents_tags"></ul></div>
-            <!--button id="tab_country">Country</button>
-            <button id="tab_continent">Continent</button>
-            <!--button id="tab_country" data-dropdown="#dropdown_countries">Country</button>
-            <button id="tab_continent" data-dropdown="#dropdown_continents">Continent</button-->
-            <img data-dropdown="#dropdown_filters" src="css/images/expand.png" />
-          </div>
-          <!--div id="tabSearch">
-            <ul id="countries_tags"></ul> 
-            <ul id="continents_tags"></ul>
-          </div-->
-          <!--div id="dropdown_filters">
-            <div id="countries_filter"></div>
-            <div id="continents_filter"></div>
-          </div--> 
-        </div>
-        
-      	<div id="selection_xy"> 
-       	  <div class="selection_float">
-            <div class="xyAxes">
-                <div class="singleAxis">
-                <label for="xAxisPicker"><stonrg class="title">X Axis:</strong></label>
-                <select id="xAxisPicker"></select>
-                </div>
-                <!-- X Axis Filter, hi-->
-                <div class="range-value">  
-                    <div class="singleFilter">
-                    <p><input type="text" id="xRangeText" />
-                    <label for="xRangeText"></label>
-                     </p>
-                    <div id="slider-xAxis"></div>
-                    </div>
-                </div>
-            </div>
-          </div>
-          
-          <div class="selection_float">
-            <div class="xyAxes">
-                <div class="singleAxis">
-                <label for="yAxisPicker"><stonrg class="title">Y Axis:</strong></label>
-                <select id="yAxisPicker"></select>
-                </div>
-                <div class="range-value">  
-                <!-- Y Axis Filter -->
-                    <div class="singleFilter">
-                    <p><input type="text" id="yRangeText" />
-                    <label for="yRangeText"></label>
-                    </p>
-                        <div id="slider-yAxis"></div>
-                    </div>
-                </div>
-            </div>
-          </div>
-          
-        <div class="selection_float">  
-            <div class="xyAxes">
-                <div class="singleAxis"><stonrg class="title">Bubble</strong>
-                <p>Population</p>
-                </div>
-            </div>
-            <div class="range-value2">  
-                <div class="singleFilter">
-                <p><input type="text" id="populationRangeText" />
-                <label for="populationRangeText"></label>
-                </p>
-                    <div id="slider-population"></div>
-                </div>
-            </div>
-        </div>
-      </div>
-      <div class="clear"></div>
-    </div>
-     <div id="legend">
-      <div id="legend_chart"><img src="css/images/legend.png" /></div>
-     </div> 
-     <div class="clear"></div>	
-   </div>
-   <div class="clear"></div>	
-<script src="js/libs/d3.v2.js"></script>
-<script src="js/libs/jquery-1.8.2.js"></script>
-<script src="js/libs/jquery-ui-1.9.2.custom.min.js"></script>
-<script src="js/libs/jquery.tag-it.min.js"></script>
-<script src="js/libs/jquery.dropdown.js"></script>
-<script src="js/libs/jquery.qtip-1.0.0-rc3.js"></script>
-<script src="js/libs/underscore.js"></script>
-<script src="js/libs/backbone.js"></script>
-<script src="js/libs/polymaps.js"></script>
-<script src="js/libs/jquery.tipsy.js"></script>
-<script src="js/libs/d3.geo.js"></script>
-
-
-<script src="js/wbd.constants.js"></script>
-<script src="js/wbd.util.js"></script>
-<script src="js/wbd.xyplot.js"></script>
-<script src="js/wbd.entries.js"></script>
-<script src="js/wbd.map.js"></script>
-<script src="js/wbd.display-options.js"></script>
-<script src="js/scripts.js"></script>
-          <div id="dropdown_filters" class="dropdown-menu has-scorll">
-            <ul id="countries_filter"></ul>
-            <ul id="continents_filter"></ul>
-          </div> 
-<!--div id="dropdown_countries" class="dropdown-menu has-scroll">
-	<ul id="countries_filter"></ul>
-</div>
-<div id="dropdown_continents" class="dropdown-menu has-scroll">
-	<ul id="continents_filter"></ul>
-</div-->
-</div> 
-<div id="footer">
-@Copyright GlobalLens : Wen | Chuan-Che (Jeff) | Jiyoung | Lezhong | An  <strong class="title">SI 649 Information Visualization</strong>
-</div>
-</body>
+<html lang="en">
+    <head>
+        <title>GlobalLens</title>
+		<meta charset="UTF-8" />
+        <link rel="stylesheet" type="text/css" href="index.css" />n
+		<link href='http://fonts.googleapis.com/css?family=PT+Sans+Narrow&v1' rel='stylesheet' type='text/css' />
+		<link href='http://fonts.googleapis.com/css?family=Wire+One&v1' rel='stylesheet' type='text/css' />
+    <script type="text/javascript" src="http://tympanus.net/Tutorials/CircleHoverEffects/js/modernizr.custom.79639.js"></script> 
+    </head>
+    <body>
+		<div class="container">
+		    <div class="title">
+			<h1>GlobalLens<span> visualize World Bank datasets</span></h1>
+			<h2>Wen | Jiyoung | Jeff | Lezhong | An</h2>
+            <h3>Our goal was to build a visualization system that the user could use to facilitate discovery and increased perception of the datasets with map view and chart. We would like to support the exploratory and playful aspects of system while also giving the user easier access to analyze the dataset and to verify their assumptions. 
+            </h3>
+			</div>
+			<div class="codrops-top">
+			<section class="main">
+			
+				<ul class="ch-grid">
+					<li>
+						<div class="ch-item">	
+							<div class="ch-info">
+								<h3>Enter</h3>
+								<p>GlobalLens <a href="home.html"><br><br><br>See our Visualization</a></p>
+							</div>
+							<div class="ch-thumb ch-img-1"></div>
+						</div>
+					</li>
+				</ul>
+				
+			</section>
+			</div>
+			<ul id="sti-menu" class="sti-menu">
+				<li data-hovercolor="#37c5e9">
+					<a href="home.html">
+						<h2 data-type="mText" class="sti-item">Health Expenditure</h2>
+						<h3 data-type="sText" class="sti-item"></h3>
+						<span data-type="icon" class="sti-icon sti-icon-care sti-item"></span>
+					</a>
+				</li>
+				<li data-hovercolor="#ff395e">
+					<a href="home.html">
+						<h2 data-type="mText" class="sti-item">GNI Per Capital</h2>
+						<h3 data-type="sText" class="sti-item"></h3>
+						<span data-type="icon" class="sti-icon sti-icon-alternative sti-item"></span>
+					</a>
+				</li>
+				<li data-hovercolor="#d869b2">
+					<a href="home.html">
+						<h2 data-type="mText" class="sti-item">Life Expectancy</h2>
+						<h3 data-type="sText" class="sti-item"></h3>
+						<span data-type="icon" class="sti-icon sti-icon-family sti-item"></span>
+					</a>
+				</li>
+				<li data-hovercolor="#ffdd3f">
+					<a href="home.html">
+						<h2 data-type="mText" class="sti-item">Population</h2>
+						<h3 data-type="sText" class="sti-item"></h3>
+						<span data-type="icon" class="sti-icon sti-icon-technology sti-item"></span>
+					</a>
+				</li>
+			</ul>
+			
+		</div>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.14/jquery-ui.min.js"></script>
+		<script type="text/javascript" src="http://tympanus.net/Tutorials/AnimatedTextIconMenu/js/jquery.easing.1.3.js"></script>
+		<script type="text/javascript" src="jquery.iconmenu.js"></script>
+		<script type="text/javascript">
+			$(function() {
+				$('#sti-menu').iconmenu();
+			});
+		</script>
+		</body>
 </html>
