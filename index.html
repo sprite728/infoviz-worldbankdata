@@ -16,11 +16,13 @@
 </head>
 
 <body>
+		<!--div id="cover"><img src="css/images/bg.png" /></div-->
+		
     <div id="main">
         <div id="title">
             GlobalLens <strong class="explain">Visualize Worldbank Data</strong>
         </div>
-    	<div id="options">
+    	<div id="options" style="display:none;">
       	
         <!-- Search Tabs and Search boxes -->
         <div id="ccTabs">
@@ -28,6 +30,7 @@
           	<ul>
             	<li><a href="#tab-1">Country</a></li>
               <li><a href="#tab-2">Continent</a></li>
+              <span id="resetBtn">Reset</span>
             </ul>
             <div id="tab-1"><ul id="countries_tags"></ul></div>
             <div id="tab-2"><ul id="continents_tags"></ul></div>
@@ -103,9 +106,9 @@
       <div class="clear"></div>
       
     </div>
- 
-
-
+    
+   </div>
+       <div class="clear"></div>	
 <script src="js/libs/d3.v2.js"></script>
 <script src="js/libs/jquery-1.8.2.js"></script>
 <script src="js/libs/jquery-ui-1.9.2.custom.min.js"></script>
@@ -126,12 +129,10 @@
 <script src="js/wbd.map.js"></script>
 <script src="js/wbd.display-options.js"></script>
 <script src="js/scripts.js"></script>
-
           <div id="dropdown_filters" class="dropdown-menu has-scorll">
             <ul id="countries_filter"></ul>
             <ul id="continents_filter"></ul>
           </div> 
-
 <!--div id="dropdown_countries" class="dropdown-menu has-scroll">
 	<ul id="countries_filter"></ul>
 </div>
