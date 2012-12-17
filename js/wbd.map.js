@@ -288,8 +288,9 @@ WBD.Map = Backbone.View.extend({
           return html1; 
         }
     });
-  },
   */
+  },
+  
 
   renderColorMap: function(){
 
