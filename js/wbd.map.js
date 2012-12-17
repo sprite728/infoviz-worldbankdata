@@ -113,11 +113,6 @@ WBD.Map = Backbone.View.extend({
             
             feature = that.countryElements.features[i];
             countryName = feature.data.properties.name;
-
-            console.log("country name");
-            console.log(countryName);
-
-            console.log(mapData);
             mapData = allMapData.filter(function(element, index, array){
               return element.country == countryName;
             });
@@ -128,16 +123,10 @@ WBD.Map = Backbone.View.extend({
             // console.log(aCountryData);
 
             if(aCountryData){
-              console.log("ACountryData");
-              console.log(aCountryData);
-
-              console.log("Current indicator");
-              console.log(that.currentInd);
-              console.log(aCountryData[that.currentInd]);
+          
 
               var countryColor = that.colorScale(aCountryData[that.currentInd]);
-              console.log("countryColor");
-              console.log(countryColor);
+            
               // setAttribute("style", "color: red;");
               
               // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
@@ -180,16 +169,10 @@ WBD.Map = Backbone.View.extend({
 
       // reset country's attributes
       if(aCountryData){
-        console.log("ACountryData");
-        console.log(aCountryData);
-
-        console.log("Current indicator");
-        console.log(that.currentInd);
-        console.log(aCountryData[that.currentInd]);
+    
 
         var countryColor = that.colorScale(aCountryData[that.currentInd]);
-        console.log("countryColor");
-        console.log(countryColor);
+        
         // setAttribute("style", "color: red;");
         
         // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
@@ -197,8 +180,7 @@ WBD.Map = Backbone.View.extend({
         feature.element.setAttribute("id", aCountryData['country']);
         feature.element.setAttribute("fill", "rgba(173,221,10,"+countryColor+")");
         feature.element.setAttribute("title", aCountryData['country']);
-        feature.element.addEventListener("click", that.clickFeature  , false);
-        feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
+        
       }
     };
     

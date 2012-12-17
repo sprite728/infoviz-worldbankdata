@@ -155,21 +155,15 @@ WBD.Entries = Backbone.Model.extend({
   updateXYDataRanges: function(){
     var that = this;
     var filter = this.get("filter");
-    console.log("filter");
-    console.log(filter);
 
     filter.set(
       { 
-        xDataRange: this.findExtendOfAnIndicator(this.xDatasetName),
-        yDataRange: this.findExtendOfAnIndicator(this.yDatasetName),
+        xDataRange: this.findExtendOfAnIndicator(this.get("xDatasetName")),
+        yDataRange: this.findExtendOfAnIndicator(this.get("yDatasetName")),
         populationRange: this.findExtendOfAnIndicator("population")
       }
     );
-    
-    console.log("Hello");
-    console.log(filter.get("xDataRange"));
-    console.log(filter.get("yDataRange"));
-    console.log(filter.get("populationRange"));
+  
 
   },
 
@@ -180,8 +174,6 @@ WBD.Entries = Backbone.Model.extend({
     var maxInd, minInd;
     var tempIndicatorSet;
     
-    console.log("indicator");
-    console.log(ind);
     // find max value of X and Y
     
     // find max X
@@ -200,8 +192,6 @@ WBD.Entries = Backbone.Model.extend({
         ) || 0;
     });
 
-    console.log("dd");
-    console.log(dd);
 
     maxInd = dd.reduce(
       function(previousValue, currentValue, index, array){
@@ -225,25 +215,13 @@ WBD.Entries = Backbone.Model.extend({
         ) || 0;
     });
 
-    console.log("dd");
-    console.log(dd);
 
     minInd = dd.reduce(
       function(previousValue, currentValue, index, array){
-        console.log(ind);
-        // console.log(array);
-        console.log(previousValue);
-        console.log(currentValue);
-        console.log(array[0]);
-        console.log(Math.min( previousValue, currentValue));
         return Math.min(previousValue, currentValue);
       },
       Infinity
     );
-
-
-    console.log("extend");
-    console.log([minInd, maxInd]);
 
     return [minInd, maxInd];
   },
@@ -332,6 +310,30 @@ WBD.Entries = Backbone.Model.extend({
     return a[1];
   },
 
+  getXDataRange: function(){
+    var xDataRange = this.findExtendOfAnIndicator(this.get("xDatasetName"));
+    this.get("filter").set(
+      { 
+        xDataRange: xDataRange
+      }
+    );
+
+    return xDataRange
+
+  },
+
+  getYDataRange: function(){
+    console.log("getYDataRange: " +  this.get("yDatasetName"));
+    var yDataRange = this.findExtendOfAnIndicator(this.get("yDatasetName"));
+    this.get("filter").set(
+      { 
+        yDataRange: yDataRange
+      }
+    );
+
+    return yDataRange
+
+  }
   // Override the set method to include applyFilter
   // set: function(attributes, options) {    
   //   Backbone.Model.prototype.set.call(this, attributes, options);

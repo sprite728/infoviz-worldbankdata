@@ -34,21 +34,14 @@ WBD.XYPlot = Backbone.View.extend({
 		this.xAxisDatasetName = this.model.get("xDatasetName");		
 		this.yAxisDatasetName = this.model.get("yDatasetName");	
 		
-		console.log("xDatasetName from Entries: " + this.xAxisDatasetName);
-		console.log("yDatasetName from Entries: " + this.yAxisDatasetName);
-		
     // Listen to changes on model
     this.model.bind("change:selDataXYPlot", this.render, this );
-    this.model.get("filter").bind("change:year", function(){
-      console.log("filter");
-      console.log(this.model.get("filter"));
-    }, this);
 		
     this.model.get("filter").bind("change:xDataRange", this.render, this );
     this.model.get("filter").bind("change:yDataRange", this.render, this );
     
-		//this.model.bind("change:xDatasetName", this.render, this );
-		//this.model.bind("change:yDatasetname", this.render, this );
+		this.model.bind("change:xDatasetName", this.updateDataset, this );
+		this.model.bind("change:yDatasetName", this.updateDataset, this );
 
     // Members
     this.svg = d3.select(this.el).append("svg")
@@ -58,55 +51,63 @@ WBD.XYPlot = Backbone.View.extend({
         .attr("transform","translate("+this.margins.left+","+this.margins.top+")")
         .attr("class", "xy-plot");
 
-    this.initAxes();
+    this.initScalesAndAxes();
+    this.renderAxes();
+
     this.initYearSelector();
+   
     
     this.initChart();
     this.render();
+    // this.initScalesAndAxes();
+    // this.updateAxes();
   },
 
   // first time draw the axes onto the chart
-  initAxes : function() {
+  renderAxes : function() {
+    console.log("init axes");
     var that = this;
     
-    // Create x, y scales and x, y axies 
-    this.initScales();
 
     // Need to change this part in the future
     // When the dataset is changed, the x-axis need to be removed/updated
     // Render Axes 
-    this.xAxisEl = this.svg.append("g")
+    this.xAxisEl
       .attr("class", "x axis")
       .attr("transform", "translate(0,"+that.height+")") 
       .call(that.xAxis);
 
-    this.yAxisEl = this.svg.append("g")
+    this.yAxisEl 
       .attr("class", "y axis")
       .call(that.yAxis);
 
     // Add an x-axis label.
-    this.xAxisLabelEl = this.svg.append("text")
+    this.xAxisLabelEl 
         .attr("class", "x label")
         .attr("text-anchor", "end")
         .attr("x", that.width)
         .attr("y", that.height - 6)
-        .text(that.xAxisDatasetName);
+        .text(that.model.get("xDatasetName"));
 
     // Add a y-axis label.
-    this.yAxisLabelEl = this.svg.append("text")
+    this.yAxisLabelEl 
         .attr("class", "y label")
         .attr("text-anchor", "end")
         .attr("y", 6)
         .attr("dy", ".75em")
         .attr("transform", "rotate(-90)")
-        .text(that.yAxisDatasetName);
+        .text(that.model.get("yDatasetName"));
   },
 
   // render the updated axes 
   updateAxes: function(){
+    console.log("update axes");
     var that = this;
 
     // Re-render x, y axes 
+    // this.xAxisEl.parentNode.removeChild(this.xAxisEl);
+
+
     this.xAxisEl
       .call(that.xAxis);
 
@@ -115,41 +116,40 @@ WBD.XYPlot = Backbone.View.extend({
 
     // Update the x, y axis label.
     this.xAxisLabelEl
-      .text(that.xAxisDatasetName);
+      .text(that.model.get("xDatasetName"));
 
     this.yAxisLabelEl
-      .text(that.yAxisDatasetName);
+      .text(that.model.get("yDatasetName"));
 
   },
 
+  updateDataset: function(){
+    var that = this;
+    console.log("update dataset");
+
+
+    // that.initScalesAndAxes();
+    that.resetScalesAndAxes();
+    that.renderAxes();
+    // that.updateAxes();
+    that.render();
+  },
+
   // initialize the elements and members used for scales and axes
-  initScales: function(){
+  initScalesAndAxes: function(){
+    console.log("init scales");
     var that = this;
 		 
 		var xDataRange = this.model.get("filter").get("xDatasetScale");
     var yDataRange = this.model.get("filter").get("yDatasetScale");
-
-    console.log(xDataRange);
-    console.log(yDataRange);
-  //       return d[that.xAxisDatasetName];} );
-				
-		// var yDataRange = d3.extent(that.model.getSelDataXYPlot(), function(d){
-  //       return d[that.yAxisDatasetName];} );
-				
-		// console.log("Initial xDataRange in XYPlot: ", xDataRange);
-		// console.log("Initial yDataRange in XYPlot: ", yDataRange);
-		
-		// that.model.get("filter").set({xDataRange: xDataRange});
-		// that.model.get("filter").set({yDataRange: yDataRange});
-		//that.model.get("filter").trigger("change:filter"); 
 		
     // Create Scales 
     this.xScale = d3.scale.linear()
-      .domain(this.model.get("filter").get("xDataRange"))
+      .domain(this.model.getXDataRange())
 			.range([0, this.width]);
 
     this.yScale = d3.scale.linear()
-      .domain(this.model.get("filter").get("yDataRange"))
+      .domain(this.model.getYDataRange())
       .range([that.height, 0]);
 
     this.popuScale = d3.scale.linear()
@@ -167,7 +167,101 @@ WBD.XYPlot = Backbone.View.extend({
     this.yAxis = d3.svg.axis()
       .scale(that.yScale)
       .orient("left");
+
+    // Init Axes elements
+    this.xAxisEl = this.svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0,"+that.height+")") 
+      .call(that.xAxis);
+
+    this.yAxisEl = this.svg.append("g")
+      .attr("class", "y axis")
+      .call(that.yAxis);
+
+    // Add an x-axis label.
+    this.xAxisLabelEl = this.svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", that.width)
+        .attr("y", that.height - 6)
+        .text(that.model.get("xDatasetName"));
+
+    // Add a y-axis label.
+    this.yAxisLabelEl = this.svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text(that.model.get("yDatasetName"));
+
+
   },
+
+  resetScalesAndAxes: function(){
+    var that = this;
+    this.xAxisEl.remove();
+    this.yAxisEl.remove();
+    this.xAxisLabelEl.remove();
+    this.yAxisLabelEl.remove();
+
+    console.log("Y data range");
+    console.log(this.model.getYDataRange()); 
+    console.log(this.model.get("yDatasetName"));
+
+    // Create Scales 
+    this.xScale = d3.scale.linear()
+      .domain(this.model.getXDataRange())
+      .range([0, this.width]);
+
+    this.yScale = d3.scale.linear()
+      .domain(this.model.getYDataRange())
+      .range([that.height, 0]);
+
+    this.popuScale = d3.scale.linear()
+      .domain(this.model.get("filter").get("populationRange"))
+      .range(this.dotSizeRange);
+
+    // this.colorScale = d3.scale.ordinal()
+    //   .domain(WBD.)
+
+    // Create Axes
+    this.xAxis = d3.svg.axis()
+      .scale(that.xScale)
+      .orient("bottom");
+
+    this.yAxis = d3.svg.axis()
+      .scale(that.yScale)
+      .orient("left");
+
+    // Init Axes elements
+    this.xAxisEl = this.svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0,"+that.height+")") 
+      .call(that.xAxis);
+
+    this.yAxisEl = this.svg.append("g")
+      .attr("class", "y axis")
+      .call(that.yAxis);
+
+    // Add an x-axis label.
+    this.xAxisLabelEl = this.svg.append("text")
+        .attr("class", "x label")
+        .attr("text-anchor", "end")
+        .attr("x", that.width)
+        .attr("y", that.height - 6)
+        .text(that.model.get("xDatasetName"));
+
+    // Add a y-axis label.
+    this.yAxisLabelEl = this.svg.append("text")
+        .attr("class", "y label")
+        .attr("text-anchor", "end")
+        .attr("y", 6)
+        .attr("dy", ".75em")
+        .attr("transform", "rotate(-90)")
+        .text(that.model.get("yDatasetName"));
+  },
+
 	
   initYearSelector: function(){
       // Add the year label; the value is set on transition.
@@ -181,11 +275,7 @@ WBD.XYPlot = Backbone.View.extend({
 
       // Add on overlay for the year label
       this.yearSelectorBox = this.yearLabel.node().getBBox();
-      // console.log("this.yearSelectorBox");
-      // console.log(this.yearSelectorBox);
 
-      //console.log("this.yearSelectorBox");
-      //console.log(this.yearSelectorBox);
 
       this.yearSelector = this.svg.append("rect")
         .attr("class", "overlay")
@@ -211,27 +301,20 @@ WBD.XYPlot = Backbone.View.extend({
 
     // Add a dot per nation
     // this.baseGraph is a selection ?
-    var exitGroup = this.baseGraph
+    var dots = this.baseGraph
       // d.country is the key to identify different array element
         .data(this.model.getSelDataXYPlot(), function(d){ 
-          console.log(d);
           return d.country;})
       .attr("visibility", "visible")
       .attr("cx", function(d){ 
         // It is possible that some countries won't have this indicator record
         // therefore, return 0 
-
-        if(d.country == "Canada"){
-          //console.log(d.country);
-          //console.log(d.gni);
-          //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
-        }
-        return that.xScale(d[that.xAxisDatasetName] || 0 ); 
+        return that.xScale(d[that.model.get("xDatasetName")] || 0 ); 
       })
       .attr("cy", function(d){ 
         // It is possible that some countries won't have this indicator record
         // therefore, return 0 
-        return that.yScale(d[that.yAxisDatasetName] || 0 ); 
+        return that.yScale(d[that.model.get("yDatasetName")] || 0 ); 
       })
       .attr("r", function(d){
         return that.popuScale(d["population"] || 0 );
@@ -243,58 +326,14 @@ WBD.XYPlot = Backbone.View.extend({
       .on("mouseout", that.removeDotLabel)
       .call( that.addToolTip );
     
-    // 
-    console.log("enter group");
-    console.log(exitGroup.enter()[0].update);
+    
 
-    // Render new gra
-    // exitGroup
-    //   .enter().insert("circle")
-    //     .attr("class", "dot")
-    //     .attr("id", function(d){ return d.country; })
-    //     .attr("cx", function(d){ 
-    //       // It is possible that some countries won't have this indicator record
-    //       // therefore, return 0 
-    //       country.log(d);
-    //       if(d.country == "Canada"){
-    //         //console.log(d.country);
-    //         //console.log(d.gni);
-    //         //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
-    //       }
-    //       return that.xScale(d[that.xAxisDatasetName] || 0 ); 
-    //     })
-    //     .attr("cy", function(d){ 
-    //       // It is possible that some countries won't have this indicator record
-    //       // therefore, return 0 
-    //       return that.yScale(d[that.yAxisDatasetName] || 0 ); 
-    //     })
-    //     .style("fill", function(d){
-    //       return WBD.mapContinentToColor[d["continent"]];
-    //     })
-    //     .attr("r", function(d){
-    //       return that.popuScale(d["population"] || 0 );
-    //     })
-    //   .call(function(d){
-    //     console.log(d);
-    //   });
-
-    exitGroup.exit()
+    dots.exit()
       .attr("visibility", "hidden");
 
-    console.log("exit group");
-    // console.log(this.baseGraph.data(this.model.getSelDataXYPlot(), function(d){ return d.country}));
-    console.log(this.svg.selectAll("g .dots"));
-    // console.log(exitGroup.exit().remove());
-    console.log(this.model.get("selDataXYPlot"));
-
-
-
-    // console.log("exit()");
-    // console.log(circles.exit());
-    // this.baseGraph.exit().remove();
     this.updateYearSelector();
-		this.initScales();
-		this.updateAxes();
+		// this.initScalesAndAxes();
+		// this.updateAxes();
     console.log("done");
   },
 
@@ -317,12 +356,12 @@ WBD.XYPlot = Backbone.View.extend({
             //console.log(d.gni);
             //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
           }
-          return that.xScale(d[that.xAxisDatasetName] || 0 ); 
+          return that.xScale(d[that.model.get("xDatasetName")] || 0 ); 
         })
         .attr("cy", function(d){ 
           // It is possible that some countries won't have this indicator record
           // therefore, return 0 
-          return that.yScale(d[that.yAxisDatasetName] || 0 ); 
+          return that.yScale(d[that.model.get("yDatasetName")] || 0 ); 
         })
         .style("fill", function(d){
           return WBD.mapContinentToColor[d["continent"]];
@@ -364,7 +403,7 @@ WBD.XYPlot = Backbone.View.extend({
     var that = self;
 
     self.yearScale = d3.scale.linear()
-            .domain([1990, 2010]) // hard-coded
+            .domain([1990, 2012]) // hard-coded
             .range([that.yearSelectorBox.x + 10, that.yearSelectorBox.x + that.yearSelectorBox.width - 10])
             .clamp(true);
 
