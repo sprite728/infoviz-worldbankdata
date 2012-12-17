@@ -26,6 +26,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		this.continents = this.model.get("filter").get("continents");
 		this.countriesCache = [];
 		this.model.get("filter").bind("change", this.update, this);
+		this.model.bind("change:xDatasetName", this.updateXYAxisSliders, this);
+		this.model.bind("change:yDatasetName", this.updateXYAxisSliders, this);
 		//var countries = $.ajax({url: "./countries.json", async: false});
 		//var names =_.map(JSON.parse(countries.responseText), function(country){return country.country});
 		//console.log(names);
@@ -162,14 +164,14 @@ WBD.DisplayOptionView = Backbone.View.extend({
 			max: xDataRange[1],
 			values: xDataRange,
 			slide: function( event, ui ) {
-        $( "#xRangeText" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-				that.model.get("filter").set({xDataRange: ui.values});
-				// that.model.get("filter").trigger("change");
+	        $( "#xRangeText" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+					that.model.get("filter").set({xDataRange: ui.values});
+					// that.model.get("filter").trigger("change");
 
-				console.log("====Slider===xDataRange======");
-				console.log(ui.values);
-      	}
-    });
+					console.log("====Slider===xDataRange======");
+					console.log(ui.values);
+	      	}
+    	});
 		
 		$( "#xRangeText" ).val( $( "#slider-xAxis" ).slider( "values", 0 ) +
             " - " + $( "#slider-xAxis" ).slider( "values", 1 ) );
@@ -183,7 +185,8 @@ WBD.DisplayOptionView = Backbone.View.extend({
 				$( "#yRangeText" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
 				that.model.get("filter").set({ yDataRange: ui.values});
 			}
-    });
+    	});
+
 		$( "#yRangeText" ).val( $( "#slider-yAxis" ).slider( "values", 0 ) +
             " - " + $( "#slider-yAxis" ).slider( "values", 1 ) );
 		
@@ -200,6 +203,44 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		$( "#populationRangeText" ).val( $( "#slider-population" ).slider( "values", 0 ) +
             " - " + $( "#slider-population" ).slider( "values", 1 ) );
 		
+	},
+
+	updateXYAxisSliders: function(){
+		var that = this;
+		console.log("update x y axis sliders")
+
+		$( "#slider-xAxis" ).slider({
+			range: true,
+			min: this.model.get("filter").get("xDataRange")[0],
+			max: this.model.get("filter").get("xDataRange")[1],
+			values: this.model.get("filter").get("xDataRange"),
+			slide: function( event, ui ) {
+	        $( "#xRangeText" ).val(ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+					that.model.get("filter").set({xDataRange: ui.values});
+					// that.model.get("filter").trigger("change");
+
+					console.log("====Slider===xDataRange======");
+					console.log(ui.values);
+	      	}
+    	});
+
+		$( "#xRangeText" ).val( $( "#slider-xAxis" ).slider( "values", 0 ) +
+            " - " + $( "#slider-xAxis" ).slider( "values", 1 ) );
+
+
+		$( "#slider-yAxis" ).slider({
+			range: true,
+			min: this.model.get("filter").get("yDataRange")[0],
+			max: this.model.get("filter").get("yDataRange")[1],
+			values: this.model.get("filter").get("yDataRange"),
+			slide: function( event, ui ) {
+				$( "#yRangeText" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+				that.model.get("filter").set({ yDataRange: ui.values});
+			}
+    	});
+
+    	$( "#yRangeText" ).val( $( "#slider-yAxis" ).slider( "values", 0 ) +
+            " - " + $( "#slider-yAxis" ).slider( "values", 1 ) );
 	},
   
 	doHandle: function(){
@@ -361,10 +402,18 @@ WBD.DisplayOptionView = Backbone.View.extend({
 		var that = this;
 		$("#countries_filter .country").each(function(index){
 			if($(this).text()==countryIn){
-				var continentName = WBD.getContinentByCountry(countryIn).replace(" ", "_").toLowerCase();
-				console.log("================"+continentName);
-				if($(this).hasClass(continentName)){$(this).removeClass(continentName).addClass("grey");}
-				else{$(this).addClass(continentName).removeClass("grey");}
+				var continentName = WBD.getContinentByCountry(countryIn);
+				if(continentName){
+					continentName = continentName.replace(" ", "_").toLowerCase();
+					// var continentName = WBD.getContinentByCountry(countryIn).replace(" ", "_").toLowerCase();
+					console.log("================"+continentName);
+					if($(this).hasClass(continentName)){$(this).removeClass(continentName).addClass("grey");}
+					else{$(this).addClass(continentName).removeClass("grey");}
+				} else {
+					// cannot find the continent
+				}
+
+				
 			}
 			
 		});		

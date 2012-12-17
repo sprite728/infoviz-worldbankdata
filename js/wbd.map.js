@@ -24,16 +24,18 @@ WBD.Map = Backbone.View.extend({
     this.model.bind("change:selDataMap", this.chooseRender, this);
     // this.model.get("filter").bind("change:countries", this.renderColorMap, this);
 
+    // this.svg = 
+
     // Create the map object, append it to this.el
     this.map = org.polymaps.map()
-    .container(d3.select(this.el).append("svg:svg").node())
-    .center({lat: 51, lon: 0})
-    .zoomRange([2,4])
-    .zoom(2)
-    .add(org.polymaps.interact())
-    .add(org.polymaps.drag())
-    .add(org.polymaps.wheel().smooth(false))
-    .add(org.polymaps.dblclick());
+      .container(d3.select(this.el).append("svg").node())
+      .center({lat: 51, lon: 0})
+      .zoomRange([2,4])
+      .zoom(2)
+      .add(org.polymaps.interact())
+      .add(org.polymaps.drag())
+      .add(org.polymaps.wheel().smooth(false))
+      .add(org.polymaps.dblclick());
     //.add(org.polymaps.arrow());
 
     // Init tab 
@@ -149,8 +151,70 @@ WBD.Map = Backbone.View.extend({
 
             // console.log(aCountryData);
             // console.log(aCountryData["population"]);
-            var continent = aCountryData["population"];
-            var population = aCountryData["continent"];
+            var population; //= aCountryData["population"];
+            var continent; //= aCountryData["continent"];
+            try{
+              population = aCountryData["population"];
+            }
+            catch(err){
+              population = "No data";
+            }
+
+            try{
+              continent = aCountryData["population"];
+            }
+            catch(err){
+              continent = "No data";
+            }
+
+            var html1 = "<div><p>" + this.id + "</p><br>" + "<ul><li>" + that.currentInd + ": " + aCountryData[that.currentInd] + "</li><li>Population: " + continent + "</li><li>Continent: " + population + "</ul></div>";
+            return html1; 
+          }
+      });
+    };
+
+    function mouseOutFeature(f, evt){
+      //console.log("mouseOverFeature");
+      // console.log(f);
+      //console.log(this);
+      // console.log(this.id);
+      var countryName = this.id;      
+      that.model.get("filter").set({hoveredCountry: ''});
+      $(this).tipsy({ 
+          gravity: 's', 
+          html: true, 
+          title: function() {
+            $('.tipsy').remove();
+            console.log("tipsy");
+            console.log(f.screenX);
+            console.log(f.screenY);
+
+            var allMapData = that.model.get("selDataMap"); 
+            var mapData; //temp data to store filtered map data
+            var aCountryData;
+            mapData = allMapData.filter(function(element, index, array){
+              return element.country == countryName;
+            });
+            
+            // To filt out missing data
+            aCountryData = mapData[0] || null;
+
+            var population; //= aCountryData["population"];
+            var continent; //= aCountryData["continent"];
+            try{
+              population = aCountryData["population"];
+            }
+            catch(err){
+              population = "No data";
+            }
+
+            try{
+              continent = aCountryData["population"];
+            }
+            catch(err){
+              continent = "No data";
+            }
+
             var html1 = "<div><p>" + this.id + "</p><br>" + "<ul><li>" + that.currentInd + ": " + aCountryData[that.currentInd] + "</li><li>Population: " + continent + "</li><li>Continent: " + population + "</ul></div>";
             return html1; 
           }
@@ -183,90 +247,93 @@ WBD.Map = Backbone.View.extend({
     };
 
     var geoMap = org.polymaps.geoJson()
-        .url(org.polymaps.url("world.json").repeat(false))
-        .tile(false) 
-        .zoom(3)
-        .on("load", function(event){
+      .url(org.polymaps.url("world.json").repeat(false))
+      .tile(false) 
+      .zoom(3)
+      .on("load", function(event){
 
-          var i, feature, countryName;
-          var allMapData = that.model.get("selDataMap"); 
-          var mapData; //temp data to store filtered map data
-          var aCountryData;
-          that.countryElements = event;
+        var i, feature, countryName;
+        var allMapData = that.model.get("selDataMap"); 
+        var mapData; //temp data to store filtered map data
+        var aCountryData;
+        that.countryElements = event;
+        
+
+        for (i = 0; i < that.countryElements.features.length; i++) {
           
+          feature = that.countryElements.features[i];
+          countryName = feature.data.properties.name;
 
-          for (i = 0; i < that.countryElements.features.length; i++) {
+          mapData = allMapData.filter(function(element, index, array){
+            return element.country == countryName;
+          });
+          
+          // To filt out missing data
+          aCountryData = mapData[0] || null;
+
+          // Render the countries with data
+          if(aCountryData){        
+            var isNew = that.model.get("filter").isNewCountry(aCountryData.country);
+
             
-            feature = that.countryElements.features[i];
-            countryName = feature.data.properties.name;
-
-            mapData = allMapData.filter(function(element, index, array){
-              return element.country == countryName;
-            });
-            
-            // To filt out missing data
-            aCountryData = mapData[0] || null;
-
-            // Render the countries with data
-            if(aCountryData){        
-              var isNew = that.model.get("filter").isNewCountry(aCountryData.country);
-
+              var countryColor = that.colorScale(aCountryData[that.currentInd]);
+              feature.element.setAttribute("class", "country-tile");
+              feature.element.setAttribute("id", aCountryData['country']);
               
-                var countryColor = that.colorScale(aCountryData[that.currentInd]);
-                feature.element.setAttribute("class", "country-tile");
-                feature.element.setAttribute("id", aCountryData['country']);
-                
-              if(aCountryData[that.currentInd] != undefined)
-              {   
-                feature.element.setAttribute("fill", "rgba(30,47,114,"+countryColor+")");
-              }
-              else{
-                feature.element.setAttribute("fill", "rgb(180,180,180)");  //set as white because of missing indicator data
-              }
-
-                feature.element.setAttribute("style", "stroke:white ");
-                feature.element.setAttribute("title", aCountryData['country']);
-                feature.element.addEventListener("click", clickFeature , false);
-                feature.element.addEventListener("mouseover", mouseOverFeature , false);
+            if(aCountryData[that.currentInd] != undefined)
+            {   
+              feature.element.setAttribute("fill", "rgba(30,47,114,"+countryColor+")");
             }
-            // Set the color of missing data as white
             else{
-              //console.log("Missing: " + countryName);
-              feature.element.setAttribute("fill", "#fff");  //set as white because of missing indicator data          
+              feature.element.setAttribute("fill", "rgb(180,180,180)");  //set as white because of missing indicator data
             }
+
+              feature.element.setAttribute("style", "stroke:white ");
+              feature.element.setAttribute("title", aCountryData['country']);
+              feature.element.addEventListener("click", clickFeature , false);
+              feature.element.addEventListener("mouseover", mouseOverFeature , false);
+              feature.element.addEventListener("mouseout", mouseOutFeature , false);
+
           }
+          // Set the color of missing data as white
+          else{
+            //console.log("Missing: " + countryName);
+            feature.element.setAttribute("fill", "#fff");  //set as white because of missing indicator data          
+          }
+        }
+      });
 
-        });
+    this.map.add(geoMap);
 
-      this.map.add(geoMap);
 
-/*
-      console.log("append legend");
-      var color = d3.scale.category10();
-            //Create the legend
-      console.log("color: " + color);      
+    // console.log("append legend");
+    // var color = d3.scale.category10();
+          //Create the legend
+    // console.log("color: " + color);   
 
-      var legend = d3.select(this.el = org.polymaps.svg("g")).selectAll(".legend")
-            .data(color.domain())
-          .enter().append("svg:g")
-            .attr("class", "legend")
-            .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+    // this.legend =    
 
-      console.log("legend: " + legend);
+    // var legend = d3.select(this.el = org.polymaps.svg("g")).selectAll(".legend")
+    //       .data(color.domain())
+    //     .enter().append("svg:g")
+    //       .attr("class", "legend")
+    //       .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
 
-        legend.append("rect")
-            .attr("x", 100 - 18)
-            .attr("width", 18)
-            .attr("height", 18)
-            .style("fill", "red");
+    // console.log("legend: " + legend);
 
-        legend.append("text")
-            .attr("x", 100 - 24)
-            .attr("y", 9)
-            .attr("dy", ".35em")
-            .style("text-anchor", "end")
-            .text(function(d) { return d; });
-*/
+    //   legend.append("rect")
+    //       .attr("x", 100 - 18)
+    //       .attr("width", 18)
+    //       .attr("height", 18)
+    //       .style("fill", "red");
+
+    //   legend.append("text")
+    //       .attr("x", 100 - 24)
+    //       .attr("y", 9)
+    //       .attr("dy", ".35em")
+    //       .style("text-anchor", "end")
+    //       .text(function(d) { return d; });
+
 
   },
 

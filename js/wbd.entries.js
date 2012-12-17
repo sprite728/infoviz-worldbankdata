@@ -166,7 +166,9 @@ WBD.Entries = Backbone.Model.extend({
     // applyFilter would change other attributes which is subscribe by other views. 
     // Therefore, when applyFilter is called, other views would change subsequently 
     this.get("filter").bind("change", this.applyFilter, this);
-		//this.get("filter").bind("change:countries", this.applyFilter, this);
+		this.bind("change:xDatasetName", this.applyFilter, this);
+    this.bind("change:yDatasetName", this.applyFilter, this);
+    //this.get("filter").bind("change:countries", this.applyFilter, this);
   },
 
   updateXYDataRanges: function(){

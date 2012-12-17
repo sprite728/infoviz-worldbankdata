@@ -24,7 +24,9 @@ WBD.XYPlot = Backbone.View.extend({
     right: 30,
     left: 30
   },
-  dotSizeRange: [3, 50],  // default dot size 
+  dotSizeRange: [3, 50],  // default dot size
+  stroke: 'red',
+  strokeWidth: 5,
 
   initialize: function(opts){
     $('#main').append(this.el);
@@ -42,6 +44,7 @@ WBD.XYPlot = Backbone.View.extend({
     
 		this.model.bind("change:xDatasetName", this.updateDataset, this );
 		this.model.bind("change:yDatasetName", this.updateDataset, this );
+    this.model.get("filter").bind("change:hoveredCountry", this.render, this);
 
     // Members
     this.svg = d3.select(this.el).append("svg")
@@ -337,6 +340,8 @@ WBD.XYPlot = Backbone.View.extend({
     console.log("Render XYPlot ... ");
     console.log("======xDataRange============");
     console.log(this.model.get("filter").get("xDataRange"));
+    console.log("======yDataRange============");
+    console.log(this.model.get("filter").get("yDataRange"));
 
     // Add a dot per nation
     // this.baseGraph is a selection ?
@@ -361,9 +366,21 @@ WBD.XYPlot = Backbone.View.extend({
       .style("fill", function(d){
         return WBD.mapContinentToColor[d["continent"]];
       })
-      .on("mouseover", that.addDotLabel)
-      .on("mouseout", that.removeDotLabel)
-      .call( that.addToolTip );
+      .style("stroke-width", function(d){
+
+        if( d.country == that.model.get("filter").get("hoveredCountry") ){
+          return that.strokeWidth;
+        } else {
+          return 1;
+        }
+      })
+      .style("stroke", function(d){
+        if( d.country == that.model.get("filter").get("hoveredCountry") ){
+          return that.stroke;
+        } else {
+          return "black";
+        }
+      });
     
     
 
@@ -378,6 +395,52 @@ WBD.XYPlot = Backbone.View.extend({
 		console.log("done");
   },
 
+  highlightHoveredCountry: function(){
+    console.log("highlightHoveredCountry");
+    var that = this;
+    var dots = this.baseGraph
+      // d.country is the key to identify different array element
+        .data(this.model.getSelDataXYPlot(), function(d){ 
+          return d.country;})
+      .attr("visibility", "visible")
+      .attr("cx", function(d){ 
+        // It is possible that some countries won't have this indicator record
+        // therefore, return 0 
+        return that.xScale(d[that.model.get("xDatasetName")] || 0 ); 
+      })
+      .attr("cy", function(d){ 
+        // It is possible that some countries won't have this indicator record
+        // therefore, return 0 
+        return that.yScale(d[that.model.get("yDatasetName")] || 0 ); 
+      })
+      .attr("r", function(d){
+        return that.popuScale(d["population"] || 0 );
+      })
+      .style("fill", function(d){
+        return WBD.mapContinentToColor[d["continent"]];
+      })
+      .style("stroke-width", function(d){
+
+          if( d.country == that.model.get("filter").get("hoveredCountry") ){
+            return that.strokeWidth;
+          } else {
+            return 0;
+          }
+      })
+      .style("stroke", function(d){
+        if( d.country == that.model.get("filter").get("hoveredCountry") ){
+          return that.stroke;
+        } else {
+          return "black";
+        }
+      });
+  },
+
+
+  order: function(a, b) {
+    return b.population - a.population;
+  },
+
   initChart: function(){
     var that = this;
     // Add a dot per nation
@@ -389,14 +452,7 @@ WBD.XYPlot = Backbone.View.extend({
         .attr("class", "dot")
         .attr("id", function(d){ return d.country; })
         .attr("cx", function(d){ 
-          // It is possible that some countries won't have this indicator record
-          // therefore, return 0 
 
-          if(d.country == "Canada"){
-            //console.log(d.country);
-            //console.log(d.gni);
-            //console.log(that.xScale(d[that.xAxisDatasetName] || 0 ));
-          }
           return that.xScale(d[that.model.get("xDatasetName")] || 0 ); 
         })
         .attr("cy", function(d){ 
@@ -407,9 +463,25 @@ WBD.XYPlot = Backbone.View.extend({
         .style("fill", function(d){
           return WBD.mapContinentToColor[d["continent"]];
         })
+        .style("stroke-width", function(d){
+
+          if( d.country == that.model.get("filter").get("hoveredCountry") ){
+            return that.strokeWidth;
+          } else {
+            return 0;
+          }
+        })
         .attr("r", function(d){
           return that.popuScale(d["population"] || 0 );
-        });
+        })
+        .style("stroke", function(d){
+          if( d.country == that.model.get("filter").get("hoveredCountry") ){
+            return that.stroke;
+          } else {
+            return "black";
+          }
+        })
+        .sort(that.order);
 
     
     // Add tipsy, not a good way

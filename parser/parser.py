@@ -13,7 +13,7 @@ def num(s):
 
 countries = {}
 files = ['gni_per_capita',  'health_expenditure', 'life_expectency', 'population', 'gdp', 'motor_vehicles_per_1k_people',
-	'birth_rate', 'death_rate', 'gni_per_capita', 'gni']
+	'birth_rate', 'death_rate','gni']
 
 print "Start parsing ... "
 for currentFileName in files:
