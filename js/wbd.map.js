@@ -20,6 +20,8 @@ WBD.Map = Backbone.View.extend({
     // Listen to changes on model
     this.model.bind("change:selDataMap", this.renderColorMap, this );
 
+    // this.model.get("filter").bind("change:countries", this.renderColorMap, this);
+
     // Create the map object, append it to this.el
     this.map = org.polymaps.map()
     .container(d3.select(this.el).append("svg:svg").node())
@@ -47,10 +49,11 @@ WBD.Map = Backbone.View.extend({
 
     // Initialize color scale
     this.initColorScale();
+
     this.initBottomMap();
     this.initColorMap();
     //this.initTopMap(); //d3, circles over the map
-    // this.updateColorMap();
+    //this.updateColorMap();
   },
 
   initColorScale: function(){
@@ -85,9 +88,8 @@ WBD.Map = Backbone.View.extend({
     if(this.showXValuesOnMap){
       this.currentInd = this.model.get("xDatasetName");
     } else {
-      this.currentInd = this.model.get("xDatasetName");
+      this.currentInd = this.model.get("yDatasetName");
     }
-
     return this.currentInd;
   },
 
@@ -95,6 +97,30 @@ WBD.Map = Backbone.View.extend({
     var that = this;
     
     console.log("initColorMap");
+
+    // triggered when a country is clicked
+    function clickFeature(f, evt){
+      console.log("clickFeature");
+
+     
+      var countryName = this.id;
+      
+      var isNew = that.model.get("filter").isNewCountry(countryName);
+      
+      if(isNew){
+        that.model.get("filter").addCountry(countryName);
+      } else {
+        that.model.get("filter").removeCountry(countryName);
+        // $(this).attr("class", "");
+      }
+
+      
+
+      // var blurb = "<div class='info_blurb'>" + this.id + " to be passed" + "</div>";
+  
+      // that.model.get("filter").addCountry(this.id);
+      //setCountry(this.id);
+    };
 
     var geoMap = org.polymaps.geoJson()
         .url(org.polymaps.url("world.json").repeat(false))
@@ -114,10 +140,6 @@ WBD.Map = Backbone.View.extend({
             feature = that.countryElements.features[i];
             countryName = feature.data.properties.name;
 
-            //console.log("country name");
-            //console.log(countryName);
-
-            //console.log(mapData);
             mapData = allMapData.filter(function(element, index, array){
               return element.country == countryName;
             });
@@ -128,35 +150,64 @@ WBD.Map = Backbone.View.extend({
             // console.log(aCountryData);
 
             if(aCountryData){
-              //console.log("ACountryData");
-              //console.log(aCountryData);
 
-              //console.log("Current indicator");
-              //console.log(that.currentInd);
-              //console.log(aCountryData[that.currentInd]);
+             
+              var isNew = that.model.get("filter").isNewCountry(aCountryData.country);
 
+              // Country is not in the countries filter
+              // 
+            
               var countryColor = that.colorScale(aCountryData[that.currentInd]);
-              //console.log("countryColor");
-              //console.log(countryColor);
-              // setAttribute("style", "color: red;");
+                  // setAttribute("style", "color: red;");
               
               // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
+              
+     
+
               feature.element.setAttribute("class", "country-tile");
               feature.element.setAttribute("id", aCountryData['country']);
               feature.element.setAttribute("fill", "rgba(173,221,10,"+countryColor+")");
               feature.element.setAttribute("title", aCountryData['country']);
-              feature.element.addEventListener("click", that.clickFeature , false);
-              feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
+              feature.element.addEventListener("click", clickFeature , false);
+              // feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
+
             }
           }
         }
       );
     this.map.add(geoMap);
-
   },
 
 
+  
+
+  mouseOverFeature: function(f, evt){
+    // console.log("mouseOverFeature");
+    // console.log(f);
+    // console.log(this);
+    // console.log(this.id);
+    
+    
+    $(this).tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+          $('.tipsy').remove();
+          console.log("tipsy");
+          console.log(f.screenX);
+          console.log(f.screenY);
+          var html1 = "<div><span>" + this.id + "</span>";
+          return html1; 
+        }
+    });
+  },
+  
+
   renderColorMap: function(){
+
+    console.log("==============renderColorMap================");
+    console.log(this);
+
     var that = this;
     var i, feature, countryName;
 
@@ -178,72 +229,32 @@ WBD.Map = Backbone.View.extend({
       aCountryData = mapData[0] || null;
      
 
-      // reset country's attributes
-      if(aCountryData){
-        //console.log("ACountryData");
-        //console.log(aCountryData);
+      // if there is no selected countries, show all the data of the countries
+      if(this.model.get("filter").get("countries").length == 0){
+        if(aCountryData){
+          var countryColor = that.colorScale(aCountryData[that.currentInd]);
+          feature.element.setAttribute("fill", "rgba(173,221,10,"+countryColor+")");  
+        }
+      } else { // otherwise, check whether the country is selected, only render the selected part
+        if(aCountryData){
 
-        //console.log("Current indicator");
-        //console.log(that.currentInd);
-        //console.log(aCountryData[that.currentInd]);
-
-        var countryColor = that.colorScale(aCountryData[that.currentInd]);
-        //console.log("countryColor");
-        //console.log(countryColor);
-        // setAttribute("style", "color: red;");
-        
-        // feature.element.setAttribute("class", "q" + (aCountryData * 1) + "-" + 9);
-        feature.element.setAttribute("class", "country-tile");
-        feature.element.setAttribute("id", aCountryData['country']);
-        feature.element.setAttribute("fill", "rgba(173,221,10,"+countryColor+")");
-        feature.element.setAttribute("title", aCountryData['country']);
-        feature.element.addEventListener("click", that.clickFeature  , false);
-        feature.element.addEventListener("mouseover", that.mouseOverFeature , false);
+          var isNotInFilter = that.model.get("filter").isNewCountry(aCountryData.country);
+          if(isNotInFilter){
+            feature.element.setAttribute("fill", "rgb(200,200,200)");
+          } else {
+            var countryColor = that.colorScale(aCountryData[that.currentInd]);
+            feature.element.setAttribute("fill", "rgba(173,221,10,"+countryColor+")");
+          }
+        } 
       }
     };
     
     
   },
 
-  clickFeature: function(f, evt){
-    //console.log("clickFeature");
-
-    f.setAttribute("class", "selected");
-
-    var blurb = "<div class='info_blurb'>" + f.getAttribute("title") + " to be passed" + "</div>";
-
-    var infowin = document.getElementById('detail')
-    
-    infowin.style.width = "200px";
-    infowin.style.maxHeight = "200px";
-    infowin.style.overflow = "auto";
-    infowin.style.left = evt.clientX + "px";
-    infowin.style.top = evt.clientY + "px";
-    infowin.style.position = 'absolute';
-    infowin.style.display = 'block';
-        
-    infowin.innerHTML = blurb; 
-
-    setCountry(f.getAttribute("title"));
-  },
-
-  mouseOverFeature: function(f, evt){
-
-    //console.log("mouseOverFeature");
-    //console.log(f);
-    $(f).tipsy({ 
-        gravity: 'w', 
-        html: true, 
-        title: function() {
-          $('.tipsy').remove();
-          var html1 = "<div><span>test POP UP </span><br>" + "<div><ul><li>test1</li><li>test2</li><li>test3</li></ul></div></div>";
-          return html1; 
-        }
-    });  
-  },
-
-  setCountry: function(name){
+  setCountry: function(){
     console.log("setCountry");
+    console.log(this.id);
   }
 
 
