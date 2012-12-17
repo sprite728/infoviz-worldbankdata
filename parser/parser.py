@@ -12,7 +12,7 @@ def num(s):
         return float(s)
 
 countries = {}
-files = ['gni', 'health_expenditure', 'life_expectency', 'population']
+files = ['gni', 'health_expenditure', 'life_expectency', 'population', 'gdp']
 
 print "Start parsing ... "
 for currentFileName in files:
@@ -21,13 +21,14 @@ for currentFileName in files:
 	reader = csv.reader(ifile)
 
 	indicator = currentFileName
+	print "-------" + indicator
 
 	rownum = 0
 	print "Start parsing ... " + currentFileName
 	for row in reader:
 
 		# Save header row.
-		print "Begin ... " + str(rownum)
+		# print "Begin ... " + str(rownum)
 		if rownum == 0:
 			header = row
 		
@@ -65,7 +66,7 @@ for currentFileName in files:
 					# if it is, get the dictionary 
 					# ( i.e, we get an object 'country name, year') now 
 					# else, create a new dictionary
-					print col
+					# print col
 					if country.get(header[colnum]):
 						aYear = header[colnum]
 						year = country[aYear] # get a year object 
@@ -88,6 +89,7 @@ for currentFileName in files:
 
 	ifile.close()
 
+print pprint.pprint(countries)
 
 # Output format 1
 # pprint.pprint(countries)
@@ -145,13 +147,17 @@ for countryName in countries:
 	countryStore = {} 
 	for year in countryRecord.keys():
 		for indicator in files:
-			if countryRecord[year][indicator] != "NaN":
-				anIndicatorStore = [num(year), num(countryRecord[year][indicator])]
-				try:
-					countryStore[indicator].append(anIndicatorStore)
-				except:  # new an indicator array if first seeing this indicator
-					countryStore[indicator] = []
-					countryStore[indicator].append(anIndicatorStore)
+			try:
+				if countryRecord[year][indicator] != "NaN":
+					anIndicatorStore = [num(year), num(countryRecord[year][indicator])]
+					try:
+						countryStore[indicator].append(anIndicatorStore)
+					except:  # new an indicator array if first seeing this indicator
+						countryStore[indicator] = []
+						countryStore[indicator].append(anIndicatorStore)
+			except:
+				continue
+
 	
 	# sort years
 	for indicator in files:
